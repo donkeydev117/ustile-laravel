@@ -15,7 +15,7 @@ class CreateMenuBuildersTable extends Migration
     {
         Schema::create('menu_builders', function (Blueprint $table) {
             $table->id();
-            $table->json('menu')->nullable();
+            $table->longText('menu')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
