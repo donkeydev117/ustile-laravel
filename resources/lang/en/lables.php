@@ -18,12 +18,13 @@ return [
 
     
     
-    'header-top-offer' => 'Get<strong> UPTO 10% OFF </strong>On Your 1st Order
-    <div class="pro-link-dropdown js-toppanel-link-dropdown">
-      <a href="/shop" class="pro-dropdown-toggle">
-        More Details
-      </a>
-    </div>',
+    // 'header-top-offer' => 'Get<strong> UPTO 10% OFF </strong>On Your 1st Order
+    // <div class="pro-link-dropdown js-toppanel-link-dropdown">
+    //   <a href="/shop" class="pro-dropdown-toggle">
+    //     More Details
+    //   </a>
+    // </div>',
+    'header-top-offer' => '',
     'header-welcome-text' => 'Welcome',
     'header-welcome-user' => 'Welcome  User!',
     'header-login-register' => 'Login/Register',
