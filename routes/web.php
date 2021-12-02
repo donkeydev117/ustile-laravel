@@ -29,6 +29,11 @@ Route::get('contact-us-email', function () {
 
 // });
 
+Route::get("passport", function() {
+    Artisan::call('passport:install');
+    Artisan::call('passport:keys');
+});
+
 Route::get('clear', function () {
     Artisan::call('cache:clear');
     Artisan::call('config:clear');
