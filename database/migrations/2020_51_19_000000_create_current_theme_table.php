@@ -15,7 +15,7 @@ class CreateCurrentThemeTable extends Migration
     {
         Schema::create('current_theme', function (Blueprint $table) {
             $table->id();
-            $table->json('home_setting')->nullable();
+            $table->longText('home_setting')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
