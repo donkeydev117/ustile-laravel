@@ -368,7 +368,8 @@ export default {
                 category_slug:this.category.category_slug,
                 parent_id:this.category.parent,
                 gallary_id:this.category.gallary_id,
-                language_id:this.category.language_id
+                language_id:this.category.language_id,
+                category_icon : this.category.icon
             },
                 this.token)
                 .then(res => {
@@ -463,7 +464,8 @@ export default {
         },
         setIcon(gallary){
             console.log(gallary);
-            this.icon_path = gallary.gallary_path
+            this.icon_path = gallary.gallary_path;
+            this.category.icon = gallary.gallary_id;
         },
 
     },
