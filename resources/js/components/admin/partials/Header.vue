@@ -35,9 +35,9 @@
             <!--begin::Topbar-->
             
             <div class="topbar">
-                <div class="posicon d-lg-block d-none" v-if="$parent.permissions.includes('pos')">
+                <!-- <div class="posicon d-lg-block d-none" v-if="$parent.permissions.includes('pos')">
                     <router-link to="/admin/pos" class="btn btn-primary white mr-2">POS</router-link>
-                </div>
+                </div> -->
                 <div class="posicon d-lg-block d-none">
                     <div class="dropdown" :class="{ 'show': showdropdown }">
 
