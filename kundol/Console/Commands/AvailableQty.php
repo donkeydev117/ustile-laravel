@@ -51,7 +51,7 @@ class AvailableQty extends Command
             DB::statement("CREATE OR REPLACE VIEW coupon_order AS SELECT customer_id, coupon_code, count(coupon_code) as num_of_usage FROM `orders` Group By customer_id, coupon_code");
 
             // DB::statement("CREATE OR REPLACE VIEW top_selling_products AS SELECT SUM(qty) as qty,product_id , product_combination_id from (SELECT orders.id as order_id,order_detail.product_id,order_detail.product_combination_id,order_detail.qty FROM orders LEFT JOIN order_detail ON order_detail.order_id = orders.id) a GROUP by product_id,product_combination_id");
-            DB::statement("CREATE OR REPLACE VIEW top_selling_products AS SELECT SUM(qty) as qty,product_id  from (SELECT orders.id as order_id,order_detail.product_id,order_detail.qty FROM orders LEFT JOIN order_detail ON order_detail.order_id = orders.id) a GROUP by product_id");
+            DB::statement("CREATE OR REPLACE VIEW top_selling_products AS SELECT SUM(order_detail.qty) AS qty, order_detail.product_id FROM orders LEFT JOIN order_detail ON order_detail.order_id = orders.id GROUP BY order_detail.product_id");
             DB::statement("CREATE OR REPLACE VIEW customer_order_amount AS select `orders`.`customer_id` AS `customer_id`,sum(`orders`.`order_price`) AS `order_amount` from `orders` group by `orders`.`customer_id`");
 
             Log::info('command run successfully mysql');
