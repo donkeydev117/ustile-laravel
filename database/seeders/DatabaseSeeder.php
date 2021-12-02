@@ -89,9 +89,9 @@ class DatabaseSeeder extends Seeder
         
         $this->call(AssignPermissionsTableSeeder::class);
 
-        \Artisan::call('key:generate');
-        \Artisan::call('config:clear');
-        \Artisan::call('config:cache');
+        // \Artisan::call('key:generate');
+        // \Artisan::call('config:clear');
+        // \Artisan::call('config:cache');
         \Artisan::call('passport:install');
         \Artisan::call('passport:keys');
         Schema::enableForeignKeyConstraints();
