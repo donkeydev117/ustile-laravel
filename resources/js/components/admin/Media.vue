@@ -41,7 +41,7 @@
                   All
                 </a>
               </li>
-              <li class="nav-item" v-for="tag in tags">
+              <li :key="tag.id" class="nav-item" v-for="tag in tags">
                 <a
                   class="nav-link btn-light-dark shadow-none mr-4 mb-4"
                   :class="{ active: tag_id == tag.tag_id }"
@@ -219,6 +219,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div
+                      :key='gallary.id'
                       v-for="gallary in gallaries"
                       class="
                         col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3

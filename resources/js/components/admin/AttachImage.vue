@@ -24,7 +24,7 @@
                                                 All
                                             </a>
                                         </li>
-                                        <li class="nav-item" v-for="tag in tags">
+                                        <li :key='tag.id' class="nav-item" v-for="tag in tags">
                                             <a class="nav-link  btn-light-dark shadow-none mr-4 mb-4" :class="{ 'active': tag_id == tag.tag_id }" id="general-tab-center" data-toggle="pill" :href="'#'+tag.tag_name" role="tab" aria-controls="general" aria-selected="false" @click="gallaryByTagId(tag.tag_id)">
                                                 {{ tag.tag_name }}
                                             </a>
@@ -42,7 +42,7 @@
                                         <div class="tab-pane fade show active" id="All-center" role="tabpanel" aria-labelledby="All-tab-center">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div v-for='gallary in gallaries' class="col-6 col-sm-4 col-md-3 col-lg-4  col-xl-3 loadingmore" style="display: block;" @click="setSelectedImages(gallary.id,gallary.gallary_name)">
+                                                    <div :key="gallary.id" v-for='gallary in gallaries' class="col-6 col-sm-4 col-md-3 col-lg-4  col-xl-3 loadingmore" style="display: block;" @click="setSelectedImages(gallary.id,gallary.gallary_name)">
                                                         <div class="thumbnail text-center  mb-4" :class="{ 'active': selectedImage == gallary.id}">
                                                             <div class="thumbnail-imges ">
                                                                 <a class="img-select d-block" href="javascript:void(0);">
@@ -51,11 +51,107 @@
                                                             </div>
                                                         </div>
                                                     </div>
+													<div
+														class="modal fade text-left"
+														:class="{ 'show': showAddModal }"
+														id="imagepopup"
+														tabindex="-1"
+														role="dialog"
+														aria-labelledby="myModalLabel1"
+														>
+														<div class="modal-dialog" role="document">
+															<div class="modal-content">
+															<div class="modal-header">
+																<h3 class="modal-title" id="myModalLabel1">
+																	Add File Here
+																</h3>
+																<button
+																	type="button"
+																	class="
+																		close
+																		rounded-pill
+																		btn btn-sm btn-icon btn-light btn-hover-primary
+																		m-0
+																	"
+																	data-dismiss="modal"
+																	aria-label="Close"
+																	@click="toggleAddModal()"
+																>
+																<svg
+																	width="20px"
+																	height="20px"
+																	viewBox="0 0 16 16"
+																	class="bi bi-x"
+																	fill="currentColor"
+																	xmlns="http://www.w3.org/2000/svg"
+																>
+																	<path
+																	fill-rule="evenodd"
+																	d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+																	></path>
+																</svg>
+																</button>
+															</div>
+															<div class="modal-body">
+																<p>
+																Click in the box for upload images (we accept JPG, PNG
+																& GIF).
+																</p>
+																<div class="avatar-upload mb-3">
+																	<div class="avatar-edit">
+																		<input
+																			type="file"
+																			id="imageUpload"
+																			accept=".png, .jpg, .jpeg"
+																			@change="onFileChange"
+																		/>
+
+																		<label for="imageUpload"> image upload </label>
+																	</div>
+																	<div class="avatar-preview">
+																		<div id="imagePreview" class="rounded">
+																		<img :src="previewUrl" style="height: 194px; width: 100%"
+																		/>
+																		</div>
+																	</div>
+																	<small
+																		class="form-text text-danger"
+																		v-if="errors.has('file')"
+																		v-text="errors.get('file')"
+																	></small>
+																</div>
+																<fieldset class="form-group">
+																<label for="tags">Tags</label>
+																<input-tag v-model="gallary_tags"></input-tag>
+																</fieldset>
+															</div>
+															<div class="modal-footer">
+																<button
+																type="button"
+																class="btn btn-light"
+																data-dismiss="modal"
+																@click="toggleAddModal()"
+																>
+																<span class="">Close</span>
+																</button>
+																<button
+																type="button"
+																class="btn btn-primary ml-1"
+																data-dismiss="modal"
+																@click="addUpdategallary()"
+																>
+																<span class="">Submit</span>
+																</button>
+															</div>
+															</div>
+														</div>
+													</div>
                                                     <div class="col-12">
                                                         <nav aria-label="navigation">
                                                             <div class="pagination d-flex justify-content-end align-items-center">
                                                                 <div class="mr-2 text-dark">(Showing result <span id="numbering">{{ meta.to }}</span> out of <span id="totalnumber">{{ meta.total }}</span> )</div>
                                                                 <a class="btn btn-secondary white" href="#" id="loadMore" @click="setLimit()">Load More</a>
+                                                                <a class="btn btn-primary white ml-2" href="#" id="uploadImage" @click="toggleAddModal()">Upload Image</a>
                                                             </div>
                                                         </nav>
                                                     </div>
@@ -90,7 +186,12 @@ export default {
   props: {
   	showModal: {
       type: Boolean,
-  }},
+  	},
+	showAddModal: {
+		type : Boolean,
+		default: false
+	}
+  },
     data() {
         return {
             meta: {},
@@ -108,6 +209,17 @@ export default {
             file: [],
             gallary_tags: [],
             url: "",
+		    previewUrl: "/default.png",
+			supported_extension: [
+				"jpg",
+				"jpeg",
+				"png",
+				"JPEG",
+				"PNG",
+				"JPG",
+				"gif",
+				"GIF",
+			],
             errors: new ErrorHandling(),
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
         };
@@ -151,9 +263,66 @@ export default {
                 this.meta = res.data.meta;
             }).finally(() => (this.$parent.loading = false));
         },
-         toggleModal() {
+        toggleModal() {
             this.$emit('toggleImageSelect');
         },
+		toggleAddModal() {
+			this.showAddModal = !this.showAddModal;
+		},
+		onFileChange(e) {
+      		var files = e.target.files || e.dataTransfer.files;
+			  console.log(files);
+      		if (!files.length) return;
+      		// this.createImage(files[0]);
+      		var fileName = files[0].name;
+      		var re = /(?:\.([^.]+))?$/;
+      		var ext = re.exec(fileName)[1];
+      		if (this.supported_extension.indexOf(ext) == -1) {
+        		this.$toaster.error("We accept only JPG, PNG and GIF files.");
+        		return;
+      		}
+      		this.file = files[0];
+		    this.previewUrl = URL.createObjectURL(files[0]);
+    	},
+		clearForm() {
+			this.showAddModal = false;
+			this.file = "";
+			this.gallary_tags = [];
+			this.selectedImages = [];
+			this.previewUrl = "/default.png";
+		},
+		addUpdategallary() {
+			this.$parent.loading = true;
+			var url = "/api/admin/gallary";
+			this.request_method = "post";
+			var formData = new FormData();
+			formData.append("file", this.file);
+			for (var i = 0; i < this.gallary_tags.length; i++) {
+				formData.append("gallary_tags[]", this.gallary_tags[i]);
+			}
+			axios[this.request_method](url, formData, this.token)
+				.then((res) => {
+					if (res.data.status == "Success") {
+						this.$toaster.success(res.data.message);
+						this.clearForm();
+						this.fetchgallaries();
+					} else {
+						this.$toaster.error(res.data.message);
+					}
+				})
+				.catch((error) => {
+					this.error_message = "";
+					this.errors = new ErrorHandling();
+					if (error.response.status == 422) {
+						if (error.response.data.status == "Error") {
+							this.error_message = error.response.data.message;
+						} else {
+							this.errors.record(error.response.data.errors);
+						}
+					}
+				})
+				.finally(() => (this.$parent.loading = false));
+		},
         setLimit() {
             var limit = this.limit;
             this.limit = limit + limit;
@@ -173,3 +342,8 @@ export default {
     }
 };
 </script>
+<style scope>
+	.show {
+		display: block !important;
+	}
+</style>

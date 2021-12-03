@@ -17,3 +17,5 @@ Homestead.json
 /.vagrant
 bootstrap/cache/packages.php
 bootstrap/cache/services.php
+storage/installed
+public/gallary
