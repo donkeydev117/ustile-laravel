@@ -4,6 +4,9 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Admin\Material;
+use App\Traits\ApiResponser;
+use Illuminate\Support\Str;
 
 class MaterialController extends Controller
 {
@@ -14,7 +17,8 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        //
+        $materials = Material::get();
+        return response()->json($materials, 200);
     }
 
     /**
@@ -35,7 +39,21 @@ class MaterialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'string|required',
+            'media' => 'string|required',
+        ]);
+
+        $data = [
+            'name' => $request->input('name'),
+            'key' => Str::slug($request->input('name')),
+            'media' => $request->input('media')
+        ];
+
+        Material::create($data);
+
+        return response()->json(['status' => 'success'], 200);
+
     }
 
     /**
@@ -69,7 +87,19 @@ class MaterialController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'string|required',
+            'media' => 'string|required'
+        ]);
+
+        $material = Material::find($id);
+        $material->name = $request->input('name');
+        $material->media = $request->input('media');
+        $material->key = Str::slug($request->input('name'));
+
+        $material->save();
+
+        return response()->json(['status' => 'success'], 200);
     }
 
     /**
@@ -80,6 +110,9 @@ class MaterialController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $material = Material::find($id);
+        $material->delete();
+
+        return response()->json(['status' => 'success'], 200);
     }
 }

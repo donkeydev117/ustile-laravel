@@ -34,21 +34,19 @@
                                 <thead class="text-body">
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">ID</th>
-                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Color Name</th>
-                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Color Code</th>
-                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Status</th>
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Material</th>
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Image</th>
                                         <th class="no-sort sorting_disabled" rowspan="1" colspan="1">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="kt-table-tbody text-dark">
-                                    <tr class="kt-table-row kt-table-row-level-0 odd" role="row" v-for="m_color in colors" v-bind:key="m_color.id">
-                                        <td class="sorting_1">{{m_color.id}}</td>
-                                        <td>{{ m_color.color }}</td>
-                                        <td>{{ m_color.code}}</td>
-                                        <td>{{ m_color.is_active == '1' ? 'Active' : 'InActive' }}</td>
+                                    <tr class="kt-table-row kt-table-row-level-0 odd" role="row" v-for="m_material in materials" v-bind:key="m_material.id">
+                                        <td class="sorting_1">{{m_material.id}}</td>
+                                        <td>{{ m_material.name }}</td>
+                                        <td><img :src='m_material.media' style='width: 50px; height:50px' /></td>
                                         <td>
-                                            <a href="javascript:void(0)" class=" click-edit" id="click-edit1" data-toggle="tooltip" title="" data-placement="right" data-original-title="Check out more demos" @click="editcolor(m_color)"><i class="fa fa-edit"></i></a>
-                                            <a class="" href="#" @click="deletecolor(m_color.id)"><i class="fa fa-trash"></i></a>
+                                            <a href="javascript:void(0)" class=" click-edit" id="click-edit1" data-toggle="tooltip" title="" data-placement="right" data-original-title="Check out more demos" @click="editMaterial(m_material)"><i class="fa fa-edit"></i></a>
+                                            <a class="" href="#" @click="deleteMaterial(m_material.id)"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -62,7 +60,7 @@
    </div>
     <div class="offcanvas offcanvas-right kt-color-panel p-5 kt_notes_panel" v-if="displayForm" :class="displayForm ? 'offcanvas-on' : ''">
         <div class="offcanvas-header d-flex align-items-center justify-content-between pb-3">
-            <h4 class="font-size-h4 font-weight-bold m-0">Add Color</h4>
+            <h4 class="font-size-h4 font-weight-bold m-0">Add Material</h4>
             <a href="#" class="btn btn-sm btn-icon btn-light btn-hover-primary kt_notes_panel_close" v-on:click="clearForm()">
                 <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
@@ -73,30 +71,24 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <label class="text-dark">Color Name</label>
-                        <input type="text" v-model='color.color' class="form-control" />
-                        <small class="form-text text-danger" v-if="errors.has('value')" v-text="errors.get('value')"></small>
+                        <label class="text-dark">Material Name</label>
+                        <input type="text" v-model='material.name' class="form-control" />
+                        <small class="form-text text-danger" v-if="errors.has('name')" v-text="errors.get('name')"></small>
                     </div>
+                    
                     <div class="form-group">
-                        <label class="text-dark">Color Code</label>
-                        <input type="color" class="form-control" v-model='color.code' />
-                        <small class="form-text text-danger" v-if="errors.has('code')" v-text="errors.get('code')"></small>
-                    </div>
-                    <div class="form-group ">
-                        <label>Status</label>
-                        <fieldset class="form-group mb-3">
-                            <select class="js-example-basic-single js-states form-control bg-transparent" v-model="color.is_active">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
-                        </fieldset>
-                        <small class="form-text text-danger" v-if="errors.has('is_active')" v-text="errors.get('is_active')"></small>
+                        <button type="button" class="btn btn-primary" @click="toggleImageSelect()">Upload Material Thumbnail</button>
+                        <small id="textHelp" class="form-text text-muted">Select Image file from gallary.</small>
+                        <small class="form-text text-danger" v-if="errors.has('media')" v-text="errors.get('media')"></small>
+
+                        <img v-if="material.media != ''" :src="material.media" style="width:100px;height:100px;"/>
                     </div>
                 </div>
             </div>
-            <button type="button" @click="addUpdateColor()" class="btn btn-primary">Submit</button>
+            <button type="button" @click="addUpdateMaterial()" class="btn btn-primary">Submit</button>
         </form>
     </div>
+    <attach-image @toggleImageSelect="toggleImageSelect" :showModal="showMediaSelector" @setImage="setImage"/>
 </div>
 </template>
 
@@ -114,51 +106,49 @@ export default {
             token: [],
             selectedLanguage:'',
             edit: false,
-            colors:[],
-            color: {
+            materials:[],
+            material: {
                 id:"",
                 key: "",
-                color: "",
-                code: "#000000",
-                is_active: 1
+                name: "",
+                media: "",
             },
+            showMediaSelector: false,
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
         };
     },
     methods: {
-        fetchcolors(){
+        fetchMaterials(){
             this.$parent.loading = true;
-            let page_url = "/api/admin/color";
+            let page_url = "/api/admin/material";
             axios.get(page_url, this.token).then(res => {
-                this.colors = res.data;
-                console.log("colors:", this.colors);
+                this.materials = res.data;
+                console.log("colors:", this.materials);
             }).finally(() => (this.$parent.loading = false));
         },
         clearForm(){
             this.displayForm = !this.displayForm;
-            this.color.id = '';
-            this.color.color = '';
-            this.color.key = '';
-            this.color.code = '';
-            this.color.is_active = 1;
+            this.material.id = '';
+            this.material.name = '';
+            this.material.media = '';
         },
-        addUpdateColor(){
+        addUpdateMaterial(){
             this.$parent.loading = true;
-            var url = '/api/admin/color';
+            var url = '/api/admin/material';
             if (this.edit === false) {
                 // Add
                 this.request_method = 'post'
             } else {
                 // Update
-                var url = '/api/admin/color/' + this.color.id;
+                var url = '/api/admin/material/' + this.material.id;
                 this.request_method = 'put'
             }
-            axios[this.request_method](url, this.color, this.token)
+            axios[this.request_method](url, this.material, this.token)
                 .then(res => {
                     if (res.data.status == "success") {
-                        this.$toaster.success('Settings has been updated successfully')
+                        this.$toaster.success('Material has been updated successfully')
                         this.clearForm();
-                        this.fetchcolors();
+                        this.fetchMaterials();
                     } else {
                         this.$toaster.error(res.message)
                     }
@@ -176,25 +166,23 @@ export default {
 					}
 				}).finally(() => (this.$parent.loading = false));
         },
-        editcolor(color){
+        editMaterial(m){
             this.edit = true;
             this.displayForm = 1;
             this.errors = new ErrorHandling();
-            this.color.id = color.id;
-            this.color.key = color.key;
-            this.color.color = color.color;
-            this.color.code = color.code;
-            this.color.is_active = color.is_active;
+            this.material.id = m.id;
+            this.material.name = m.name;
+            this.material.media = m.media;
         },
-        deletecolor(id){
+        deleteMaterial(id){
             let confirm = window.confirm("Are you sure?");
             if(!confirm) return;
             this.$parent.loading = true;
-            axios.delete(`/api/admin/color/${id}`,this.token)
+            axios.delete(`/api/admin/material/${id}`,this.token)
             .then(res => {
                 console.log(res);
-                this.$toaster.success('Color has been removed successfully')
-                this.fetchcolors();
+                this.$toaster.success('Material has been removed successfully')
+                this.fetchMaterials();
             })
             .catch(error => {
                 console.log(error);
@@ -202,6 +190,12 @@ export default {
             })
             .finally(() => this.$parent.loading = false );
             
+        },
+        toggleImageSelect(){
+            this.showMediaSelector = !this.showMediaSelector;
+        },
+        setImage(gallery){
+            this.material.media = gallery.gallary_path;
         }
     },
     mounted() {
@@ -212,7 +206,7 @@ export default {
                 Authorization: `Bearer ${token}`
             }
         };
-        this.fetchcolors();
+        this.fetchMaterials();
      
     }
 };

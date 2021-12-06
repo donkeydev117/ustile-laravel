@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <label class="text-dark">Color Name</label>
                         <input type="text" v-model='color.color' class="form-control" />
-                        <small class="form-text text-danger" v-if="errors.has('value')" v-text="errors.get('value')"></small>
+                        <small class="form-text text-danger" v-if="errors.has('color')" v-text="errors.get('color')"></small>
                     </div>
                     <div class="form-group">
                         <label class="text-dark">Color Code</label>
