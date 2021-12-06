@@ -133,12 +133,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="tabslang">
-                        <div v-for="language in languages" class="tablang" :class="language.id == selectedLanguage ?'active':''" @click="setSelectedLanguage(language.id)">
+                        <div v-for="language in languages" :key='language.id' class="tablang" :class="language.id == selectedLanguage ?'active':''" @click="setSelectedLanguage(language.id)">
                             {{ language.language_name }}
                         </div>
                     </div>
                     <br />
-                    <div class="form-group " v-for="(language,index) in languages" v-if="language.id == selectedLanguage">
+                    <div class="form-group " v-for="(language,index) in languages" :key='language.id' v-if="language.id == selectedLanguage">
                         <label class="text-dark">Name ( {{ language.language_name }} ) </label>
                         <input type="text" :name="'name'+index" v-model="unit.name[index]" class="form-control" />
                         <small class="form-text text-danger" v-if="errors.has('name')" v-text="errors.get('name')"></small>

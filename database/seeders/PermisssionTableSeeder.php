@@ -723,10 +723,14 @@ class PermisssionTableSeeder extends Seeder
             'key' => 'Manage Delivery Boy',
             'Value' => 'manage-delivery-boy',
             'parent_id'=>91
-
         ]);
 
-       
-
+        // for colors
+        Permission::insertOrIgnore([
+            'key' => 'Product Colors',
+            'value' => 'product-colors',
+            'parent_id' => 5
+        ]);
+        
     }
 }

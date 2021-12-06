@@ -37,7 +37,7 @@ let routes = [
             { path: '/admin/product-brand', component: require('./components/admin/ProductBrand.vue').default, name: 'product-brand-list', meta: { auth: true } },
             { path: '/admin/product-category', component: require('./components/admin/ProductCategory.vue').default, name: 'product-category-list', meta: { auth: true } },
             { path: '/admin/product-reviews', component: require('./components/admin/ProductReviews.vue').default, name: 'product-reviews', meta: { auth: true } },
-            
+            { path : "/admin/product-colors", component: require("./components/admin/ProductColors.vue").default, name:'product-colors', meta: { auth: true }},
 
 
             { path: '/admin/quotation-detail/:id', component: require('./components/admin/QuotationDetail.vue').default, name: 'quotation-detail', meta: { auth: true } },
@@ -136,6 +136,7 @@ let routes = [
     { path: '/admin/login', component: require('./components/admin/Login.vue').default, name: 'login', meta: { redirectToDashboard: true } },
     { path: "/admin/accessdenied", component: require('./components/AccessDenied.vue').default, name: 'accessdenied' },
 
+    // Added for new pages
     { path: "/admin/*", component: require('./components/PageNotFound.vue').default, name: 'pageNotFound' },
 
     
@@ -151,8 +152,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-
-
     var loggedIn = localStorage.getItem('loggedIn');
     if (to.matched.some(record => record.meta.auth) && (loggedIn == null || loggedIn == false)) {
         next('/admin/login')
