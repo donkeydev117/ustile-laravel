@@ -70,13 +70,13 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label class="text-dark">Color Name</label>
-                        <input type="text" class="form-control" />
-                        <small class="form-text text-danger" v-if="errors.has('name')" v-text="errors.get('name')"></small>
+                        <input type="text" v-model='color.value' class="form-control" />
+                        <small class="form-text text-danger" v-if="errors.has('value')" v-text="errors.get('value')"></small>
                     </div>
                     <div class="form-group">
                         <label class="text-dark">Color Code</label>
-                        <input type="text" class="form-control" />
-                        <small class="form-text text-danger" v-if="errors.has('name')" v-text="errors.get('name')"></small>
+                        <input type="color" class="form-control" v-model='color.code' />
+                        <small class="form-text text-danger" v-if="errors.has('code')" v-text="errors.get('code')"></small>
                     </div>
                     <div class="form-group ">
                         <label>Status</label>
@@ -121,30 +121,6 @@ export default {
         };
     },
     methods: {
-        fetchLanguages() {
-            this.$parent.loading = true;
-            var token = localStorage.getItem('token');
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            };
-            var responseData = {};
-
-            axios.get('/api/admin/language?limit=500', config)
-                .then(res => {
-                    if (res.data.status == "Success") {
-                        this.languages = res.data.data;
-                        console.log(this.languages);
-                        for(var i = 0 ; i < res.data.data.length; i++){
-                            // this.unit.language_id.push(res.data.data[i].id);
-                            if(res.data.data[i].is_default){
-                                this.selectedLanguage = res.data.data[i].id;   
-                            }
-                        }
-                    }
-                }).finally(() => (this.$parent.loading = false));
-        },
         fetchcolors(){
 
         },
@@ -163,8 +139,7 @@ export default {
                 Authorization: `Bearer ${token}`
             }
         };
-        // this.fetchunits();
-        this.fetchLanguages();
+        this.fetchcolors();
      
     }
 };
