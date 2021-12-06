@@ -251,9 +251,8 @@
                           <span class="nav-text">Product Units</span>
                         </router-link>
                       </li>
-                      <li
-                        class="nav-item"
-                      >
+                      <!-- Product Color -->
+                      <li class="nav-item">
                         <router-link
                           to='/admin/product-colors'
                           class="nav-link sub-nav-link"
@@ -278,21 +277,14 @@
                           <span class="nav-text">Product Colors</span>
                         </router-link>
                       </li>
-                      <li
-                        class="nav-item"
-                        v-if="$parent.permissions.includes('product-attribute-list')"
-                      >
+                      <!-- Product Materials -->
+                      <li class="nav-item">
                         <router-link
-                          to="/admin/product-attribute"
+                          to='/admin/product-materials'
                           class="nav-link sub-nav-link"
                         >
                           <span
-                            class="
-                              svg-icon
-                              nav-icon
-                              d-flex
-                              justify-content-center
-                            "
+                            class="svg-icon nav-icon d-flex justify-content-center"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -308,10 +300,9 @@
                               />
                             </svg>
                           </span>
-                          <span class="nav-text">Product Attributes</span>
+                          <span class="nav-text">Product Materials</span>
                         </router-link>
                       </li>
-
                       <li
                         class="nav-item"
                         v-if="

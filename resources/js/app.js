@@ -37,8 +37,11 @@ let routes = [
             { path: '/admin/product-brand', component: require('./components/admin/ProductBrand.vue').default, name: 'product-brand-list', meta: { auth: true } },
             { path: '/admin/product-category', component: require('./components/admin/ProductCategory.vue').default, name: 'product-category-list', meta: { auth: true } },
             { path: '/admin/product-reviews', component: require('./components/admin/ProductReviews.vue').default, name: 'product-reviews', meta: { auth: true } },
+            
+            // Added by Darko
             { path : "/admin/product-colors", component: require("./components/admin/ProductColors.vue").default, name:'product-colors', meta: { auth: true }},
-
+            { path : "/admin/product-materials", component: require("./components/admin/ProductMaterials.vue").default, name:'product-materials', meta: { auth: true }},
+            
 
             { path: '/admin/quotation-detail/:id', component: require('./components/admin/QuotationDetail.vue').default, name: 'quotation-detail', meta: { auth: true } },
             { path: '/admin/warehouse', component: require('./components/admin/Warehouse.vue').default, name: 'warehouse-list', meta: { auth: true } },

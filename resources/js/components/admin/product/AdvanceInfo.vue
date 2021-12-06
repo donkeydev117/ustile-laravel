@@ -9,7 +9,7 @@
                 <form>
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <label>Product Type</label>
+                        <label>Product Colors</label>
                         <fieldset class="form-group mb-3">
                             <select @change="setProductType($event.target.value)" class="single-select w-100 mb-3 categories-select ms-offscreen" v-model="product_type">
                                 <option value="" disabled>Select Product Type</option>
@@ -61,7 +61,7 @@
                         <fieldset class="form-group mb-3">
                             <select @change="setUnit($event.target.value)" class="single-select w-100 mb-3 categories-select ms-offscreen" v-model="product_unit">
                                 <option value="">Select Unit</option>
-                                <option v-for="unit in units" v-bind:value="unit.id">
+                                <option v-for="unit in units" v-bind:value="unit.id" :key='unit.id'>
                                 {{ unit.detail == null ? '' : (unit.detail[0] ? unit.detail[0].name : '') }}
                                 </option>
                             </select>
@@ -202,12 +202,13 @@ export default {
     data() {
         return {
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            colors: [],
             units: [],
             new_sku: [],
             brands: [],
             attributes: [],
             variations: [],
-            product_type: '',
+            product_type: 'variable',
             attribute: '',
             selectedAttribute: [],
             product_status: true,
