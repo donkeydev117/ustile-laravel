@@ -18,6 +18,7 @@ class CreateColorsTable extends Migration
             $table->string('key');
             $table->string('color');
             $table->string('code');
+            $table->integer()->defalt(1);
             $table->timestamps();
         });
     }
