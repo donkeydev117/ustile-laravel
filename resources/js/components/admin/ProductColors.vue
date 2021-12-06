@@ -29,26 +29,30 @@
             <div class="col-12 ">
                 <div class="card card-custom gutter-b bg-white border-0">
                     <div class="card-body">
-                        <div>
-                            <div class=" table-responsive" id="printableTable">
-                            
-                                <div id="productUnitTable_wrapper" class="dataTables_wrapper no-footer">
-
-                                    <div class="dataTables_length" id="productUnitTable_length">
-                                        <label>Show 
-                                            <select name="productUnitTable_length" aria-controls="productUnitTable" class="" v-model="limit" v-on:change="fetchcolors()">
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                                <option value="200">200</option>
-                                                <option value="500">500</option>
-                                                <option value="1000">1000</option>
-                                            </select> entries
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class=" table-responsive" id="printableTable">
+                            <table id="productColorTable" class="display dataTable no-footer" role="grid">
+                                <thead class="text-body">
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">ID</th>
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Color Name</th>
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Color Code</th>
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Status</th>
+                                        <th class="no-sort sorting_disabled" rowspan="1" colspan="1">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="kt-table-tbody text-dark">
+                                    <tr class="kt-table-row kt-table-row-level-0 odd" role="row" v-for="m_color in colors" v-bind:key="m_color.id">
+                                        <td class="sorting_1">{{m_color.id}}</td>
+                                        <td>{{ m_color.color }}</td>
+                                        <td>{{ m_color.code}}</td>
+                                        <td>{{ m_color.is_active == '1' ? 'Active' : 'InActive' }}</td>
+                                        <td>
+                                            <a href="javascript:void(0)" class=" click-edit" id="click-edit1" data-toggle="tooltip" title="" data-placement="right" data-original-title="Check out more demos" @click="editcolor(m_color)"><i class="fa fa-edit"></i></a>
+                                            <a class="" href="#" @click="deletecolor(m_color.id)"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -56,7 +60,7 @@
         </div>
       </div>
    </div>
-       <div class="offcanvas offcanvas-right kt-color-panel p-5 kt_notes_panel" v-if="displayForm" :class="displayForm ? 'offcanvas-on' : ''">
+    <div class="offcanvas offcanvas-right kt-color-panel p-5 kt_notes_panel" v-if="displayForm" :class="displayForm ? 'offcanvas-on' : ''">
         <div class="offcanvas-header d-flex align-items-center justify-content-between pb-3">
             <h4 class="font-size-h4 font-weight-bold m-0">Add Color</h4>
             <a href="#" class="btn btn-sm btn-icon btn-light btn-hover-primary kt_notes_panel_close" v-on:click="clearForm()">
@@ -70,7 +74,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label class="text-dark">Color Name</label>
-                        <input type="text" v-model='color.value' class="form-control" />
+                        <input type="text" v-model='color.color' class="form-control" />
                         <small class="form-text text-danger" v-if="errors.has('value')" v-text="errors.get('value')"></small>
                     </div>
                     <div class="form-group">
@@ -109,12 +113,13 @@ export default {
             languages: [],
             token: [],
             selectedLanguage:'',
+            edit: false,
             colors:[],
             color: {
                 id:"",
                 key: "",
-                value: "",
-                code: "",
+                color: "",
+                code: "#000000",
                 is_active: 1
             },
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
@@ -122,13 +127,81 @@ export default {
     },
     methods: {
         fetchcolors(){
-
+            this.$parent.loading = true;
+            let page_url = "/api/admin/color";
+            axios.get(page_url, this.token).then(res => {
+                this.colors = res.data;
+                console.log("colors:", this.colors);
+            }).finally(() => (this.$parent.loading = false));
         },
         clearForm(){
             this.displayForm = !this.displayForm;
+            this.color.id = '';
+            this.color.color = '';
+            this.color.key = '';
+            this.color.code = '';
+            this.color.is_active = 1;
         },
         addUpdateColor(){
-
+            this.$parent.loading = true;
+            var url = '/api/admin/color';
+            if (this.edit === false) {
+                // Add
+                this.request_method = 'post'
+            } else {
+                // Update
+                var url = '/api/admin/color/' + this.color.id;
+                this.request_method = 'put'
+            }
+            axios[this.request_method](url, this.color, this.token)
+                .then(res => {
+                    if (res.data.status == "success") {
+                        this.$toaster.success('Settings has been updated successfully')
+                        this.clearForm();
+                        this.fetchcolors();
+                    } else {
+                        this.$toaster.error(res.message)
+                    }
+                })
+                .catch(error => {
+					this.error_message = '';
+					this.errors = new ErrorHandling();
+					if (error.response.status == 422) {
+						if(error.response.data.status == 'Error'){
+							this.error_message = error.response.data.message;
+						}
+						else{
+							this.errors.record(error.response.data.errors);
+						}
+					}
+				}).finally(() => (this.$parent.loading = false));
+        },
+        editcolor(color){
+            this.edit = true;
+            this.displayForm = 1;
+            this.errors = new ErrorHandling();
+            this.color.id = color.id;
+            this.color.key = color.key;
+            this.color.color = color.color;
+            this.color.code = color.code;
+            this.color.is_active = color.is_active;
+        },
+        deletecolor(id){
+            let confirm = window.confirm("Are you sure?");
+            if(!confirm) return;
+            this.$parent.loading = true;
+            axios.delete(`/api/admin/color/${id}`,this.token)
+            .then(res => {
+                console.log(res);
+                this.$toaster.success('Color has been removed successfully')
+                this.fetchcolors();
+            })
+            .catch(error => {
+                console.log(error);
+                this.$toaster.error(error.message);
+            })
+            .finally(() => this.$parent.loading = false );
+            
         }
     },
     mounted() {

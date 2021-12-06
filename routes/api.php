@@ -94,6 +94,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:user-api', 'scopes:use
     
     Route::post('product/sku', 'API\Admin\ProductController@sku');
 
+    // Colors Resource
+    Route::resource('color', 'API\Admin\ColorController');
+
     Route::resource('sale', 'API\Admin\SaleController', ['names' => ['index' => 'admin.sale.index', 'store' => 'admin.sale.store', 'destroy' => 'admin.sale.delete']])->middleware('store');
     Route::resource('sale_return', 'API\Admin\SaleReturnController', ['names' => ['index' => 'admin.sale_return.index', 'store' => 'admin.sale_return.store', 'destroy' => 'admin.sale_return.delete']])->middleware('store');
     Route::resource('blog_category', 'API\Admin\BlogCategoryController', ['names' => ['index' => 'admin.blog_category.index', 'store' => 'admin.blog_category.store', 'update' => 'admin.blog_category.update', 'destroy' => 'admin.blog_category.delete']])->except(['edit', 'create']);
