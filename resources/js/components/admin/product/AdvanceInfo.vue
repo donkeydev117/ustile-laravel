@@ -11,8 +11,17 @@
                     <div class="col-md-6">
                         <label>Product Colors</label>
                         <fieldset class="form-group">
-                            <multiselect v-model="color" :options="colors" :custom-label="nameWithLang" placeholder="Select one" label="color" track-by="id" :multiple="true"  :taggable="true" @input="setColor" @remove='removeColor'>
-                            </multiselect>
+                            <multiselect 
+                                v-model="color" 
+                                :options="colors" 
+                                :custom-label="nameWithLang" 
+                                placeholder="Select one" 
+                                label="color" track-by="id" 
+                                :multiple="true"  
+                                :taggable="true" 
+                                @input="setColor" 
+                                @remove='removeColor' 
+                            />
                             <small class="form-text text-danger" v-if="errors.has('product_type')" v-text="errors.get('product_type')"></small>
                         </fieldset>
                     </div>
@@ -21,9 +30,15 @@
                         <div class="switch-h d-flex justify-content-between align-items-center border p-2">
                             <label class="text-dark mb-0">Is Active?</label>
                             <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
-                                <input type="checkbox" class="custom-control-input" id="customSwitchcolor445" :value="product_status" v-model="product_status" v-on:input="setProductStatus($event.target.value)">
-                                <label class="custom-control-label mr-1" for="customSwitchcolor445">
-                                </label>
+                                <input
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="customSwitchcolor445"
+                                    :value="product_status"
+                                    v-model="product_status"
+                                    v-on:input="setProductStatus($event.target.value)" 
+                                />
+                                <label class="custom-control-label mr-1" for="customSwitchcolor445"></label>
                             </div>
                         </div>
                         <small class="form-text text-danger" v-if="errors.has('product_status')" v-text="errors.get('product_status')"></small>
@@ -32,9 +47,15 @@
                         <div class="switch-h d-flex justify-content-between align-items-center border p-2 mb-3">
                             <label class="text-dark mb-0">Is Point</label>
                             <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
-                                <input type="checkbox" class="custom-control-input" id="customSwitchcolor446" :value="is_points" v-model="is_points" v-on:input="setIsPoints($event.target.value)">
-                                <label class="custom-control-label mr-1" for="customSwitchcolor446">
-                                </label>
+                                <input
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="customSwitchcolor446"
+                                    :value="is_points"
+                                    v-model="is_points"
+                                    v-on:input="setIsPoints($event.target.value)" 
+                                />
+                                <label class="custom-control-label mr-1" for="customSwitchcolor446"></label>
                             </div>
                         </div>
                         <small class="form-text text-danger" v-if="errors.has('is_points')" v-text="errors.get('is_points')"></small>
@@ -43,9 +64,15 @@
                         <div class="switch-h d-flex justify-content-between align-items-center border p-2 mb-3">
                             <label class="text-dark mb-0">Is Feature</label>
                             <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
-                                <input type="checkbox" class="custom-control-input" id="features" :value="is_featured" v-model="is_featured" v-on:input="setIsFeatured($event.target.value)">
-                                <label class="custom-control-label mr-1" for="features">
-                                </label>
+                                <input
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="features"
+                                    :value="is_featured"
+                                    v-model="is_featured"
+                                    v-on:input="setIsFeatured($event.target.value)" 
+                                />
+                                <label class="custom-control-label mr-1" for="features"></label>
                             </div>
                         </div>
                         <small class="form-text text-danger" v-if="errors.has('is_featured')" v-text="errors.get('is_featured')"></small>
@@ -79,7 +106,7 @@
                         </fieldset>
                         <small class="form-text text-danger" v-if="errors.has('brand_id')" v-text="errors.get('brand_id')"></small>
                     </div>
-                    
+
                     <!-- Size -->
                     <div class="col-md-6">
                         <div class="row mb-3">
@@ -147,9 +174,15 @@
                         <div class="switch-h d-flex justify-content-between align-items-center border p-2">
                             <label class="text-dark mb-0">Made in USA</label>
                             <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
-                                <input type="checkbox" class="custom-control-input" id="features" :value="is_featured" v-model="is_featured" v-on:input="setIsFeatured($event.target.value)">
-                                <label class="custom-control-label mr-1" for="features">
-                                </label>
+                                <input 
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="features"
+                                    :value="is_featured"
+                                    v-model="is_featured"
+                                    v-on:input="setIsFeatured($event.target.value)"
+                                />
+                                <label class="custom-control-label mr-1" for="features"></label>
                             </div>
                         </div>
                     </div>
