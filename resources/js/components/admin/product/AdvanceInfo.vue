@@ -8,24 +8,21 @@
         <div class="card-body">
             <form>
                 <div class="form-group row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <label>Product Colors</label>
-                        <fieldset class="form-group">
-                            <multiselect 
-                                v-model="color" 
-                                :options="colors" 
-                                :custom-label="nameWithLang" 
-                                placeholder="Select one" 
-                                label="color" track-by="id" 
-                                :multiple="true"  
-                                :taggable="true" 
-                                @input="setColor" 
-                                @remove='removeColor' 
-                            />
-                            <small class="form-text text-danger" v-if="errors.has('product_type')" v-text="errors.get('product_type')"></small>
-                        </fieldset>
+                        <multiselect 
+                            v-model="color" 
+                            :options="colors" 
+                            placeholder="Select Colors" 
+                            label="color" track-by="id" 
+                            :multiple="true"  
+                            :taggable="true" 
+                            @input="setColor" 
+                            @remove='removeColor' 
+                        />
+                        <small class="form-text text-danger" v-if="errors.has('colors')" v-text="errors.get('colors')"></small>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <label>&nbsp;</label>
                         <div class="switch-h d-flex justify-content-between align-items-center border p-2">
                             <label class="text-dark mb-0">Is Active?</label>
@@ -62,7 +59,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="switch-h d-flex justify-content-between align-items-center border p-2 mb-3">
-                            <label class="text-dark mb-0">Is Feature</label>
+                            <label class="text-dark mb-0">Is Featured</label>
                             <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
                                 <input
                                     type="checkbox"
@@ -92,7 +89,13 @@
                     <!-- Size of Box -->
                     <div class="col-md-6 mb-3">
                         <label>Size of Box (pcs/box)</label>
-                        <input type="number" class="form-control" placeholder="Please enter amount of tiles in a box" />
+                        <input 
+                            type="number" 
+                            class="form-control" 
+                            placeholder="Please enter amount of tiles in a box"
+                            v-on:input="setBoxSize($event.target.value)" 
+                            v-model="boxSize" 
+                        />
                     </div>
                     <div class="col-md-6">
                         <label>Brands</label>
@@ -112,12 +115,12 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label>Width (mm)</label>
-                                <input type="number" class="form-control" placeholder="Width of tile (mm)" > 
+                                <input type="number" class="form-control" placeholder="Width of tile (mm)" v-model='width' v-on:input='setWidth($event.target.value)' > 
                                 <small class="form-text text-danger" v-if="errors.has('width')" v-text="errors.get('width')"></small>
                             </div>
                             <div class="col-md-6">
                                 <label>Length (mm)</label>
-                                <input type="number" class="form-control" placeholder="Length of tile(mm)">
+                                <input type="number" class="form-control" placeholder="Length of tile(mm)" v-model='length' v-on:input='setLength($event.target.value)'>
                                 <small class="form-text text-danger" v-if="errors.has('length')" v-text="errors.get('length')"></small>
                             </div>
                         </div>
@@ -125,48 +128,63 @@
                     <!-- Shades -->
                     <div class="col-sm-6 mb-3">
                         <label>Shades</label>
-                        <select class="form-control">
+                        <select class="form-control" @change='setShade($event.target.value)'>
                             <option>Please select the shade</option>
+                            <option value='shade1'>Shade</option>
                         </select>
+                        <small class="form-text text-danger" v-if="errors.has('shade')" v-text="errors.get('shade')"></small>
                     </div>
                     <!-- Room -->
                     <div class="col-sm-6 mb-3">
                         <label>Kitchen/Foyer/Bathroom</label>
-                        <select class="form-control">
+                        <select class="form-control" @change='setRoom($event.target.value)'>
                             <option>Select one option</option>
                             <option value='kitchen'>Kitchen</option>
                             <option value='foyer'>Foyer</option>
                             <option value='bathroom'>Bathroom</option>
                         </select>
+                        <small class="form-text text-danger" v-if="errors.has('room')" v-text="errors.get('room')"></small>
                     </div>
                     <!-- Materials -->
                     <div class="col-sm-6 mb-3">
                         <label>Material</label>
-                        <select class="form-control">
+                        <select class="form-control" @change='setMaterial($event.target.value)'>
                             <option>Select one option</option>
+                            <option v-for="m_material in materials" :key='m_material.id' :value='m_material.id'>{{ m_material.name}}</option>
                         </select>
+                        <small class="form-text text-danger" v-if="errors.has('material')" v-text="errors.get('material')"></small>
+
                     </div>
                     <!-- Finish -->
                     <div class="col-sm-6 mb-3">
                         <label>Finish</label>
-                        <select class="form-control">
+                        <select class="form-control" @change='setFinish($event.target.value)'>
                             <option>Select one option</option>
+                            <option value='1'>Yes</option>
+                            <option value='0'>No</option>
                         </select>
+                        <small class="form-text text-danger" v-if="errors.has('finish')" v-text="errors.get('finish')"></small>
+
                     </div>
                     <!-- Look & Trend -->
                     <div class="col-sm-6 mb-3">
                         <label>Look & Trend</label>
-                        <select class="form-control">
+                        <select class="form-control" @change='setLookTrend($event.target.value)'>
                             <option>Select one option</option>
+                            <option value='1'>Yes</option>
+                            <option value='0'>No</option>
                         </select>
+                        <small class="form-text text-danger" v-if="errors.has('look_trend')" v-text="errors.get('look_trend')"></small>
+                        
                     </div>
                     <!-- Shapes -->
                     <div class="col-sm-6 mb-3">
                         <label>Shapes</label>
-                        <select class="form-control">
+                        <select class="form-control" @change='setShape($event.target.value)'>
                             <option>Select one option</option>
-
+                            <option value='shape1'>Shape1</option>
                         </select>
+                        <small class="form-text text-danger" v-if="errors.has('shape')" v-text="errors.get('shape')"></small>
                     </div>
                     <!-- Made in USA -->
                     <div class="col-sm-6 mb-3">
@@ -177,12 +195,12 @@
                                 <input 
                                     type="checkbox"
                                     class="custom-control-input"
-                                    id="features"
-                                    :value="is_featured"
-                                    v-model="is_featured"
-                                    v-on:input="setIsFeatured($event.target.value)"
+                                    id="madeInUsa"
+                                    :value="made_in_usa"
+                                    v-model="made_in_usa"
+                                    v-on:input="setMadeInUsa($event.target.value)"
                                 />
-                                <label class="custom-control-label mr-1" for="features"></label>
+                                <label class="custom-control-label mr-1" for="madeInUsa"></label>
                             </div>
                         </div>
                     </div>
@@ -244,9 +262,9 @@
 
                     <!-- Speciality -->
                     <div class="col-md-6 mb-3">
-                        <label>Speciality</label>
-                        <input class="form-control" type="text" placeholder="Speciality" />
-                    </div>
+                        <label>Specialty</label>
+                        <input class="form-control" type="text" placeholder="Specialty" v-model='specialty' v-on:input='setSepcialty($event.target.value)' />
+                    </div> 
 
                     <!-- SKU -->
                     <div class="col-md-6">
@@ -288,34 +306,34 @@ export default {
         return {
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             colors: [],
-            units: [],
+            materials: [],
+            boxSize: '',
+            width:'',
+            length: '',
+            shade:'',
+            room: '',
+            material: '',
+            finish: '',
+            look_trend: '',
+            shape: '',
+            made_in_usa: 1,
+            specialty: '',
             new_sku: [],
             brands: [],
-            attributes: [],
-            variations: [],
-            product_type: 'variable',
-            attribute: '',
-            selectedAttribute: [],
+            product_type: 'simple',
             product_status: true,
             is_featured: true,
             is_points: true,
-            product_unit: '',
-            product_weight: '',
             brand_id: '',
+            width: '',
+            length: '',
+            shade: '',
             price: '',
             sku: '',
             color:'',
             discount_price: '',
             product_min_order: '',
             product_max_order: '',
-            combinationPrice: {},
-            combinationSku: {},
-            combinationGallery: {},
-            combinationGalleryPath: {},
-            variationData: {},
-            combinations: [],
-            combinationDetail: [],
-            allVariations: [],
             showModal: false,
             currentSelectedGalleryName: '',
             lastSku: '',
@@ -326,7 +344,6 @@ export default {
         };
     },
     methods: {
-
         fetchColors() {
             var token = localStorage.getItem('token');
             const config = {
@@ -342,42 +359,6 @@ export default {
                 .catch(error => {
                     console.log(error);
                 })
-        },
-        fetchUnits() {
-            this.$parent.$parent.loading = true;
-            var token = localStorage.getItem('token');
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            };
-            var responseData = {};
-
-            axios.get('/api/admin/unit?getAllData=1&getDetail=1', config)
-                .then(res => {
-                    if (res.data.status == "Success") {
-                        this.units = res.data.data;
-                    }
-                })
-                .finally(() => (this.$parent.$parent.loading = false));
-        },
-        fetchAttributes() {
-            this.$parent.$parent.loading = true;
-            var token = localStorage.getItem('token');
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            };
-            var responseData = {};
-
-            axios.get('/api/admin/attribute?getAllData=1&getDetail=1', config)
-                .then(res => {
-                    if (res.data.status == "Success") {
-                        this.attributes = res.data.data;
-                    }
-                })
-                .finally(() => (this.$parent.$parent.loading = false));
         },
         fetchBrands() {
             this.$parent.$parent.loading = true;
@@ -397,14 +378,68 @@ export default {
                 })
                 .finally(() => (this.$parent.$parent.loading = false));
         },
-        setUnit(value) {
-            this.$emit('setUnitInChild', value);
+        fetchMaterials(){
+            var token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+            var responseData = {};
+            axios.get("/api/admin/material", config)
+                .then(res => {
+                    this.materials = res.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         },
+
+        
+        setColor(value, id) {
+            this.$emit("setColorsInChild", value[value.length - 1].id, 'push');
+        },
+        removeColor(removedOption, id) {
+            this.$emit("setColorsInChild", removedOption.id, 'remove');
+        },
+        setBoxSize(value) {
+            this.$emit('setBoxSizeInChild', value);
+        },
+        setWidth(value){
+            this.$emit('setWidthInChild', value);
+        },
+        setLength(value){
+            this.$emit('setLengthInChild', value);
+        },
+        setShade(value){
+            this.$emit('setShadeInChild', value);
+        },
+        setRoom(value){
+            this.$emit('setRoomInChild', value);
+        },
+        setMaterial(value){
+            this.$emit('setMaterialInChild', value);
+        },
+        setFinish(value){
+            this.$emit('setFinishInChild', value);
+        },
+        setLookTrend(value){
+            this.$emit('setLookTrendInChild', value);
+        },
+        setShape(value){
+            this.$emit('setShapeInChild', value);
+        },
+        setMadeInUsa(value){
+            this.$emit('setMadeInUsaInChild', value);
+        },
+        setSepcialty(value){
+            this.$emit('setSpecialtyInChild', value);
+        },
+
+
+
         setBrand(value) {
             this.$emit('setBrandInChild', value);
-        },
-        setProductWeight(value) {
-            this.$emit('setProductWeightInChild', value);
         },
         setProductMinOrder(value) {
             this.$emit('setProductMinOrderInChild', value);
@@ -422,9 +457,6 @@ export default {
         setDiscountPrice(value) {
             this.$emit('setDiscountPriceInChild', value);
         },
-        setProductType(value) {
-            this.$emit('setProductTypeInChild', value);
-        },
         setProductStatus(value) {
             this.$emit('setProductStatusInChild', value);
         },
@@ -434,206 +466,19 @@ export default {
         setIsPoints(value) {
             this.$emit('setIsPointsInChild', value);
         },
-
-        setAttributes(value) {
-            this.$emit('setAttributesInChild', value);
-        },
         isActive(value) {
             this.$emit('isActiveInChild', value);
         },
         setActive(value) {
             this.$emit('setActiveInChild', value);
         },
-        setColor(value, id) {
-            this.$emit("setColorInChild", value[value.length - 1].id, 'push');
-        },
-        removeColor(removedOption, id) {
-            this.$emit("setColorInChild", removedOption.id, 'remove');
-        },
-        setCombinationPrice(name, price) {
-            console.log(name, price)
-            var newprice = price != null ? price : this.price;
-            if (this.combinationPrice[name] == null) {
-                this.combinationPrice[name] = newprice;
-            }
-            this.$emit('setCombinationPriceInChild', name, newprice);
-        },
-        setCombinationSku(name, sku) {
-            console.log(name, sku);
-            var newsku = sku != null ? sku : this.sku;
-
-            this.$emit('setCombinationSkuInChild', name, newsku);
-        },
-        setCombinationGallery(name) {
-            if (this.combinationGallery[name] == null) {
-                this.combinationGallery[name] = 0;
-            }
-            this.$emit('setCombinationGalleryInChild', name, this.combinationGallery[name]);
-        },
-        unsetVariationData() {
-            this.variations = [];
-            this.variationData = {};
-            this.selectedAttribute = [];
-            this.combinationDetail = [];
-            this.combinationPrice = {};
-            this.combinationSku = {};
-            this.combinationGallery = {};
-            this.combinations = [];
-            this.combinationGalleryPath = {};
-            this.displayClearBtn = 0;
-
-        },
-        setVariations(name) {
-            if (this.edit == 0 && (this.price == '' || this.sku == '')) {
-                this.$toaster.error('Price or Sku Field can"t be empty');
-                return
-            }
-
-            this.$emit('setVariationsInChild', name, this.variationData[name]);
-            // Check variation is selected against every attribute
-            var totalVariations = 0;
-
-            for (var i = 0; i < this.selectedAttribute.length; i++) {
-                // console.log(this.variationData[i]);
-                if (this.variationData['variation_' + this.selectedAttribute[i]].length > 0) {
-                    totalVariations = parseInt(totalVariations) + 1;
-                }
-            }
-
-            if (this.selectedAttribute.length != totalVariations) {
-                this.combinationDetail = [];
-                return;
-            }
-            if (this.edit == 0) {
-                this.displayClearBtn = 1;
-            }
-
-            // create product combinations
-            this.combinationDetail = [];
-            this.combinationPrice = {};
-            this.combinationSku = {};
-            this.combinationGallery = {};
-            this.combinations = [];
-            for (var i = 0; i < this.selectedAttribute.length; i++) {
-                this.combinations.push(this.variationData['variation_' + this.selectedAttribute[i]]);
-            }
-
-            this.makeCombinationData();
-
-        },
-
-        makeCombinationData() {
-            var res = this.cartesian(this.combinations);
-            console.log(this.lastSku, "last sku");
-            var new_sku, sku_no;
-            new_sku = this.lastSku;
-            for (var i = 0; i < res.length; i++) {
-                var arr = {};
-                var price = 'combination_price_';
-                var sku = 'combination_sku_';
-                var gallary = 'combination_gallary_';
-                var variation_name = '';
-                for (var j = 0; j < res[i].length; j++) {
-                    if (this.allVariations[res[i][j]] == null) {
-                        continue;
-                    }
-                    if (res[i].length - 1 == j) {
-
-                        if (!this.edit) {
-                            arr.new_sku = this.sku + '-' + (i + 1);
-                            arr.price = this.price;
-                        }
-                        variation_name += this.allVariations[res[i][j]] == null ? '' : this.allVariations[res[i][j]];
-                        arr.variation_name = variation_name;
-
-                        arr.price = price + res[i][j];
-                        arr.sku = sku + res[i][j];
-                        arr.gallary = gallary + res[i][j];
-                        if (!this.edit) {
-                            this.setCombinationPrice(arr.price, null);
-                            this.combinationSku[arr.sku] = arr.new_sku;
-                            this.setCombinationSku(arr.sku, null);
-                        }
-                    } else {
-                        variation_name += this.allVariations[res[i][j]] == null ? '' : this.allVariations[res[i][j]] + ' - ';
-
-                        price = price + res[i][j] + '_';
-                        sku = sku + res[i][j] + '_';
-                        gallary = gallary + res[i][j] + '_';
-                    }
-                }
-                if (arr.hasOwnProperty('price') != false) {
-
-                    this.combinationDetail.push(arr);
-                }
-
-            }
-            // console.log(this.edit_combination_detail.length);
-            if (this.combinationDetail.length > 0 && this.edit_combination_detail.length > 0) {
-                for (var i = 0; i < res.length; i++) {
-                    var variation_id = [];
-                    var price_name = 'combination_price_';
-                    var sku_name = 'combination_sku_';
-                    var gallary_name = 'combination_gallary_';
-                    for (var j = 0; j < res[i].length; j++) {
-                        variation_id.push(res[i][j]);
-                        if (res[i].length - 1 == j) {
-                            price_name = price_name + res[i][j];
-                            sku_name = sku_name + res[i][j];
-                            gallary_name = gallary_name + res[i][j];
-
-                            for (var j = 0; j < this.edit_combination_detail.length; j++) {
-                                var is_combination = [];
-                                var edit_variation_id = [];
-                                for (var jj = 0; jj < this.edit_combination_detail[j].combination.length; jj++) {
-                                    if (variation_id.indexOf(this.edit_combination_detail[j].combination[jj].variation_id) > -1) {
-                                        is_combination.push(1);
-                                    } else {
-                                        is_combination.push(0);
-                                    }
-
-                                }
-                                if (is_combination.indexOf(0) == -1) {
-                                    // console.log(price_name + ' => ' + this.edit_combination_detail[j].price);
-                                    this.combinationPrice[price_name] = this.edit_combination_detail[j].price;
-                                    this.setCombinationPrice(price_name, this.edit_combination_detail[j].price);
-                                    this.combinationSku[sku_name] = this.edit_combination_detail[j].sku;
-
-                                    this.setCombinationSku(sku_name, this.edit_combination_detail[j].sku);
-                                    this.combinationGalleryPath[gallary_name] = '/gallary/' + this.edit_combination_detail[j].gallary.gallary_name;
-                                    this.combinationGallery[gallary_name] = this.edit_combination_detail[j].gallary.id;
-                                    this.setCombinationGallery(gallary_name);
-                                }
-
-                            }
-                        } else {
-                            price_name = price_name + res[i][j] + '_';
-                            sku_name = sku_name + res[i][j] + '_';
-                            gallary_name = gallary_name + res[i][j] + '_';
-                        }
-                    }
-
-                }
-            }
-
-        },
-
+        
         formatNumberLength(num, length) {
             var r = "" + num;
             while (r.length < length) {
                 r = "0" + r;
             }
             return r;
-        },
-
-        searchVariationName(variation_id) {
-            for (var i = 0; i < this.variations.length; i++) {
-                for (var j = 0; i < this.variations[i].variations.length; j++) {
-                    if (this.variations[i].variations[j].id == variation_id) {
-                        return this.variations[i].variations[j].detail == null ? '' : this.variations[i].variations[j].detail[0].name;
-                    }
-                }
-            }
         },
 
         cartesian(args) {
@@ -653,35 +498,6 @@ export default {
             helper([], 0);
             return r;
         },
-        getVariation() {
-            this.$parent.$parent.loading = true;
-            var token = localStorage.getItem('token');
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            };
-            var responseData = {};
-
-            if (this.selectedAttribute.indexOf(this.attribute) < 0) {
-                this.selectedAttribute.push(this.attribute);
-                this.setAttributes(this.attribute);
-            } else {
-                this.$parent.$parent.loading = false;
-                return false;
-            }
-            var name = 'variation_' + this.attribute;
-            this.$set(this.variationData, name, []);
-
-            axios.get('/api/admin/attribute/' + this.attribute + '?getVariation=1&getDetail=1', config)
-                .then(res => {
-                    if (res.data.status == "Success") {
-                        this.variations.push(res.data.data);
-                        // this.variations = res.data.data;
-                    }
-                })
-                .finally(() => (this.$parent.$parent.loading = false));
-        },
         toggleImageSelect(name) {
             this.showModal = !this.showModal;
             this.currentSelectedGalleryName = name;
@@ -693,48 +509,6 @@ export default {
             this.setCombinationGallery(this.currentSelectedGalleryName);
         }
     },
-    watch: {
-        product(newVal, oldVal) {
-            console.log(newVal, "newval");
-            this.editChild = this.$parent.edit;
-            this.product_type = newVal.product_type;
-            this.sku = newVal.sku;
-
-            this.product_status = newVal.product_status == 'inactive' ? 0 : 1;
-            this.is_featured = newVal.is_featured == true || newVal.is_featured == 'true' ? 1 : 0;
-            this.is_points = newVal.is_points == true || newVal.is_points == 'true' ? 1 : 0;
-            this.product_unit = newVal.product_unit;
-            this.brand_id = newVal.brand_id;
-            this.price = parseFloat(newVal.price);
-
-            this.discount_price = newVal.discount_price;
-            this.product_max_order = newVal.product_max_order;
-            this.product_min_order = newVal.product_min_order;
-            this.product_weight = newVal.product_weight;
-
-            console.log(this.sku, "sku")
-            if (newVal.product_type == 'variable') {
-
-                this.edit_combination_detail = newVal.combination_detail;
-
-                newVal.attributes.map((attribute_id, index) => {
-                    this.attribute = attribute_id;
-                    this.getVariation();
-
-                    setTimeout(() => {
-                        for (var i = 0; i < newVal.combination[attribute_id].variations.length; i++) {
-                            this.variationData['variation_' + attribute_id].push(newVal.combination[attribute_id].variations[i].product_variation.id);
-                        }
-                        this.setVariations('variation_' + attribute_id);
-                    }, 3000);
-
-                    // this.setVariations('variation_'+attribute_id);
-                });
-
-            }
-
-        }
-    },
     mounted() {
         var token = localStorage.getItem('token');
         this.token = {
@@ -742,10 +516,9 @@ export default {
                 Authorization: `Bearer ${token}`
             }
         };
-        this.fetchUnits();
         this.fetchBrands();
-        this.fetchAttributes();
         this.fetchColors();
+        this.fetchMaterials();
     },
     props: ['product', 'errors', 'edit'],
 };

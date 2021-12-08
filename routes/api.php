@@ -98,6 +98,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:user-api', 'scopes:use
     Route::resource('color', 'API\Admin\ColorController');
     // Material Resource
     Route::resource('material', 'API\Admin\MaterialController');
+    Route::resource('finish', 'API\Admin\FinishController');
+    Route::resource('shade', 'API\Admin\ShadeController');
+    Route::resource('shape', 'API\Admin\ShapeController');
+    Route::resource('looktrend', 'API\Admin\LookTrendController');
+
 
     Route::resource('sale', 'API\Admin\SaleController', ['names' => ['index' => 'admin.sale.index', 'store' => 'admin.sale.store', 'destroy' => 'admin.sale.delete']])->middleware('store');
     Route::resource('sale_return', 'API\Admin\SaleReturnController', ['names' => ['index' => 'admin.sale_return.index', 'store' => 'admin.sale_return.store', 'destroy' => 'admin.sale_return.delete']])->middleware('store');

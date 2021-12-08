@@ -218,7 +218,7 @@
                 >
                   <div id="accordion1">
                     <ul class="nav flex-column">
-                      <li
+                      <!-- <li
                         class="nav-item"
                         v-if="$parent.permissions.includes('product-unit-list')"
                       >
@@ -250,7 +250,7 @@
                           </span>
                           <span class="nav-text">Product Units</span>
                         </router-link>
-                      </li>
+                      </li> -->
                       <!-- Product Color -->
                       <li class="nav-item">
                         <router-link
@@ -274,7 +274,7 @@
                               />
                             </svg>
                           </span>
-                          <span class="nav-text">Product Colors</span>
+                          <span class="nav-text">Colors</span>
                         </router-link>
                       </li>
                       <!-- Product Materials -->
@@ -300,9 +300,110 @@
                               />
                             </svg>
                           </span>
-                          <span class="nav-text">Product Materials</span>
+                          <span class="nav-text">Materials</span>
                         </router-link>
                       </li>
+                      <li class="nav-item">
+                        <router-link
+                          to='/admin/product-finish'
+                          class="nav-link sub-nav-link"
+                        >
+                          <span
+                            class="svg-icon nav-icon d-flex justify-content-center"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="10px"
+                              height="10px"
+                              fill="currentColor"
+                              class="bi bi-circle"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                              />
+                            </svg>
+                          </span>
+                          <span class="nav-text">Finish</span>
+                        </router-link>
+                      </li>
+                      <li class="nav-item">
+                        <router-link
+                          to='/admin/product-shades'
+                          class="nav-link sub-nav-link"
+                        >
+                          <span
+                            class="svg-icon nav-icon d-flex justify-content-center"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="10px"
+                              height="10px"
+                              fill="currentColor"
+                              class="bi bi-circle"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                              />
+                            </svg>
+                          </span>
+                          <span class="nav-text">Shades</span>
+                        </router-link>
+                      </li>
+                      <li class="nav-item">
+                        <router-link
+                          to='/admin/product-shapes'
+                          class="nav-link sub-nav-link"
+                        >
+                          <span
+                            class="svg-icon nav-icon d-flex justify-content-center"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="10px"
+                              height="10px"
+                              fill="currentColor"
+                              class="bi bi-circle"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                              />
+                            </svg>
+                          </span>
+                          <span class="nav-text">Shapes</span>
+                        </router-link>
+                      </li>
+                      <li class="nav-item">
+                        <router-link
+                          to='/admin/product-look-trend'
+                          class="nav-link sub-nav-link"
+                        >
+                          <span
+                            class="svg-icon nav-icon d-flex justify-content-center"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="10px"
+                              height="10px"
+                              fill="currentColor"
+                              class="bi bi-circle"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                              />
+                            </svg>
+                          </span>
+                          <span class="nav-text">Look & Trend</span>
+                        </router-link>
+                      </li>
+
                       <li
                         class="nav-item"
                         v-if="

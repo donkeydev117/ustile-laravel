@@ -41,7 +41,12 @@ let routes = [
             // Added by Darko
             { path : "/admin/product-colors", component: require("./components/admin/ProductColors.vue").default, name:'product-colors', meta: { auth: true }},
             { path : "/admin/product-materials", component: require("./components/admin/ProductMaterials.vue").default, name:'product-materials', meta: { auth: true }},
+            { path : "/admin/product-finish", component: require("./components/admin/ProductFinish.vue").default, name:'product-finish', meta: { auth: true }},
+            { path : "/admin/product-shades", component: require("./components/admin/ProductShade.vue").default, name:'product-shades', meta: { auth: true }},
+            { path : "/admin/product-shapes", component: require("./components/admin/ProductShape.vue").default, name:'product-shapes', meta: { auth: true }},
+            { path : "/admin/product-look-trend", component: require("./components/admin/ProductLookTrend.vue").default, name:'product-look-trend', meta: { auth: true }},
             
+
 
             { path: '/admin/quotation-detail/:id', component: require('./components/admin/QuotationDetail.vue').default, name: 'quotation-detail', meta: { auth: true } },
             { path: '/admin/warehouse', component: require('./components/admin/Warehouse.vue').default, name: 'warehouse-list', meta: { auth: true } },

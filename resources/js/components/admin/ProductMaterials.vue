@@ -123,7 +123,6 @@ export default {
             let page_url = "/api/admin/material";
             axios.get(page_url, this.token).then(res => {
                 this.materials = res.data;
-                console.log("colors:", this.materials);
             }).finally(() => (this.$parent.loading = false));
         },
         clearForm(){
@@ -131,6 +130,7 @@ export default {
             this.material.id = '';
             this.material.name = '';
             this.material.media = '';
+            this.edit = false;
         },
         addUpdateMaterial(){
             this.$parent.loading = true;

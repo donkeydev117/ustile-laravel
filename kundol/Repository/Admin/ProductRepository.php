@@ -262,58 +262,7 @@ class ProductRepository implements ProductInterface
                 $parms['digital_file'] = '';
                 $parms['user_id'] = \Auth::id();
                 $parms['product_slug'] = str_replace(" ", "-", $parms['title'][0]);
-                // $product_slug = Product::slug($parms['product_slug'])->first();
-
-                // $checkSlug = Product::where('product_slug', $parms['product_slug'])->first();
-                // if ($checkSlug) {
-                //     $checkSlug = Product::where('product_slug', 'like', $parms['product_slug'] . '%')->latest()->value('product_slug');
-                //     $slugInt = substr($checkSlug, strrpos($checkSlug, '-') + 1);
-                //     if (is_numeric($slugInt)) {
-                //         $slugInt++;
-                //         $parms['product_slug'] = $parms['product_slug'] . '-' . $slugInt;
-                //     } else {
-                //         $parms['product_slug'] = $parms['product_slug'] . '-1';
-                //     }
-                // }
-
-                // if ($parms['product_type'] == 'simple') {
-                //     $sql = ProductCombination::orderBy('id', 'DESC')->value('sku');
-                //     $sql1 = Product::whereIn('product_type', ['simple', 'digital'])->orderBy('id', 'DESC')->value('sku');
-                //     $sql = strtolower($sql);
-                //     $sql1 = strtolower($sql1);
-                //     $sql_sku = explode("sku", $sql);
-                //     $sql1_sku = explode("sku", $sql1);
-                //     $sku_prefix = $parms['category_id'][0];
-                //     if ($parms['category_id'][0] < 10) {
-                //         $sku_prefix = 'sku0' . $parms['category_id'][0];
-                //     }
-
-                //     if (isset($sql1_sku[1])) {
-                //         $str = substr($sql_sku[1], 3, 7);
-                //         $str1 = substr($sql1_sku[1], 3, 7);
-                //         if ($str > $str1) {
-                //             $str = intval($str) + 1;
-                //             $parms['sku'] = $str;
-                //         } else {
-                //             $str = intval($str1) + 1;
-                //             $parms['sku'] = $str;
-                //         }
-                //     } else if (isset($sql_sku[1])) {
-                //         $str = substr($sql_sku[1], 3, 7);
-                //         $str = str_split($str, 2);
-                //         $parms['sku'] = $str;
-                //     } else {
-                //         $parms['sku'] = '000001';
-                //     }
-
-                //     for ($k = 0; $k < 6; $k++) {
-                //         if (strlen($parms['sku']) < 6) {
-                //             $parms['sku'] = '0' . $parms['sku'];
-                //         }
-                //     }
-                //     $parms['sku'] = $sku_prefix . $parms['sku'];
-                // }
-
+                
                 $sql = new Product;
                 $parms['product_slug'] = $parms['sku'];
                 $parms['created_by'] = \Auth::id();

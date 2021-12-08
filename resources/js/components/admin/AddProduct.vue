@@ -57,45 +57,37 @@
                         <div class="col-lg-12 col-xl-12">
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade" :class="{ 'active show': isActive('info-tab') }">
-                                    <BasicInfo 
-                                       @setCategoryInChild="setCategory" 
-                                       @setTitleInChild="setTitle" 
-                                       @setDescInChild="setDesc" 
-                                       @setGallaryIdInChild="setGallaryId" 
-                                       @setActiveInChild="setActiveFromChild" 
-                                       @isActiveInChild="isActiveFromChild" 
-                                       @setVideoUrlInChild="setVideoUrl" 
-                                       :errors="errors" 
-                                       :product="product" 
-                                       :edit="edit" />
+                                    <BasicInfo @setCategoryInChild="setCategory" @setTitleInChild="setTitle" @setDescInChild="setDesc" @setGallaryIdInChild="setGallaryId" @setActiveInChild="setActiveFromChild" @isActiveInChild="isActiveFromChild" @setVideoUrlInChild="setVideoUrl" :errors="errors" :product="product" :edit="edit" />
                                 </div>
                                 <div class="tab-pane fade" :class="{ 'active show': isActive('ad-info-tab') }">
                                     <AdvanceInfo 
-                                       @setUnitInChild="setUnit" 
-                                       @setProductWeightInChild="setProductWeight" 
                                        @setBrandInChild="setBrand" 
                                        @setProductMaxOrderInChild="setProductMaxOrder" 
-                                       @setProductMinOrderInChild="setProductMinOrder"
+                                       @setProductMinOrderInChild="setProductMinOrder" 
                                        @setPriceInChild="setPrice" 
                                        @setDiscountPriceInChild="setDiscountPrice" 
-                                       @setProductTypeInChild="setProductType" 
+                                       @setBoxSizeInChild='setBoxSize' 
                                        @setProductStatusInChild="setProductStatus" 
                                        @setIsFeaturedInChild="setIsFeatured" 
                                        @setIsPointsInChild="setIsPoints" 
                                        @addProductInChild="addProduct" 
                                        @setActiveInChild="setActiveFromChild" 
                                        @isActiveInChild="isActiveFromChild" 
-                                       @setAttributesInChild="setAttributes" 
-                                       @setVariationsInChild="setVariations" 
-                                       @setCombinationPriceInChild="setCombinationPrice" 
-                                       @setCombinationGalleryInChild="setCombinationGallery" 
-                                       @setCombinationSkuInChild="setCombinationSku" 
                                        @setProductskuInChild="setSku" 
                                        @setColorsInChild="setColors"
+                                       @setWidthInChild='setWidth'
+                                       @setLengthInChild='setLength'
+                                       @setShadeInChild='setShade'
+                                       @setRoomInChild='setRoom'
+                                       @setMaterialInChild='setMaterial'
+                                       @setFinishInChild='setFinish'
+                                       @setLookTrendInChild='setLookTrend'
+                                       @setShapeInChild='setShape'
+                                       @setMadeInUsaInChild='setMadeInUsa'
+                                       @setSpecialtyInChild='setSpecialty'
                                        :product="product" 
                                        :edit="edit" 
-                                       :errors="errors" 
-                                    />
+                                       :errors="errors" />
                                 </div>
                                 <div class="tab-pane fade" :class="{ 'active show': isActive('seo-tab') }">
                                     <Seo :product="product" :edit="edit" :errors="errors" @setSeoMetaTagInChild="setSeoMetaTag" @setSeoDescInChild="setSeoDesc" @setActiveInChild="setActiveFromChild" @isActiveInChild="isActiveFromChild" @addProductInChild="addProduct" />
@@ -133,16 +125,28 @@ export default {
                 'language_id': [],
                 'gallary_id': '',
                 'gallary_detail_id': [],
-                'colors': [],
                 'video_url': '',
-                'product_unit': '',
-                'product_weight': '',
                 'brand_id': '',
+
+                'colors': [],
+                'box_size': '',
+                'material': '',
+                'width': '',
+                'length' : '',
+                'shade' : '',
+                'room': '',
+                'finish': '',
+                'made_in_usa': 1,
+                'specialty': '',
+                'shade': '',
+                'look_trend': '',
+                'shape': '',
+
                 'product_min_order': '0',
                 'product_max_order': '0',
                 'price': '0',
                 'discount_price': '0',
-                'product_type': 'variable',
+                'product_type': 'simple',
                 'product_status': 'active',
                 'is_featured': 1,
                 'is_points': 1,
@@ -153,8 +157,6 @@ export default {
                 'desc_lang': [],
                 'languages': [],
                 'gallary_detail_path': [],
-                'combination': {},
-                'combination_detail': [],
                 'sku': '',
             },
             request_method: '',
@@ -185,16 +187,50 @@ export default {
 
         },
 
-        setColors(value, type){
-           if(type === 'push'){
-              if(this.product.colors.indexOf(value) === -1){
-                 this.product.colors.push(value);
-              }
-           } else if (type === 'remove'){
-              if(this.product.colors.indexOf(value) !== -1){
-                 this.product.colors.splice(this.product.colors.indexOf(value), value);
-              }
-           }
+        setColors(value, type) {
+            if (type === 'push') {
+                if (this.product.colors.indexOf(value) === -1) {
+                    this.product.colors.push(value);
+                }
+            } else if (type === 'remove') {
+                if (this.product.colors.indexOf(value) !== -1) {
+                    this.product.colors.splice(this.product.colors.indexOf(value), value);
+                }
+            }
+        },
+
+        setBoxSize(value) {
+            this.product.box_size = value;
+        },
+        setWidth(value){
+           this.product.width = value;
+        },
+        setLength(value){
+           this.product.length = value;
+        },
+        setShade(value){
+           this.product.shade = value;
+        },
+        setRoom(value){
+           this.product.room = value;
+        },
+        setMaterial(value){
+           this.product.material = value;
+        },
+        setFinish(value){
+           this.product.finish = value;
+        },
+        setLookTrend(value){
+           this.product.look_trend = value;
+        },
+        setShape(value){
+           this.product.shape = value;
+        },
+        setMadeInUsa(value){
+           this.product.made_in_usa = value;
+        },
+        setSpecialty(value){
+           this.product.specialty = value;
         },
 
         setTitle(value, index) {

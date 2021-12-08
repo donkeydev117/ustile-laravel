@@ -731,6 +731,31 @@ class PermisssionTableSeeder extends Seeder
             'value' => 'product-colors',
             'parent_id' => 5
         ]);
+        Permission::insertOrIgnore([
+            'key' => 'Product Materials',
+            'value' => 'product-materials',
+            'parent_id' => 5
+        ]);
+        Permission::insertOrIgnore([
+            'key' => 'Product Finishes',
+            'value' => 'product-finish',
+            'parent_id' => 5
+        ]);
+        Permission::insertOrIgnore([
+            'key' => 'Product Shades',
+            'value' => 'product-shades',
+            'parent_id' => 5
+        ]);
+        Permission::insertOrIgnore([
+            'key' => 'Product Shapes',
+            'value' => 'product-shapes',
+            'parent_id' => 5
+        ]);
+        Permission::insertOrIgnore([
+            'key' => 'Product Look & Trend',
+            'value' => 'product-look-trend',
+            'parent_id' => 5
+        ]);
         
     }
 }
