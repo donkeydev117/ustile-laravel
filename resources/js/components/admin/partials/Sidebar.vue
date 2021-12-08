@@ -599,7 +599,7 @@
               </li>
 
               <!--begin::Nav Product Stock / Inventory -->
-
+<!-- 
               <li class="nav-item" v-if="$parent.permissions.includes('stock')">
                 <a
                   class="nav-link"
@@ -762,10 +762,10 @@
                     </ul>
                   </div>
                 </div>
-              </li>
+              </li> -->
 
               <!--begin::Nav Quotations -->
-
+<!-- 
               <li
                 class="nav-item"
                 v-if="$parent.permissions.includes('quotation-list')"
@@ -855,7 +855,7 @@
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li> -->
 
               <!--begin::Nav Purchase -->
 

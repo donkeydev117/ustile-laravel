@@ -87,13 +87,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 col-12 mt-2">
+                        <!-- <div class="col-md-12 col-12 mt-2">
                             <div class="form-group">
                                 <label class="text-dark">Video URL</label>
                                 <input type="text" v-on:input="setVideoUrl($event.target.value)" class="form-control" v-model="video_url" />
                                 <small class="form-text text-danger" v-if="errors.has('video_url')" v-text="errors.get('video_url')"></small>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

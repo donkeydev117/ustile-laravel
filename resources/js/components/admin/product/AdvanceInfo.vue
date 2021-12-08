@@ -40,7 +40,7 @@
                         </div>
                         <small class="form-text text-danger" v-if="errors.has('product_status')" v-text="errors.get('product_status')"></small>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <div class="switch-h d-flex justify-content-between align-items-center border p-2 mb-3">
                             <label class="text-dark mb-0">Is Point</label>
                             <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <small class="form-text text-danger" v-if="errors.has('is_points')" v-text="errors.get('is_points')"></small>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
                         <div class="switch-h d-flex justify-content-between align-items-center border p-2 mb-3">
                             <label class="text-dark mb-0">Is Featured</label>
@@ -74,29 +74,26 @@
                         </div>
                         <small class="form-text text-danger" v-if="errors.has('is_featured')" v-text="errors.get('is_featured')"></small>
                     </div>
-                    <!-- <div class="col-md-6">
-                        <label>Units</label>
-                        <fieldset class="form-group mb-3">
-                            <select @change="setUnit($event.target.value)" class="form-control single-select w-100 mb-3 categories-select ms-offscreen" v-model="product_unit">
-                                <option value="">Select Unit</option>
-                                <option v-for="unit in units" v-bind:value="unit.id" :key='unit.id'>
-                                    {{ unit.detail == null ? '' : (unit.detail[0] ? unit.detail[0].name : '') }}
-                                </option>
-                            </select>
-                        </fieldset>
-                        <small class="form-text text-danger" v-if="errors.has('product_unit')" v-text="errors.get('product_unit')"></small>
-                    </div> -->
-                    <!-- Size of Box -->
-                    <div class="col-md-6 mb-3">
-                        <label>Size of Box (pcs/box)</label>
-                        <input 
-                            type="number" 
-                            class="form-control" 
-                            placeholder="Please enter amount of tiles in a box"
-                            v-on:input="setBoxSize($event.target.value)" 
-                            v-model="boxSize" 
-                        />
+
+                     <!-- Made in USA -->
+                    <div class="col-sm-6 mb-3">
+                        <div class="switch-h d-flex justify-content-between align-items-center border p-2">
+                            <label class="text-dark mb-0">Made in USA</label>
+                            <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
+                                <input 
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="madeInUsa"
+                                    :value="made_in_usa"
+                                    v-model="made_in_usa"
+                                    v-on:input="setMadeInUsa($event.target.value)"
+                                />
+                                <label class="custom-control-label mr-1" for="madeInUsa"></label>
+                            </div>
+                        </div>
                     </div>
+
+                   
                     <div class="col-md-6">
                         <label>Brands</label>
                         <fieldset class="form-group mb-3">
@@ -110,27 +107,13 @@
                         <small class="form-text text-danger" v-if="errors.has('brand_id')" v-text="errors.get('brand_id')"></small>
                     </div>
 
-                    <!-- Size -->
-                    <div class="col-md-6">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label>Width (mm)</label>
-                                <input type="number" class="form-control" placeholder="Width of tile (mm)" v-model='width' v-on:input='setWidth($event.target.value)' > 
-                                <small class="form-text text-danger" v-if="errors.has('width')" v-text="errors.get('width')"></small>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Length (mm)</label>
-                                <input type="number" class="form-control" placeholder="Length of tile(mm)" v-model='length' v-on:input='setLength($event.target.value)'>
-                                <small class="form-text text-danger" v-if="errors.has('length')" v-text="errors.get('length')"></small>
-                            </div>
-                        </div>
-                    </div>
+                   
                     <!-- Shades -->
                     <div class="col-sm-6 mb-3">
                         <label>Shades</label>
                         <select class="form-control" @change='setShade($event.target.value)'>
                             <option>Please select the shade</option>
-                            <option value='shade1'>Shade</option>
+                            <option v-for='s in shades' :key='s.id' :value='s.id'>{{s.name}}</option>
                         </select>
                         <small class="form-text text-danger" v-if="errors.has('shade')" v-text="errors.get('shade')"></small>
                     </div>
@@ -160,8 +143,7 @@
                         <label>Finish</label>
                         <select class="form-control" @change='setFinish($event.target.value)'>
                             <option>Select one option</option>
-                            <option value='1'>Yes</option>
-                            <option value='0'>No</option>
+                            <option v-for='f in finishes' :key='f.id' :value='f.id'>{{ f.name }}</option>
                         </select>
                         <small class="form-text text-danger" v-if="errors.has('finish')" v-text="errors.get('finish')"></small>
 
@@ -171,8 +153,7 @@
                         <label>Look & Trend</label>
                         <select class="form-control" @change='setLookTrend($event.target.value)'>
                             <option>Select one option</option>
-                            <option value='1'>Yes</option>
-                            <option value='0'>No</option>
+                            <option v-for='lt in looktrends' :key='lt.id' :value='lt.id'>{{lt.name}}</option>
                         </select>
                         <small class="form-text text-danger" v-if="errors.has('look_trend')" v-text="errors.get('look_trend')"></small>
                         
@@ -182,29 +163,11 @@
                         <label>Shapes</label>
                         <select class="form-control" @change='setShape($event.target.value)'>
                             <option>Select one option</option>
-                            <option value='shape1'>Shape1</option>
+                            <option v-for='sh in shapes' :key='sh.id' :value='sh.id' >{{ sh.name }}</option>
                         </select>
                         <small class="form-text text-danger" v-if="errors.has('shape')" v-text="errors.get('shape')"></small>
                     </div>
-                    <!-- Made in USA -->
-                    <div class="col-sm-6 mb-3">
-                        <label>Made in USA</label>
-                        <div class="switch-h d-flex justify-content-between align-items-center border p-2">
-                            <label class="text-dark mb-0">Made in USA</label>
-                            <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
-                                <input 
-                                    type="checkbox"
-                                    class="custom-control-input"
-                                    id="madeInUsa"
-                                    :value="made_in_usa"
-                                    v-model="made_in_usa"
-                                    v-on:input="setMadeInUsa($event.target.value)"
-                                />
-                                <label class="custom-control-label mr-1" for="madeInUsa"></label>
-                            </div>
-                        </div>
-                    </div>
-
+                   
                     <div class="col-md-6">
                         <label>Price</label>
                         <fieldset class="form-group mb-3">
@@ -281,6 +244,32 @@
                         </fieldset>
                         <small class="form-text text-danger" v-if="errors.has('sku')" v-text="errors.get('sku')"></small>
                     </div>
+                     <!-- Size of Box -->
+                    <div class="col-md-6 mb-3">
+                        <label>Size of Box (pcs/box)</label>
+                        <input 
+                            type="number" 
+                            class="form-control" 
+                            placeholder="Please enter amount of tiles in a box"
+                            v-on:input="setBoxSize($event.target.value)" 
+                            v-model="boxSize" 
+                        />
+                    </div>
+                     <!-- Size -->
+                    <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label>Width (mm)</label>
+                                <input type="number" class="form-control" placeholder="Width of tile (mm)" v-model='width' v-on:input='setWidth($event.target.value)' > 
+                                <small class="form-text text-danger" v-if="errors.has('width')" v-text="errors.get('width')"></small>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Length (mm)</label>
+                                <input type="number" class="form-control" placeholder="Length of tile(mm)" v-model='length' v-on:input='setLength($event.target.value)'>
+                                <small class="form-text text-danger" v-if="errors.has('length')" v-text="errors.get('length')"></small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -307,6 +296,10 @@ export default {
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             colors: [],
             materials: [],
+            shades: [],
+            finishes: [],
+            looktrends: [],
+            shapes: [],
             boxSize: '',
             width:'',
             length: '',
@@ -394,7 +387,70 @@ export default {
                     console.log(error);
                 })
         },
-
+        fetchShades(){
+            var token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+            var responseData = {};
+            axios.get("/api/admin/shade", config)
+                .then(res => {
+                    this.shades = res.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        fetchFinishes(){
+            var token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+            var responseData = {};
+            axios.get("/api/admin/finish", config)
+                .then(res => {
+                    this.finishes = res.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        fetchLookTrends(){
+            var token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+            var responseData = {};
+            axios.get("/api/admin/looktrend", config)
+                .then(res => {
+                    this.looktrends = res.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        fetchShapes(){
+            var token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+            var responseData = {};
+            axios.get("/api/admin/shape", config)
+                .then(res => {
+                    this.shapes = res.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
         
         setColor(value, id) {
             this.$emit("setColorsInChild", value[value.length - 1].id, 'push');
@@ -519,6 +575,10 @@ export default {
         this.fetchBrands();
         this.fetchColors();
         this.fetchMaterials();
+        this.fetchShades();
+        this.fetchFinishes();
+        this.fetchLookTrends();
+        this.fetchShapes();
     },
     props: ['product', 'errors', 'edit'],
 };
