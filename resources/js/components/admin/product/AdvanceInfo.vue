@@ -8,20 +8,7 @@
         <div class="card-body">
             <form>
                 <div class="form-group row">
-                    <div class="col-md-6 mb-3">
-                        <label>Product Colors</label>
-                        <multiselect 
-                            v-model="color" 
-                            :options="colors" 
-                            placeholder="Select Colors" 
-                            label="color" track-by="id" 
-                            :multiple="true"  
-                            :taggable="true" 
-                            @input="setColor" 
-                            @remove='removeColor' 
-                        />
-                        <small class="form-text text-danger" v-if="errors.has('colors')" v-text="errors.get('colors')"></small>
-                    </div>
+                    
                     <div class="col-md-6 mb-3">
                         <label>&nbsp;</label>
                         <div class="switch-h d-flex justify-content-between align-items-center border p-2">
@@ -107,16 +94,7 @@
                         <small class="form-text text-danger" v-if="errors.has('brand_id')" v-text="errors.get('brand_id')"></small>
                     </div>
 
-                   
-                    <!-- Shades -->
-                    <div class="col-sm-6 mb-3">
-                        <label>Shades</label>
-                        <select class="form-control" @change='setShade($event.target.value)'>
-                            <option>Please select the shade</option>
-                            <option v-for='s in shades' :key='s.id' :value='s.id'>{{s.name}}</option>
-                        </select>
-                        <small class="form-text text-danger" v-if="errors.has('shade')" v-text="errors.get('shade')"></small>
-                    </div>
+                 
                     <!-- Room -->
                     <div class="col-sm-6 mb-3">
                         <label>Kitchen/Foyer/Bathroom</label>
@@ -138,35 +116,7 @@
                         <small class="form-text text-danger" v-if="errors.has('material')" v-text="errors.get('material')"></small>
 
                     </div>
-                    <!-- Finish -->
-                    <div class="col-sm-6 mb-3">
-                        <label>Finish</label>
-                        <select class="form-control" @change='setFinish($event.target.value)'>
-                            <option>Select one option</option>
-                            <option v-for='f in finishes' :key='f.id' :value='f.id'>{{ f.name }}</option>
-                        </select>
-                        <small class="form-text text-danger" v-if="errors.has('finish')" v-text="errors.get('finish')"></small>
-
-                    </div>
-                    <!-- Look & Trend -->
-                    <div class="col-sm-6 mb-3">
-                        <label>Look & Trend</label>
-                        <select class="form-control" @change='setLookTrend($event.target.value)'>
-                            <option>Select one option</option>
-                            <option v-for='lt in looktrends' :key='lt.id' :value='lt.id'>{{lt.name}}</option>
-                        </select>
-                        <small class="form-text text-danger" v-if="errors.has('look_trend')" v-text="errors.get('look_trend')"></small>
-                        
-                    </div>
-                    <!-- Shapes -->
-                    <div class="col-sm-6 mb-3">
-                        <label>Shapes</label>
-                        <select class="form-control" @change='setShape($event.target.value)'>
-                            <option>Select one option</option>
-                            <option v-for='sh in shapes' :key='sh.id' :value='sh.id' >{{ sh.name }}</option>
-                        </select>
-                        <small class="form-text text-danger" v-if="errors.has('shape')" v-text="errors.get('shape')"></small>
-                    </div>
+                   
                    
                     <div class="col-md-6">
                         <label>Price</label>
@@ -194,7 +144,7 @@
                         </fieldset>
                         <small class="form-text text-danger" v-if="errors.has('discount_price')" v-text="errors.get('discount_price')"></small>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <label>Minimum Order</label>
                         <fieldset class="form-group mb-3">
                             <input 
@@ -221,14 +171,7 @@
                             />
                         </fieldset>
                         <small class="form-text text-danger" v-if="errors.has('product_max_order')" v-text="errors.get('product_max_order')"></small>
-                    </div>
-
-                    <!-- Speciality -->
-                    <div class="col-md-6 mb-3">
-                        <label>Specialty</label>
-                        <input class="form-control" type="text" placeholder="Specialty" v-model='specialty' v-on:input='setSepcialty($event.target.value)' />
-                    </div> 
-
+                    </div> -->
                     <!-- SKU -->
                     <div class="col-md-6">
                         <label>SKU</label>
@@ -244,34 +187,94 @@
                         </fieldset>
                         <small class="form-text text-danger" v-if="errors.has('sku')" v-text="errors.get('sku')"></small>
                     </div>
-                     <!-- Size of Box -->
-                    <div class="col-md-6 mb-3">
-                        <label>Size of Box (pcs/box)</label>
-                        <input 
-                            type="number" 
-                            class="form-control" 
-                            placeholder="Please enter amount of tiles in a box"
-                            v-on:input="setBoxSize($event.target.value)" 
-                            v-model="boxSize" 
-                        />
-                    </div>
-                     <!-- Size -->
-                    <div class="col-md-6">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label>Width (mm)</label>
-                                <input type="number" class="form-control" placeholder="Width of tile (mm)" v-model='width' v-on:input='setWidth($event.target.value)' > 
-                                <small class="form-text text-danger" v-if="errors.has('width')" v-text="errors.get('width')"></small>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Length (mm)</label>
-                                <input type="number" class="form-control" placeholder="Length of tile(mm)" v-model='length' v-on:input='setLength($event.target.value)'>
-                                <small class="form-text text-danger" v-if="errors.has('length')" v-text="errors.get('length')"></small>
-                            </div>
+                   
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card card-custom gutter-b b-white border-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Product Colors</label>
+                    <multiselect 
+                        v-model="color" 
+                        :options="colors" 
+                        placeholder="Select Colors" 
+                        label="color" track-by="id" 
+                        :multiple="true"  
+                        :taggable="true" 
+                        @input="setColor" 
+                        @remove='removeColor' 
+                    />
+                    <small class="form-text text-danger" v-if="errors.has('colors')" v-text="errors.get('colors')"></small>
+                </div>
+                <!-- Shades -->
+                <div class="col-sm-6 mb-3">
+                    <label>Shades</label>
+                    <select class="form-control" @change='setShade($event.target.value)'>
+                        <option>Please select the shade</option>
+                        <option v-for='s in shades' :key='s.id' :value='s.id'>{{s.name}}</option>
+                    </select>
+                    <small class="form-text text-danger" v-if="errors.has('shade')" v-text="errors.get('shade')"></small>
+                </div>
+                <!-- Finish -->
+                <div class="col-sm-6 mb-3">
+                    <label>Finish</label>
+                    <select class="form-control" @change='setFinish($event.target.value)'>
+                        <option>Select one option</option>
+                        <option v-for='f in finishes' :key='f.id' :value='f.id'>{{ f.name }}</option>
+                    </select>
+                    <small class="form-text text-danger" v-if="errors.has('finish')" v-text="errors.get('finish')"></small>
+
+                </div>
+                <!-- Look & Trend -->
+                <div class="col-sm-6 mb-3">
+                    <label>Look & Trend</label>
+                    <select class="form-control" @change='setLookTrend($event.target.value)'>
+                        <option>Select one option</option>
+                        <option v-for='lt in looktrends' :key='lt.id' :value='lt.id'>{{lt.name}}</option>
+                    </select>
+                    <small class="form-text text-danger" v-if="errors.has('look_trend')" v-text="errors.get('look_trend')"></small>
+                    
+                </div>
+                <!-- Shapes -->
+                <div class="col-sm-6 mb-3">
+                    <label>Shapes</label>
+                    <select class="form-control" @change='setShape($event.target.value)'>
+                        <option>Select one option</option>
+                        <option v-for='sh in shapes' :key='sh.id' :value='sh.id' >{{ sh.name }}</option>
+                    </select>
+                    <small class="form-text text-danger" v-if="errors.has('shape')" v-text="errors.get('shape')"></small>
+                </div>
+                <!-- Size of Box -->
+                <div class="col-md-6 mb-3">
+                    <label>Size of Box (pcs/box)</label>
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        placeholder="Please enter amount of tiles in a box"
+                        v-on:input="setBoxSize($event.target.value)" 
+                        v-model="boxSize" 
+                    />
+                </div>
+                    <!-- Size -->
+                <div class="col-md-6">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Width (mm)</label>
+                            <input type="number" class="form-control" placeholder="Width of tile (mm)" v-model='width' v-on:input='setWidth($event.target.value)' > 
+                            <small class="form-text text-danger" v-if="errors.has('width')" v-text="errors.get('width')"></small>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Length (mm)</label>
+                            <input type="number" class="form-control" placeholder="Length of tile(mm)" v-model='length' v-on:input='setLength($event.target.value)'>
+                            <small class="form-text text-danger" v-if="errors.has('length')" v-text="errors.get('length')"></small>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
     <div class="row">

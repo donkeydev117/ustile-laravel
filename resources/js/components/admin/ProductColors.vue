@@ -34,8 +34,9 @@
                                 <thead class="text-body">
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">ID</th>
-                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Color Name</th>
-                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Color Code</th>
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Name</th>
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Color</th>
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Code</th>
                                         <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Status</th>
                                         <th class="no-sort sorting_disabled" rowspan="1" colspan="1">Action</th>
                                     </tr>
@@ -44,6 +45,9 @@
                                     <tr class="kt-table-row kt-table-row-level-0 odd" role="row" v-for="m_color in colors" v-bind:key="m_color.id">
                                         <td class="sorting_1">{{m_color.id}}</td>
                                         <td>{{ m_color.color }}</td>
+                                        <td>
+                                            <div :style="'width:50px;height:50px; background-color:' + m_color.code"></div>
+                                        </td>
                                         <td>{{ m_color.code}}</td>
                                         <td>{{ m_color.is_active == '1' ? 'Active' : 'InActive' }}</td>
                                         <td>
