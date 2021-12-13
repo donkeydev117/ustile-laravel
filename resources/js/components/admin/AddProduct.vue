@@ -85,6 +85,8 @@
                                        @setShapeInChild='setShape'
                                        @setMadeInUsaInChild='setMadeInUsa'
                                        @setSpecialtyInChild='setSpecialty'
+                                       @setVarinatInChild='setVariant'
+                                       @removeVariantInChild='removeVariant'
                                        :product="product" 
                                        :edit="edit" 
                                        :errors="errors" />
@@ -141,6 +143,7 @@ export default {
                 'shade': '',
                 'look_trend': '',
                 'shape': '',
+                'variants' : [],
 
                 'product_min_order': '0',
                 'product_max_order': '0',
@@ -309,6 +312,14 @@ export default {
         },
         setCombinationSku(name, value) {
             this.product[name] = value;
+        },
+
+        setVariant(variant){
+            this.variants = [...this.variants, variant];
+        },
+        removeVariant(index){
+            const variants = this.variants;
+            variants.splice(index, 1);
         },
         addProduct() {
             this.$parent.loading = true;

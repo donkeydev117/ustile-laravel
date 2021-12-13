@@ -8,9 +8,7 @@
         <div class="card-body">
             <form>
                 <div class="form-group row">
-                    
                     <div class="col-md-6 mb-3">
-                        <label>&nbsp;</label>
                         <div class="switch-h d-flex justify-content-between align-items-center border p-2">
                             <label class="text-dark mb-0">Is Active?</label>
                             <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
@@ -44,28 +42,12 @@
                         </div>
                         <small class="form-text text-danger" v-if="errors.has('is_featured')" v-text="errors.get('is_featured')"></small>
                     </div>
-                     <!-- Made in USA -->
-                    <div class="col-sm-6 mb-3">
-                        <div class="switch-h d-flex justify-content-between align-items-center border p-2">
-                            <label class="text-dark mb-0">Made in USA</label>
-                            <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
-                                <input 
-                                    type="checkbox"
-                                    class="custom-control-input"
-                                    id="madeInUsa"
-                                    :value="made_in_usa"
-                                    v-model="made_in_usa"
-                                    v-on:input="setMadeInUsa($event.target.value)"
-                                />
-                                <label class="custom-control-label mr-1" for="madeInUsa"></label>
-                            </div>
-                        </div>
-                    </div>
+                  
                     <div class="col-md-6">
-                        <label>Brands</label>
+                        <label>Brands *</label>
                         <fieldset class="form-group mb-3">
                             <select @change="setBrand($event.target.value)" class="form-control single-select w-100 mb-3 categories-select ms-offscreen" v-model="brand_id">
-                                <option value="">Select Brand</option>
+                                <option disabled value="">Select Brand</option>
                                 <option v-for="brand in brands" v-bind:value="brand.brand_id" :key='brand.brand_id'>
                                     {{ brand.brand_name }}
                                 </option>
@@ -75,9 +57,9 @@
                     </div>
                     <!-- Room -->
                     <div class="col-sm-6 mb-3">
-                        <label>Kitchen/Foyer/Bathroom</label>
+                        <label>Kitchen/Foyer/Bathroom *</label>
                         <select class="form-control" @change='setRoom($event.target.value)'>
-                            <option>Select one option</option>
+                            <option disaled value=''>Select one option</option>
                             <option value='kitchen'>Kitchen</option>
                             <option value='foyer'>Foyer</option>
                             <option value='bathroom'>Bathroom</option>
@@ -86,18 +68,33 @@
                     </div>
                     <!-- Materials -->
                     <div class="col-sm-6 mb-3">
-                        <label>Material</label>
+                        <label>Material *</label>
                         <select class="form-control" @change='setMaterial($event.target.value)'>
-                            <option>Select one option</option>
+                            <option disabled value=''>Select one option</option>
                             <option v-for="m_material in materials" :key='m_material.id' :value='m_material.id'>{{ m_material.name}}</option>
                         </select>
                         <small class="form-text text-danger" v-if="errors.has('material')" v-text="errors.get('material')"></small>
 
                     </div>
+                     <!-- SKU -->
+                    <div class="col-md-6">
+                        <label>SKU *</label>
+                        <fieldset class="form-group mb-3">
+                            <input 
+                                type="text" 
+                                id="type-max" 
+                                class="form-control text-dark" 
+                                placeholder="Enter Sku" 
+                                v-on:input="setProductsku($event.target.value)" 
+                                v-model="sku"
+                            />
+                        </fieldset>
+                        <small class="form-text text-danger" v-if="errors.has('sku')" v-text="errors.get('sku')"></small>
+                    </div>
                    
                    
                     <div class="col-md-6">
-                        <label>Price</label>
+                        <label>Price *</label>
                         <fieldset class="form-group mb-3">
                             <input 
                                 type="text" 
@@ -150,20 +147,24 @@
                         </fieldset>
                         <small class="form-text text-danger" v-if="errors.has('product_max_order')" v-text="errors.get('product_max_order')"></small>
                     </div> -->
-                    <!-- SKU -->
-                    <div class="col-md-6">
-                        <label>SKU</label>
-                        <fieldset class="form-group mb-3">
-                            <input 
-                                type="text" 
-                                id="type-max" 
-                                class="form-control text-dark" 
-                                placeholder="Enter Sku" 
-                                v-on:input="setProductsku($event.target.value)" 
-                                v-model="sku"
-                            />
-                        </fieldset>
-                        <small class="form-text text-danger" v-if="errors.has('sku')" v-text="errors.get('sku')"></small>
+                   
+
+                       <!-- Made in USA -->
+                    <div class="col-sm-6 mb-3">
+                        <div class="switch-h d-flex justify-content-between align-items-center border p-2">
+                            <label class="text-dark mb-0">Made in USA</label>
+                            <div class="custom-control switch custom-switch-info custom-switch custom-control-inline mr-0">
+                                <input 
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="madeInUsa"
+                                    :value="made_in_usa"
+                                    v-model="made_in_usa"
+                                    v-on:input="setMadeInUsa($event.target.value)"
+                                />
+                                <label class="custom-control-label mr-1" for="madeInUsa"></label>
+                            </div>
+                        </div>
                     </div>
                    
                 </div>
@@ -254,13 +255,7 @@
                     />
                 </div>
                 <div class="ml-2 mb-3">
-                    <button 
-                        class="btn btn-primary" 
-                        style="padding: 0.25rem 0.5rem;font-size: 0.875rem;line-height: 1.5;border-radius: 0.2rem;"
-                        @click.prevent='createVariant()'
-                    >
-                    Create
-                    </button>
+                    <button  class="btn btn-primary btn-sm"  @click.prevent='createVariant()'>Create</button>
                 </div>
             </div>
             <div class="row">
@@ -291,16 +286,20 @@
                                     <td>{{v.look.name}}</td>
                                     <td>{{v.shape.name}}</td>
                                     <td>{{v.box_size}}</td>
-                                    <td>{{v.width}}</td>
-                                    <td>{{v.length}}</td>
+                                    <td>{{v.width == "" ? "" : v.width + "mm"}} </td>
+                                    <td>{{v.length == "" ? "" : v.length + "mm"}}</td>
                                     <td>{{v.price}}</td>
                                     <td>{{v.sku}}</td>
                                     <td>
-                                        <button v-if='v.media==""' class="btn btn-sm btn-primary">Add</button>
-                                        {{v.media}}
+                                        <button v-if='v.media==""' class="btn btn-sm btn-primary" @click.prevent="toggleImageSelect(index)">Add</button>
+                                        <img 
+                                            v-if="v.media != ''"
+                                            :src="v.media.gallary_path"
+                                            class='variant-image'
+                                        />
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger btn-sm">Remove</button>
+                                        <button class="btn btn-danger btn-sm" @click.prevent="removeVariant(index)">Remove</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -366,9 +365,8 @@ export default {
             box_size: '',
             width: '',
             length: '',
-            price: '',
-            sku: '',
             media: '',
+            editMediaIndex: -1,
             variant: {
                 color: '',
                 shade: '',
@@ -378,8 +376,8 @@ export default {
                 box_size: '',
                 width: '',
                 length: '',
-                price: '',
-                sku: '',
+                price: this.price,
+                sku: this.sku,
                 media: ''
             }
         };
@@ -605,7 +603,7 @@ export default {
                 return;
             }
             this.variants = [...this.variants, this.variant];
-            console.log(this.variant);
+            this.$emit('setVarinatInChild', this.variant);
             this.color = '';
             this.shade = '';
             this.finish = '';
@@ -633,15 +631,20 @@ export default {
             };
         },
 
-        toggleImageSelect(name) {
+        removeVariant(index){
+            const variants = [...this.variants];
+            variants.splice(index, 1);
+            this.variants = variants;
+            this.$emit('removeVariantInChild', index);
+        },
+
+        toggleImageSelect(index) {
+            this.editMediaIndex = index;
             this.showModal = !this.showModal;
-            this.currentSelectedGalleryName = name;
+            // this.currentSelectedGalleryName = name;
         },
         setImage(gallary) {
-            // console.log(gallary);
-            this.combinationGalleryPath[this.currentSelectedGalleryName] = gallary.gallary_path;
-            this.combinationGallery[this.currentSelectedGalleryName] = gallary.gallary_id;
-            this.setCombinationGallery(this.currentSelectedGalleryName);
+            this.variants[this.editMediaIndex].media = gallary;
         }
     },
     mounted() {
@@ -662,3 +665,16 @@ export default {
     props: ['product', 'errors', 'edit'],
 };
 </script>
+
+<style scoped>
+    .btn-sm {
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.875rem !important;
+        line-height: 1.5 !important;
+        border-radius: 0.2rem !important;
+    }
+    .variant-image {
+        width: 50px;
+        height: 50px;
+    }
+</style>
