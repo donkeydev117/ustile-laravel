@@ -231,16 +231,10 @@ export default {
             }
             this.$emit("setGallaryIdInChild", this.gallary_detail_id);
         },
-        // setSelectedImage(index) {
-        //     this.currentSelectedImg = index;
-        //     this.currentSelectedIndex = index;
-        // },
         removeImage(index) {
-
             this.gallary_detail_path.splice(index, 1);
             this.gallary_detail_id.splice(index, 1);
             this.$emit("setGallaryIdInChild", this.gallary_detail_id);
-
         }
     },
     watch: {

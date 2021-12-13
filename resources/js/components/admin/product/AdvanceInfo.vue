@@ -180,35 +180,35 @@
             <div class="row pl-2 pr-2">
                 <div class="mb-3 ml-2">
                     <select class="form-control" v-model="color" v-on:change='changeColor($event.target.value)' >
-                        <option value=''>Color</option>
+                        <option disabled value=''>Color</option>
                         <option v-for='c in colors' :key='c.id' :value='c.id'>{{c.color}}</option>
                     </select>
                 </div>
                 <!-- Shades -->
                 <div class="mb-3 ml-2">
                     <select class="form-control" v-model="shade" v-on:change='changeShade($event.target.value)'>
-                        <option value=''>Shade</option>
+                        <option disabled value=''>Shade</option>
                         <option v-for='s in shades' :key='s.id' :value='s.id'>{{s.name}}</option>
                     </select>
                 </div>
                 <!-- Finish -->
                 <div class="ml-2 mb-3">
                     <select class="form-control" v-model='finish' v-on:change="changeFinish($event.target.value)">
-                        <option value=''>Finish</option>
+                        <option disabled value=''>Finish</option>
                         <option v-for='f in finishes' :key='f.id' :value='f.id'>{{ f.name }}</option>
                     </select>
                 </div>
                 <!-- Look & Trend -->
                 <div class="ml-2 mb-3">
                     <select class="form-control" v-model='look' v-on:change='changeLook($event.target.value)'>
-                        <option value=''>Look</option>
+                        <option disabled value=''>Look</option>
                         <option v-for='lt in looktrends' :key='lt.id' :value='lt.id'>{{lt.name}}</option>
                     </select>
                 </div>
                 <!-- Shapes -->
                 <div class="ml-2 mb-3">
                     <select class="form-control" v-model="shape" v-on:change='changeShape($event.target.value)'>
-                        <option value=''>Shape</option>
+                        <option disabled value=''>Shape</option>
                         <option v-for='sh in shapes' :key='sh.id' :value='sh.id' >{{ sh.name }}</option>
                     </select>
                 </div>
@@ -217,7 +217,7 @@
                     <input 
                         type="number" 
                         class="form-control" 
-                        placeholder="Box size"
+                        placeholder="Box size *"
                         v-model="variant.box_size" 
                     />
                 </div>
@@ -226,7 +226,7 @@
                     <input 
                         type="number" 
                         class="form-control" 
-                        placeholder="Width(mm)" 
+                        placeholder="Width(mm) *" 
                         v-model='variant.width' 
                     > 
                 </div>
@@ -234,7 +234,7 @@
                     <input 
                         type="number" 
                         class="form-control" 
-                        placeholder="Length(mm)" 
+                        placeholder="Length(mm) *" 
                         v-model='variant.length'
                     >
                 </div>
@@ -243,14 +243,14 @@
                         class="form-control"
                         type="number"
                         step='0.1' 
-                        placeholder="Price" 
+                        placeholder="Price *" 
                         v-model='variant.price'
                     />
                 </div>
                 <div class="ml-2 mb-3">
                     <input 
                         class="form-control"
-                        placeholder="SKU" 
+                        placeholder="SKU *" 
                         v-model='variant.sku'
                     />
                 </div>
@@ -540,22 +540,42 @@ export default {
         },
 
         changeColor(colorId){
+            if(colorId == '') {
+                this.variant.color = '';
+                return;
+            }
             const color = this.colors.find(c => c.id == colorId);
             this.variant.color = color;
         },
         changeShade(shadeId){
+            if(shadeId == ''){
+                this.variant.shade = '';
+                return;
+            }
             const shade = this.shades.find(s => s.id == shadeId);
             this.variant.shade = shade
         },
         changeFinish(finishId){
+            if(finishId == ''){
+                this.variant.finish = '';
+                return;
+            }
             const finish = this.finishes.find(s => s.id == finishId);
             this.variant.finish = finish;
         },
         changeShape(shapeId){
+            if(shapeId == ''){
+                this.variant.shade = '';
+                return;
+            }
             const shape = this.shapes.find(s => s.id == shapeId);
             this.variant.shape = shape;
         },
         changeLook(lookId) {
+            if(lookId == ''){
+                this.variant.look = '';
+                return;
+            }
             const look = this.looktrends.find(s => s.id == lookId);
             this.variant.look = look;
         },
@@ -586,14 +606,16 @@ export default {
         },
         
         validateVariant(){
-            if(this.variant.color == '' &&
-                this.variant.shade == '' &&
-                this.variant.finish == '' &&
-                this.variant.look == '' &&
-                this.variant.shape == '' &&
-                this.variant.box_size == '' &&
-                this.variant.width == '' &&
-                this.variant.length == ''
+            if(this.variant.color == '' ||
+                this.variant.shade == '' ||
+                this.variant.finish == '' ||
+                this.variant.look == '' ||
+                this.variant.shape == '' ||
+                this.variant.box_size == '' ||
+                this.variant.width == '' ||
+                this.variant.length == '' ||
+                this.variant.price == '' ||
+                this.variant.sku == ''
             ) return false;
             return true;
         },
@@ -645,6 +667,7 @@ export default {
         },
         setImage(gallary) {
             this.variants[this.editMediaIndex].media = gallary;
+            this.$emit('setVariantImageInChild', this.editMediaIndex, gallary);
         }
     },
     mounted() {

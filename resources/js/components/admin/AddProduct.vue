@@ -87,6 +87,7 @@
                                        @setSpecialtyInChild='setSpecialty'
                                        @setVarinatInChild='setVariant'
                                        @removeVariantInChild='removeVariant'
+                                       @setVariantImageInChild='setVariantImage'
                                        :product="product" 
                                        :edit="edit" 
                                        :errors="errors" />
@@ -315,11 +316,14 @@ export default {
         },
 
         setVariant(variant){
-            this.variants = [...this.variants, variant];
+            this.product.variants = [...this.product.variants, variant];
         },
         removeVariant(index){
-            const variants = this.variants;
+            const variants = this.product.variants;
             variants.splice(index, 1);
+        },
+        setVariantImage(index, gallary){
+            this.product.variants[index].media = gallary;
         },
         addProduct() {
             this.$parent.loading = true;

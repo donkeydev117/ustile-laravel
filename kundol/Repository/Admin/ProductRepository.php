@@ -15,6 +15,8 @@ use App\Services\Admin\PointService;
 use App\Services\Admin\ProductService;
 use App\Traits\ApiResponser;
 use Illuminate\Support\Collection;
+use App\Models\Admin\ProductVariationAlt;
+use Illuminate\Support\Str;
 
 class ProductRepository implements ProductInterface
 {
@@ -296,6 +298,58 @@ class ProductRepository implements ProductInterface
             \DB::commit();
             return $this->successResponse(new ProductResource(Product::with('category')->with("detail")->productId($sql->id)->firstOrFail()), 'Product Save Successfully!');
         } else {
+            \DB::rollback();
+            return $this->errorResponse();
+        }
+    }
+
+    // Created by me
+    public function storeProduct(array $params){
+
+        \DB::beginTransaction();
+        try{
+            $product = new Product;
+            $product->product_type = 'variable';
+            $product->product_slug = Str::slug($params['sku']);
+            $product->sku = $params['sku'];
+            $product->gallary_id = $params['gallary_id'];
+            // Need to add product gallary details
+            $product->price = $params['price'];
+            $product->product_status = $params['product_status'];
+            $product->brand_id = $params['brand_id'];
+            $product->is_featured = $params['is_featured'];
+            $product->seo_meta_tag = $params['seo_meta_tag'];
+            $product->seo_desc = $params['seo_desc'];
+            $product->made_in_usa = $params['made_in_usa'];
+            $product->user_id = \Auth::id();
+            $product->created_by = \Auth::id();
+    
+            $product->save();
+            $productService = new ProductService;
+            $product_result = $productService->simpleProductDetailData($params, $product->id, 'store');
+            $productService->saveProductGallaryImage($product->id, $params['gallary_detail_id']);
+    
+            $variants = $params['variants'];
+    
+            foreach($variants as $v){
+                $variant = new ProductVariationAlt;
+                $variant->product_id = $product->id;
+                $variant->color = $v['color']['id'];
+                $variant->shade = $v['shade']['id'];
+                $variant->finish = $v['finish']['id'];
+                $variant->look = $v['look']['id'];
+                $variant->shape = $v['shape']['id'];
+                $variant->box_size = $v['box_size'];
+                $variant->width = $v['width'];
+                $variant->length = $v['length'];
+                $variant->price = $v['price'];
+                $variant->sku = $v['sku'];
+                $variant->media_id = $v['media']['gallary_id'];
+                $variant->save();
+            }
+            \DB::commit();
+            return $this->successResponse(new ProductResource(Product::with('category')->with("detail")->productId($product->id)->firstOrFail()), 'Product Save Successfully!');
+        } catch(Exception $e){
             \DB::rollback();
             return $this->errorResponse();
         }

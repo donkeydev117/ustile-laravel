@@ -35,14 +35,14 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $parms = $request->all();
-        if ($request->product_type == 'variable') {
-            $productService = new ProductService;
-            $validate = $productService->validateProductVariable($request);
-            if ($validate != '1') {
-                return $validate;
-            }
-        }
-        return $this->ProductRepository->store($parms);
+        // if ($request->product_type == 'variable') {
+        //     $productService = new ProductService;
+        //     $validate = $productService->validateProductVariable($request);
+        //     if ($validate != '1') {
+        //         return $validate;
+        //     }
+        // }
+        return $this->ProductRepository->storeProduct($parms);
     }
 
     public function update(ProductRequest $request, Product $product)
