@@ -340,11 +340,11 @@ export default {
             specialty: '',
             brands: [],
             product_type: 'simple',
-            product_status: true,
-            is_featured: true,
-            is_points: true,
-            brand_id: '',
-            price: '',
+            product_status: this.product ? this.product.product_status : true,
+            is_featured: this.prodcuct ? this.product.is_featured : true,
+            is_points: this.product ? this.product.is_points : true,
+            brand_id: this.product ? this.product.brand_id : '',
+            price: this.product ? this.product.price : '',
             sku: '',
             discount_price: '',
             product_min_order: '',
@@ -684,6 +684,8 @@ export default {
         this.fetchFinishes();
         this.fetchLookTrends();
         this.fetchShapes();
+
+        console.log("Product:", this.product);
     },
     props: ['product', 'errors', 'edit'],
 };

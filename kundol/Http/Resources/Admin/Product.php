@@ -33,9 +33,8 @@ class Product extends JsonResource
             ];
         }
 
-        die(print_r($this));
-
         $this->exchange_rate = 1;
+        $variations = ProductVariationAlt::where("product_id", $this->id)->get();
         $currency = [];
         if (isset($request->currency) && $request->currency != '') {
             $currency = Currency::findByCurrencyId($request->currency)->select('exchange_rate', 'symbol_position', 'code')->first();
@@ -87,7 +86,8 @@ class Product extends JsonResource
                 'reviews' => ReviewResource::collection($this->review),
                 'comments' => CommentResource::collection($this->comment),
                 'made_in_usa' => $this->made_in_usa,
-                'material' => $this->material
+                'material' => $this->material,
+                'variations' => $variations 
             ];
         }
         if (\Request::route()->getName() == 'products.show'  || \Request::route()->getName() == 'client.wishlist.index' || \Request::route()->getName() == 'compare.index') {
@@ -135,7 +135,9 @@ class Product extends JsonResource
                 'comments' => CommentResource::collection($this->comment),
                 'made_in_usa' => $this->made_in_usa,
                 'material' => $this->material,
-                "brand_id" => $this->brand_id
+                "brand_id" => $this->brand_id,
+                'variations' => $variations 
+
             ];
         }
         // dd($this->productGallaryDetail()->gallary_detail);
@@ -178,6 +180,10 @@ class Product extends JsonResource
             'reviews' => ReviewResource::collection($this->review),
             'comments' => CommentResource::collection($this->comment),
             'stock' => new AvailableQtyResource($this->when($this->product_type == 'simple', $this->stock)),
+            'made_in_usa' => $this->made_in_usa,
+            'material' => $this->material,
+            "brand_id" => $this->brand_id,
+            'variations' => $variations 
         ];
     }
 }

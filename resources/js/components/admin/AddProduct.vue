@@ -395,7 +395,11 @@ export default {
                 this.product.discount_price = res.data.data.product_discount_price;
                 this.product.product_type = res.data.data.product_type;
                 this.product.product_status = res.data.data.product_status;
-                this.product.brand_id = res.data.data.product_brand == null ? '' : res.data.data.product_brand.brand_id;
+                this.product.brand_id = res.data.data.brand_id;
+                this.product.material = res.data.data.material;
+                this.product.made_in_usa = res.data.data.made_in_usa;
+                this.product.variants = res.data.data.variations;
+
 
                 if (res.data.data.category != null) {
                     for (var i = 0; i < res.data.data.category.length; i++) {
