@@ -321,6 +321,7 @@ class ProductRepository implements ProductInterface
             $product->seo_meta_tag = $params['seo_meta_tag'];
             $product->seo_desc = $params['seo_desc'];
             $product->made_in_usa = $params['made_in_usa'];
+            $product->material = $params['material'];
             $product->user_id = \Auth::id();
             $product->created_by = \Auth::id();
     

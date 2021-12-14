@@ -17,6 +17,7 @@ use App\Http\Resources\Web\Comment as CommentResource;
 use App\Models\Admin\AvailableQty;
 use App\Models\Admin\Currency;
 use App\Models\Admin\Gallary;
+use App\Models\Admin\ProductVariationAlt;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Product extends JsonResource
@@ -31,6 +32,8 @@ class Product extends JsonResource
                 'detail' => ProductDetailResource::collection($this->whenLoaded('detail')),
             ];
         }
+
+        die(print_r($this));
 
         $this->exchange_rate = 1;
         $currency = [];
@@ -48,12 +51,14 @@ class Product extends JsonResource
                 }
             }
 
+
             return [
                 'product_id' => $this->id,
                 'product_sku' => $this->when($this->product_type == 'simple', $this->sku),
                 'product_type' => $this->product_type,
                 'product_slug' => $this->product_slug,
                 'product_video_url' => $this->video_url,
+                'brand_id' => $this->brand_id,
                 'available_qty' => $this->when($this->product_type == 'simple', AvailableQty::productId($this->id)->value('remaining')),
                 'product_gallary' => new GallaryResource(Gallary::with('detail')->find($this->gallary_id)),
                 'product_gallary_detail' => GallaryResource::collection($images),
@@ -81,6 +86,8 @@ class Product extends JsonResource
                 'attribute' => ProductAttributeResource::collection($this->when($this->product_type == 'variable', $this->product_attribute)),
                 'reviews' => ReviewResource::collection($this->review),
                 'comments' => CommentResource::collection($this->comment),
+                'made_in_usa' => $this->made_in_usa,
+                'material' => $this->material
             ];
         }
         if (\Request::route()->getName() == 'products.show'  || \Request::route()->getName() == 'client.wishlist.index' || \Request::route()->getName() == 'compare.index') {
@@ -126,6 +133,9 @@ class Product extends JsonResource
                 'product_combination' => ProductCombinationResource::collection($this->when($this->product_type == 'variable', $this->product_combination)),
                 'reviews' => ReviewResource::collection($this->review),
                 'comments' => CommentResource::collection($this->comment),
+                'made_in_usa' => $this->made_in_usa,
+                'material' => $this->material,
+                "brand_id" => $this->brand_id
             ];
         }
         // dd($this->productGallaryDetail()->gallary_detail);
