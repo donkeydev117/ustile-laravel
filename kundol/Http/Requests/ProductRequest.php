@@ -52,6 +52,7 @@ class ProductRequest extends FormRequest
             // 'look_trend' => 'integer|required',
             // 'shape' => 'string|required',
             'made_in_usa' =>'integer|required',
+            'applications' => 'array|required',
             // 'box_size' => 'integer|required',
             // 'specialty' => 'string|required',
             'product_status' => 'in:DEFAULT,active,inactive',

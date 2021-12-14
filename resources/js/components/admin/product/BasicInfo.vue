@@ -135,7 +135,6 @@ export default {
 
     methods: {
         nameWithLang(option) {
-            console.log(option, 'option');
             return option.detail ? `${option.detail[0].name}` : 'Hey';
         },
         fetchCategories() {

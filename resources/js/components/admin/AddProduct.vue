@@ -76,7 +76,6 @@
                                        @setProductMinOrderInChild="setProductMinOrder" 
                                        @setPriceInChild="setPrice" 
                                        @setDiscountPriceInChild="setDiscountPrice" 
-                                       @setBoxSizeInChild='setBoxSize' 
                                        @setProductStatusInChild="setProductStatus" 
                                        @setIsFeaturedInChild="setIsFeatured" 
                                        @setIsPointsInChild="setIsPoints" 
@@ -84,17 +83,9 @@
                                        @setActiveInChild="setActiveFromChild" 
                                        @isActiveInChild="isActiveFromChild" 
                                        @setProductskuInChild="setSku" 
-                                       @setColorsInChild="setColors"
-                                       @setWidthInChild='setWidth'
-                                       @setLengthInChild='setLength'
-                                       @setShadeInChild='setShade'
-                                       @setRoomInChild='setRoom'
                                        @setMaterialInChild='setMaterial'
-                                       @setFinishInChild='setFinish'
-                                       @setLookTrendInChild='setLookTrend'
-                                       @setShapeInChild='setShape'
                                        @setMadeInUsaInChild='setMadeInUsa'
-                                       @setSpecialtyInChild='setSpecialty'
+                                       @setApplicationInChild='setApplication'
                                        @setVarinatInChild='setVariant'
                                        @removeVariantInChild='removeVariant'
                                        @setVariantImageInChild='setVariantImage'
@@ -141,20 +132,10 @@ export default {
                 'video_url': '',
                 'brand_id': '',
 
-                'colors': [],
-                'box_size': '',
                 'material': '',
-                'width': '',
-                'length' : '',
-                'shade' : '',
-                'room': '',
-                'finish': '',
                 'made_in_usa': 1,
-                'specialty': '',
-                'shade': '',
-                'look_trend': '',
-                'shape': '',
                 'variants' : [],
+                'applications': [],
 
                 'product_min_order': '0',
                 'product_max_order': '0',
@@ -188,65 +169,34 @@ export default {
             this.activeItem = menuItem
         },
         setCategory(value, type) {
-            console.log(value, type);
             if (type === 'push') {
                 if (this.product.category_id.indexOf(value) === -1) {
                     this.product.category_id.push(value);
                 }
             } else if (type === 'remove') {
                 if (this.product.category_id.indexOf(value) !== -1) {
-                    this.product.category_id.splice(this.product.category_id.indexOf(value), value);
-                }
-            }
-
-        },
-
-        setColors(value, type) {
-            if (type === 'push') {
-                if (this.product.colors.indexOf(value) === -1) {
-                    this.product.colors.push(value);
-                }
-            } else if (type === 'remove') {
-                if (this.product.colors.indexOf(value) !== -1) {
-                    this.product.colors.splice(this.product.colors.indexOf(value), value);
+                    this.product.category_id.splice(this.product.category_id.indexOf(value), 1);
                 }
             }
         },
 
-        setBoxSize(value) {
-            this.product.box_size = value;
-        },
-        setWidth(value){
-           this.product.width = value;
-        },
-        setLength(value){
-           this.product.length = value;
-        },
-        setShade(value){
-           this.product.shade = value;
-        },
-        setRoom(value){
-           this.product.room = value;
-        },
-        setMaterial(value){
-           this.product.material = value;
-        },
-        setFinish(value){
-           this.product.finish = value;
-        },
-        setLookTrend(value){
-           this.product.look_trend = value;
-        },
-        setShape(value){
-           this.product.shape = value;
-        },
         setMadeInUsa(value){
            this.product.made_in_usa = value;
         },
-        setSpecialty(value){
-           this.product.specialty = value;
+        setMaterial(value){
+            this.product.material = value;
         },
-
+        setApplication(value, type) {
+            if (type === 'push') {
+                if (this.product.applications.indexOf(value) === -1) {
+                    this.product.applications.push(value);
+                }
+            } else if (type === 'remove') {
+                if (this.product.applications.indexOf(value) !== -1) {
+                    this.product.applications.splice(this.product.applications.indexOf(value), 1);
+                }
+            }
+        },
         setTitle(value, index) {
             this.product.title[index] = value;
         },
@@ -254,7 +204,6 @@ export default {
             this.product.desc[index] = value;
         },
         setGallaryId(value) {
-            console.log(value);
             this.product.gallary_id = value[0];
             this.product.gallary_detail_id = value;
         },
@@ -315,7 +264,6 @@ export default {
             this.product[name] = value;
         },
         setCombinationPrice(name, value) {
-            console.log(value);
             this.product[name] = value;
         },
         setCombinationGallery(name, value) {
@@ -399,6 +347,7 @@ export default {
                 this.product.material = res.data.data.material;
                 this.product.made_in_usa = res.data.data.made_in_usa;
                 this.product.variants = res.data.data.variations;
+                this.product.applications = res.data.data.application;
 
 
                 if (res.data.data.category != null) {

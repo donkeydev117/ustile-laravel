@@ -322,6 +322,7 @@ class ProductRepository implements ProductInterface
             $product->seo_desc = $params['seo_desc'];
             $product->made_in_usa = $params['made_in_usa'];
             $product->material = $params['material'];
+            $product->application = implode(",", $params['applications']);
             $product->user_id = \Auth::id();
             $product->created_by = \Auth::id();
     
@@ -345,7 +346,7 @@ class ProductRepository implements ProductInterface
                 $variant->length        = $v['length'];
                 $variant->price         = $v['price'];
                 $variant->sku           = $v['sku'];
-                $variant->media_id      = $v['media']['gallary_id'];
+                $variant->media_id      = $v['media'] ? $v['media']['gallary_id'] : 0;
                 $variant->save();
             }
             \DB::commit();

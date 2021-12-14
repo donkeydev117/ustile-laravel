@@ -62,12 +62,18 @@
                     <!-- Room -->
                     <div class="col-sm-6 mb-3">
                         <label>Kitchen/Foyer/Bathroom *</label>
-                        <select class="form-control" @change='setRoom($event.target.value)'>
-                            <option value="">Select one option</option>
-                            <option value='kitchen'>Kitchen</option>
-                            <option value='foyer'>Foyer</option>
-                            <option value='bathroom'>Bathroom</option>
-                        </select>
+                         <multiselect 
+                            v-model="application" 
+                            :options="applications" 
+                            placeholder="Select Applications" 
+                            label="name" 
+                            track-by="value" 
+                            :multiple="true" 
+                            :taggable="true"
+                            @input='setApplication'
+                            @remove='removeApplication'
+                        >
+                    </multiselect>
                         <small class="form-text text-danger" v-if="errors.has('room')" v-text="errors.get('room')"></small>
                     </div>
                     <!-- Materials -->
@@ -339,6 +345,12 @@ export default {
             finishes: [],
             looktrends: [],
             shapes: [],
+            applications: [
+                { value : 'kitchen', name: "Kitchen"},
+                { value : 'foyer', name: "Foyer"},
+                { value : 'bathroom', name: "Bathroom"},
+            ],
+            application: [],
             material: '',
             made_in_usa: 1,
             specialty: '',
@@ -418,7 +430,6 @@ export default {
                     if (res.data.status == "Success") {
                         this.brands = res.data.data;
                         this.brand_id = this.product.brand_id;
-                        console.log("Brand ID:", this.brand_id);
                     }
                 })
                 .finally(() => (this.$parent.$parent.loading = false));
@@ -503,10 +514,9 @@ export default {
                     console.log(error);
                 })
         },
-       
-        setRoom(value){
-            this.$emit('setRoomInChild', value);
-        },
+
+
+
         setMaterial(value){
             this.$emit('setMaterialInChild', value);
         },
@@ -544,7 +554,12 @@ export default {
         setActive(value) {
             this.$emit('setActiveInChild', value);
         },
-
+        setApplication(value, id) {
+            this.$emit("setApplicationInChild", value[value.length - 1].value, 'push');
+        },
+        removeApplication(removedOption, id) {
+            this.$emit("setApplicationInChild", removedOption.value, 'remove');
+        },
         changeColor(colorId){
             if(colorId == '') {
                 this.variant.color = '';
@@ -697,7 +712,6 @@ export default {
             this.product_type = newVal.product_type;
             this.sku = newVal.sku;
             this.brand_id = newVal.brand_id;
-            // this.variants = newVal.variants;
             newVal.variants.map((variant, index) => {
                 const media = {
                     gallary_id: variant.media.id,
@@ -712,6 +726,8 @@ export default {
             this.made_in_usa = newVal.made_in_usa;
             this.is_featured = newVal.is_featured;
             this.is_active = newVal.is_active;
+            console.log(newVal);
+            // this.applications = newVal.application.split(",");
         }
     },
     props: ['product', 'errors', 'edit'],

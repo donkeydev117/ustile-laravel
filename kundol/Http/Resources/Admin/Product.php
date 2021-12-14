@@ -97,7 +97,8 @@ class Product extends JsonResource
                 'comments' => CommentResource::collection($this->comment),
                 'made_in_usa' => $this->made_in_usa,
                 'material' => $this->material,
-                'variations' => $variations 
+                'variations' => $variations ,
+                'application' => $this->application
             ];
         }
         if (\Request::route()->getName() == 'products.show'  || \Request::route()->getName() == 'client.wishlist.index' || \Request::route()->getName() == 'compare.index') {
@@ -146,7 +147,9 @@ class Product extends JsonResource
                 'made_in_usa' => $this->made_in_usa,
                 'material' => $this->material,
                 "brand_id" => $this->brand_id,
-                'variations' => $variations 
+                'variations' => $variations,
+                'application' => $this->application
+
 
             ];
         }
@@ -193,7 +196,8 @@ class Product extends JsonResource
             'made_in_usa' => $this->made_in_usa,
             'material' => $this->material,
             "brand_id" => $this->brand_id,
-            'variations' => $variations 
+            'variations' => $variations,
+            'application' => $this->application
         ];
     }
 }
