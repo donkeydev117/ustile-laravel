@@ -24,4 +24,8 @@ export default class ErrorHandling {
     clear(field) {
         delete this.errors[field]
     }
+
+    all(){
+        return this.errors;
+    }
 }

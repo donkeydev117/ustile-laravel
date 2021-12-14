@@ -47,7 +47,7 @@
                         <label>Brands *</label>
                         <fieldset class="form-group mb-3">
                             <select @change="setBrand($event.target.value)" class="form-control single-select w-100 mb-3 categories-select ms-offscreen" v-model="brand_id">
-                                <option disabled value="">Select Brand</option>
+                                <option value="">Select Brand</option>
                                 <option v-for="brand in brands" v-bind:value="brand.brand_id" :key='brand.brand_id'>
                                     {{ brand.brand_name }}
                                 </option>
@@ -59,7 +59,7 @@
                     <div class="col-sm-6 mb-3">
                         <label>Kitchen/Foyer/Bathroom *</label>
                         <select class="form-control" @change='setRoom($event.target.value)'>
-                            <option disaled value=''>Select one option</option>
+                            <option value="">Select one option</option>
                             <option value='kitchen'>Kitchen</option>
                             <option value='foyer'>Foyer</option>
                             <option value='bathroom'>Bathroom</option>
@@ -70,7 +70,7 @@
                     <div class="col-sm-6 mb-3">
                         <label>Material *</label>
                         <select class="form-control" @change='setMaterial($event.target.value)'>
-                            <option disabled value=''>Select one option</option>
+                            <option value="">Select one option</option>
                             <option v-for="m_material in materials" :key='m_material.id' :value='m_material.id'>{{ m_material.name}}</option>
                         </select>
                         <small class="form-text text-danger" v-if="errors.has('material')" v-text="errors.get('material')"></small>

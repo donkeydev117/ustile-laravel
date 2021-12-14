@@ -332,19 +332,19 @@ class ProductRepository implements ProductInterface
             $variants = $params['variants'];
     
             foreach($variants as $v){
-                $variant = new ProductVariationAlt;
-                $variant->product_id = $product->id;
-                $variant->color = $v['color']['id'];
-                $variant->shade = $v['shade']['id'];
-                $variant->finish = $v['finish']['id'];
-                $variant->look = $v['look']['id'];
-                $variant->shape = $v['shape']['id'];
-                $variant->box_size = $v['box_size'];
-                $variant->width = $v['width'];
-                $variant->length = $v['length'];
-                $variant->price = $v['price'];
-                $variant->sku = $v['sku'];
-                $variant->media_id = $v['media']['gallary_id'];
+                $variant                = new ProductVariationAlt;
+                $variant->product_id    = $product->id;
+                $variant->color         = $v['color']['id'];
+                $variant->shade         = $v['shade']['id'];
+                $variant->finish        = $v['finish']['id'];
+                $variant->look          = $v['look']['id'];
+                $variant->shape         = $v['shape']['id'];
+                $variant->box_size      = $v['box_size'];
+                $variant->width         = $v['width'];
+                $variant->length        = $v['length'];
+                $variant->price         = $v['price'];
+                $variant->sku           = $v['sku'];
+                $variant->media_id      = $v['media']['gallary_id'];
                 $variant->save();
             }
             \DB::commit();
