@@ -37,7 +37,7 @@ class CreateProductsTable extends Migration
             $table->enum('is_points', ['1', '0'])->default('0');
             // $table->text('colors');
             // $table->string('shade');
-            $table->text('room');
+            $table->text('appliction');
             $table->integer('material');
             // $table->integer('finish');
             // $table->integer('look_trend');

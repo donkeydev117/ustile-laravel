@@ -3,3 +3,5 @@ ALTER TABLE `products` ADD `colors` TEXT NOT NULL AFTER `user_id`, ADD `shade` V
 ALTER TABLE `products` DROP `colors`, DROP `shade`, DROP `material`, DROP `finish`, DROP `look_trend`, DROP `shape`, DROP `width`, DROP `length`, DROP `box_size`, DROP `specialty`, DROP `keyword`;
 
 ALTER TABLE `products` ADD `material` INT(11) NOT NULL DEFAULT '0' AFTER `made_in_usa`;
+
+ALTER TABLE `products` ADD `application` TEXT NOT NULL AFTER `material`;
