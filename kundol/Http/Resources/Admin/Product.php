@@ -34,7 +34,17 @@ class Product extends JsonResource
         }
 
         $this->exchange_rate = 1;
-        $variations = ProductVariationAlt::where("product_id", $this->id)->get();
+
+        // Get variations
+        $variations = ProductVariationAlt::with('media')
+                                        ->with('color')
+                                        ->with('shade')
+                                        ->with('finish')
+                                        ->with('shape')
+                                        ->with('look')
+                                        ->where("product_id", $this->id)
+                                        ->get();
+
         $currency = [];
         if (isset($request->currency) && $request->currency != '') {
             $currency = Currency::findByCurrencyId($request->currency)->select('exchange_rate', 'symbol_position', 'code')->first();

@@ -46,9 +46,13 @@
                     <div class="col-md-6">
                         <label>Brands *</label>
                         <fieldset class="form-group mb-3">
-                            <select @change="setBrand($event.target.value)" class="form-control single-select w-100 mb-3 categories-select ms-offscreen" v-model="brand_id">
+                            <select 
+                                @change="setBrand($event.target.value)" 
+                                class="form-control single-select w-100 mb-3 categories-select ms-offscreen" 
+                                v-model="brand_id"
+                            >
                                 <option value="">Select Brand</option>
-                                <option v-for="brand in brands" v-bind:value="brand.brand_id" :key='brand.brand_id'>
+                                <option v-for="brand in brands" v-bind:value="brand.brand_id" :key='brand.brand_id' :selected="brand_id">
                                     {{ brand.brand_name }}
                                 </option>
                             </select>
@@ -380,7 +384,6 @@ export default {
                 sku: this.sku,
                 media: ''
             },
-            ...this.product
         };
     },
     methods: {
@@ -414,6 +417,8 @@ export default {
                 .then(res => {
                     if (res.data.status == "Success") {
                         this.brands = res.data.data;
+                        this.brand_id = this.product.brand_id;
+                        console.log("Brand ID:", this.brand_id);
                     }
                 })
                 .finally(() => (this.$parent.$parent.loading = false));
@@ -683,8 +688,31 @@ export default {
         this.fetchMaterials();
         this.fetchShades();
         this.fetchFinishes();
-        this.fetchLookTrends();
+        this.fetchLookTrends(); 
         this.fetchShapes();
+    },
+     watch: {
+        product(newVal, oldVal) {
+            this.editChild = this.$parent.edit;
+            this.product_type = newVal.product_type;
+            this.sku = newVal.sku;
+            this.brand_id = newVal.brand_id;
+            // this.variants = newVal.variants;
+            newVal.variants.map((variant, index) => {
+                const media = {
+                    gallary_id: variant.media.id,
+                    gallary_path : "/gallary/" + variant.media.name
+                };
+                this.variants = [...this.variants, {...variant, media}]
+            })
+
+            this.material = newVal.material;
+            this.price = newVal.price;
+            this.discount_price = newVal.discount_price;
+            this.made_in_usa = newVal.made_in_usa;
+            this.is_featured = newVal.is_featured;
+            this.is_active = newVal.is_active;
+        }
     },
     props: ['product', 'errors', 'edit'],
 };
