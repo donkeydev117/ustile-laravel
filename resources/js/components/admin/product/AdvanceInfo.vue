@@ -79,7 +79,7 @@
                     <!-- Materials -->
                     <div class="col-sm-6 mb-3">
                         <label>Material *</label>
-                        <select class="form-control" @change='setMaterial($event.target.value)'>
+                        <select class="form-control" @change='setMaterial($event.target.value)' v-model='material'>
                             <option value="">Select one option</option>
                             <option v-for="m_material in materials" :key='m_material.id' :value='m_material.id'>{{ m_material.name}}</option>
                         </select>
@@ -726,8 +726,10 @@ export default {
             this.made_in_usa = newVal.made_in_usa;
             this.is_featured = newVal.is_featured;
             this.is_active = newVal.is_active;
-            console.log(newVal);
-            // this.applications = newVal.application.split(",");
+            newVal.applications.map(a => {
+                const app = this.applications.find(b => b.value === a);
+                this.application = [...this.application, app]
+            })
         }
     },
     props: ['product', 'errors', 'edit'],

@@ -15,6 +15,7 @@ use App\Models\Web\Order;
 use App\Models\Admin\Customer;
 use App\Models\Admin\PaymentMethod;
 use App\Models\Admin\PaymentMethodSetting;
+use App\Models\Admin\Material;
 use Carbon\Carbon;
 use DB;
 use App\Jobs\OrderProcess;

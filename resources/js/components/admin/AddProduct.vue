@@ -193,6 +193,7 @@ export default {
                 }
             } else if (type === 'remove') {
                 if (this.product.applications.indexOf(value) !== -1) {
+                    console.log(this.product.applications);
                     this.product.applications.splice(this.product.applications.indexOf(value), 1);
                 }
             }
@@ -347,7 +348,7 @@ export default {
                 this.product.material = res.data.data.material;
                 this.product.made_in_usa = res.data.data.made_in_usa;
                 this.product.variants = res.data.data.variations;
-                this.product.applications = res.data.data.application;
+                this.product.applications = res.data.data.application.split(",");
 
 
                 if (res.data.data.category != null) {
