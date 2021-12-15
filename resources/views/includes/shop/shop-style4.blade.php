@@ -72,15 +72,15 @@
                         <span>Bathroom</span> --}}
                         <div class="row">
                             <div class="col-md-4 pl-2 pr-2">
-                                <img src='/gallary/large202112104256FOREST_LIANA.jpeg' class="w-100" />
+                                <img src='/images/applications/kitchen.jpeg' class="w-100" />
                                 <span class='filter-item-label'>Kitchen</span>
                             </div>
                             <div class="col-md-4 pl-2 pr-2">
-                                <img src='/gallary/large202112103948ONE_COAL.jpeg' class="w-100" />
+                                <img src='/images/applications/foyer.jpg' class="w-100" />
                                 <span class='filter-item-label'>Foyer</span>
                             </div>
                             <div class="col-md-4 pl-2 pr-2">
-                                <img src='/gallary/large202112103948ONE_COAL.jpeg' class="w-100" />
+                                <img src='/images/applications/bathroom.jpeg' class="w-100" />
                                 <span class='filter-item-label'>Bathroom</span>
                             </div>
                         </div>
