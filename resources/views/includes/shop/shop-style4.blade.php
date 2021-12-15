@@ -2,7 +2,7 @@
     .filter-item-label{
         position: absolute;
         bottom: 0;
-        left: 0.5rem;
+        left: 15px;
         right: 0.5rem;
         text-align: center;
         background: #1a1a1a66;
@@ -12,12 +12,18 @@
         /* width:   */
         width: 100%;
         padding-top: 100%;
+        border-radius: 50%;
+        cursor: pointer;
     }
     .filter-application-item{
         width: 100%;
         padding-top: 80%;
         background-size: cover;
         background-position: center;
+        cursor: pointer;
+    }
+    .right-menu{
+        padding-right: 40px !important;
     }
 </style>
 
@@ -38,10 +44,10 @@
             <h2> {{ trans('lables.shop-shop') }} </h2>
         </div>
     </div>
-    <section class="shop-content shop-two">
+    <section class="shop-content shop-two pl-4 pr-2">
         <div class="container-fluid pl-4 pr-4">
             <div class="row">
-                <div class="col-12 col-lg-4  d-lg-block d-xl-block right-menu">
+                <div class="col-12 col-lg-4 d-lg-block d-xl-block right-menu">
                     {{-- Render Categories --}}
                     <div class="right-menu-categories">
                         <h5>{{__('Categories')}}</h5>
@@ -73,40 +79,41 @@
                     {{-- Applications --}}
                     <div class="right-menu-applications mt-4">
                         <h5>Application</h5>
-                        <div class="row">
-                            <div class="col-md-4 pl-2 pr-2">
+                        <div class="row pr-4">
+                            <div class="col-md-4 pr-2">
                                 <div class="filter-application-item" style='background-image:url(/images/applications/kitchen.jpeg)'></div>
                                 <span class='filter-item-label'>Kitchen</span>
                             </div>
-                            <div class="col-md-4 pl-2 pr-2">
+                            <div class="col-md-4 pr-2">
                                 <div class="filter-application-item" style='background-image:url(/images/applications/foyer.jpg)'></div>
                                 <span class='filter-item-label'>Foyer</span>
                             </div>
-                            <div class="col-md-4 pl-2 pr-2">
+                            <div class="col-md-4 pr-2">
                                 <div class="filter-application-item" style='background-image:url(/images/applications/bathroom.jpeg)'></div>
                                 <span class='filter-item-label'>Bathroom</span>
                             </div>
                         </div>
                     </div>
+                    <hr />
                     {{-- Render Materials --}}
                     <div class="right-menu-materials mt-4">
                         <h5>{{ __('Material')}}</h5>
                         <div class="row">
                             @foreach($materials as $material)
-                            <div class="col-md-3 pl-2 pr-2">
+                            <div class="col-md-3 pr-2">
                                 <div class="filter-application-item" style='background-image:url({{ $material->media }})'></div>
                                 <span class='filter-item-label'>{{ $material->name }}</span>
                             </div>
                             @endforeach
                         </div>
                     </div>
+                    <hr />
                     {{-- Render Colors --}}
                     <div class="right-menu-colors mt-4">
                         <h5>{{__('Color')}}</h5>
                         <div class="row">
                             @foreach($colors as $color)
-                            {{-- <span>{{ $color->color }}</span> --}}
-                            <div class="col-md-2 pl-1 pr-1" >
+                            <div class="col-md-2 pr-2" >
                                 <div class='fitler-color-item' style='background-color:{{$color->code}}'>
 
                                 </div>
@@ -118,45 +125,50 @@
                     {{-- Render Shades --}}
                     <div class="right-menu-shades mt-4">
                         <h5>{{__('Shade')}}</h5>
-                        <select class="form-control">
-                            <option>Select Items</option>
+                        <div class="row">
                             @foreach($shades as $shade)
-                            <option value="{{ $shade->id}}">{{ $shade->name }}</option>
+                            <div class="col-md-3 pr-2">
+                                <div class="filter-application-item" style='background-image:url({{ $shade->media }})'></div>
+                                <span class='filter-item-label'>{{ $shade->name }}</span>
+                            </div>
                             @endforeach
-                        </select>
-                       
+                        </div>
                     </div>
                     {{-- Render Finishes --}}
                     <div class="right-menu-finishes mt-4">
                         <h5>{{__('Finish')}}</h5>
-                        <select class="form-control">
-                            <option>Select Items</option>
+                        <div class="row">
                             @foreach($finishes as $finish)
-                            <option value='{{ $finish->id }}'>{{ $finish->name }}</option>
+                            <div class="col-md-3 pr-2">
+                                <div class="filter-application-item" style='background-image:url({{ $finish->media }})'></div>
+                                <span class='filter-item-label'>{{ $finish->name }}</span>
+                            </div>
                             @endforeach
-                        </select>
-                        
+                        </div>
                     </div>
                     {{-- Render Shapes --}}
                     <div class="right-menu-shapes mt-4">
                         <h5>{{__('Shape')}}</h5>
-                        <select class="form-control">
-                            <option>Select Items</option>
+                        <div class="row">
                             @foreach($shapes as $shape)
-                            <option value="{{ $shape->id }}">{{ $shape->name }}</option>
+                            <div class="col-md-3 pr-2">
+                                <div class="filter-application-item" style='background-image:url({{ $shape->media }})'></div>
+                                <span class='filter-item-label'>{{ $shape->name }}</span>
+                            </div>
                             @endforeach
-                        </select>
+                        </div>
                     </div>
                     {{-- Render Look & Trend --}}
                     <div class="right-menu-shapes mt-4">
                         <h5>{{__('Look & Trend')}}</h5>
-                        <select name="" id="" class="form-control">
-                            <option>Select Items</option>
+                        <div class="row">
                             @foreach($looktrends as $looktrend)
-                           <option value='{{ $looktrend->id }}'>{{ $looktrend->name }}</option>
+                            <div class="col-md-3 pr-2">
+                                <div class="filter-application-item" style='background-image:url({{ $looktrend->media }})'></div>
+                                <span class='filter-item-label'>{{ $looktrend->name }}</span>
+                            </div>
                             @endforeach
-                        </select>
-                       
+                        </div>
                     </div>
 
                   
@@ -186,32 +198,6 @@
                         </div>
                     </div>
 
-                    @foreach ($data['attribute'] as $key => $attribute)
-                        <div class="color-range-main">
-                            <h5>{{ $attribute->attribute_detail[0]->name }}</h5>
-                            <div class="color-range">
-                                <ul>
-                                    @foreach ($attribute->variation as $variation)
-                                        @if (isset($_GET['variation_id']) && in_array($variation->variation_detail[0]->variation_id, explode(',', $_GET['variation_id'])))
-                                            <li><span class="btn size-btn variation_list_item attribute_{{ str_replace(' ', '_', $attribute->attribute_detail[0]->name) }}_div  {{ $variation->variation_detail[0]->name }}-{{ str_replace(' ', '_', $attribute->attribute_detail[0]->name) }}" style="border:1px solid;"
-                                                    role="button" data-attribute-id="{{ $attribute->id }}"
-                                                    data-attribute-name="{{ $attribute->attribute_detail[0]->name }}" data-variation-id="{{ $variation->variation_detail[0]->variation_id }}"
-                                                    data-variation-name={{ $variation->variation_detail[0]->name }}>{{ $variation->variation_detail[0]->name }}</span>
-                                            </li>
-                                        @else
-                                            <li><span class="btn size-btn variation_list_item attribute_{{ str_replace(' ', '_', $attribute->attribute_detail[0]->name) }}_div {{ $variation->variation_detail[0]->name }}-{{str_replace(' ', '_', $attribute->attribute_detail[0]->name) }}"
-                                                    role="button" data-attribute-id="{{ $attribute->id }}"
-                                                    data-attribute-name="{{ $attribute->attribute_detail[0]->name }}" data-variation-id="{{ $variation->variation_detail[0]->variation_id }}"
-                                                    data-variation-name={{ $variation->variation_detail[0]->name }}>{{ $variation->variation_detail[0]->name }}</span>
-                                            </li>
-
-                                        @endif
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    @endforeach
-                
                     <div class="range-slider-main">
                         <button class="btn btn-primary filter-from-sidebar">{{ trans('lables.shop-apply') }}</button>
                         <a href="{{ url('/shop') }}" class="btn btn-primary">{{ trans('lables.shop-reset') }} </a>
@@ -239,7 +225,7 @@
                 </div>
                 <div class="col-12 col-lg-8">
                     <div class="products-area">
-                        <div class="top-bar">
+                        <div class="top-bar d-none">
                             <div class="row">
                                 <div class="col-12 col-lg-12">
                                     <div class="row align-items-center">
