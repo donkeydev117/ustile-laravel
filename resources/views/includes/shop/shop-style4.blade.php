@@ -8,6 +8,11 @@
         background: #1a1a1a66;
         color: #fff;
     }
+    .fitler-color-item {
+        /* width:   */
+        width: 100%;
+        padding-top: 100%;
+    }
 </style>
 
 <!-- Shop Page One content -->
@@ -91,42 +96,64 @@
                             </div>
                             @endforeach
                         </div>
-                        
                     </div>
                     {{-- Render Colors --}}
                     <div class="right-menu-colors mt-4">
                         <h5>{{__('Color')}}</h5>
-                        @foreach($colors as $color)
-                        <span>{{ $color->color }}</span>
-                        @endforeach
+                        <div class="row">
+                            @foreach($colors as $color)
+                            {{-- <span>{{ $color->color }}</span> --}}
+                            <div class="col-md-2 pl-1 pr-1" >
+                                <div class='fitler-color-item' style='background-color:{{$color->code}}'>
+
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                      
                     </div>
                     {{-- Render Shades --}}
                     <div class="right-menu-shades mt-4">
                         <h5>{{__('Shade')}}</h5>
-                        @foreach($shades as $shade)
-                        <span>{{ $shade->name }}</span>
-                        @endforeach
+                        <select class="form-control">
+                            <option>Select Items</option>
+                            @foreach($shades as $shade)
+                            <option value="{{ $shade->id}}">{{ $shade->name }}</option>
+                            @endforeach
+                        </select>
+                       
                     </div>
                     {{-- Render Finishes --}}
                     <div class="right-menu-finishes mt-4">
                         <h5>{{__('Finish')}}</h5>
-                        @foreach($finishes as $finish)
-                        <span>{{ $finish->name }}</span>
-                        @endforeach
+                        <select class="form-control">
+                            <option>Select Items</option>
+                            @foreach($finishes as $finish)
+                            <option value='{{ $finish->id }}'>{{ $finish->name }}</option>
+                            @endforeach
+                        </select>
+                        
                     </div>
                     {{-- Render Shapes --}}
                     <div class="right-menu-shapes mt-4">
                         <h5>{{__('Shape')}}</h5>
-                        @foreach($shapes as $shape)
-                        <span>{{ $shape->name }}</span>
-                        @endforeach
+                        <select class="form-control">
+                            <option>Select Items</option>
+                            @foreach($shapes as $shape)
+                            <option value="{{ $shape->id }}">{{ $shape->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     {{-- Render Look & Trend --}}
                     <div class="right-menu-shapes mt-4">
                         <h5>{{__('Look & Trend')}}</h5>
-                        @foreach($looktrends as $looktrend)
-                        <span>{{ $looktrend->name }}</span>
-                        @endforeach
+                        <select name="" id="" class="form-control">
+                            <option>Select Items</option>
+                            @foreach($looktrends as $looktrend)
+                           <option value='{{ $looktrend->id }}'>{{ $looktrend->name }}</option>
+                            @endforeach
+                        </select>
+                       
                     </div>
 
                   
