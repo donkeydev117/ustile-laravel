@@ -16,6 +16,11 @@ use App\Models\Admin\Customer;
 use App\Models\Admin\PaymentMethod;
 use App\Models\Admin\PaymentMethodSetting;
 use App\Models\Admin\Material;
+use App\Models\Admin\Color;
+use App\Models\Admin\Shade;
+use App\Models\Admin\Shape;
+use App\Models\Admin\Finish;
+use App\Models\Admin\LookTrend;
 use Carbon\Carbon;
 use DB;
 use App\Jobs\OrderProcess;
@@ -99,10 +104,17 @@ class IndexController extends Controller
         $attribute = $attribute->getVariationDetailByLanguageId($languageId);
         $attribute = $attribute->get();
         $brand = Brand::all();
+        $materials = Material::all();
+        $colors = Color::all();
+        $shades = Shade::all();
+        $shapes = Shape::all();
+        $finishes = Finish::all();
+        $looktrends = LookTrend::all();
+
         $data['attribute'] = $attribute;
         $data['price_range'] = ['0-500', '500-1000', '1000-2000'];
         $data['brand'] = $brand;
-        return view('shop', compact('data'));
+        return view('shop', compact('data', 'materials', 'colors', 'shades', 'shapes', 'finishes', 'looktrends'));
     }
 
     public function cartPage()

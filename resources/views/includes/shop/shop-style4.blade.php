@@ -21,6 +21,7 @@
                 <div class="col-12 col-lg-4  d-lg-block d-xl-block right-menu">
                     {{-- Render Categories --}}
                     <div class="right-menu-categories">
+                        <h5>{{__('Categories')}}</h5>
                         @foreach ($data['category'] as $category)
                             @if ($category->parent == null)
                                 <a class=" main-manu" data-toggle="collapse" href="#{{ $category->category_slug }}" role="button"
@@ -46,6 +47,58 @@
                             </div>
                         @endforeach
                     </div>
+                    {{-- Applications --}}
+                    <div class="right-menu-applications">
+                        <h5>Application</h5>
+                        <span>Kitchen</span>
+                        <span>Foyer</span>
+                        <span>Bathroom</span>
+                    </div>
+                    {{-- Render Materials --}}
+                    <div class="right-menu-materials">
+                        <h5>{{ __('Material')}}</h5>
+                        @foreach($materials as $material)
+                        <span>{{ $material->name }}</span>
+                        @endforeach
+                    </div>
+                    {{-- Render Colors --}}
+                    <div class="right-menu-colors">
+                        <h5>{{__('Color')}}</h5>
+                        @foreach($colors as $color)
+                        <span>{{ $color->color }}</span>
+                        @endforeach
+                    </div>
+                    {{-- Render Shades --}}
+                    <div class="right-menu-shades">
+                        <h5>{{__('Shade')}}</h5>
+                        @foreach($shades as $shade)
+                        <span>{{ $shade->name }}</span>
+                        @endforeach
+                    </div>
+                    {{-- Render Finishes --}}
+                    <div class="right-menu-finishes">
+                        <h5>{{__('Finish')}}</h5>
+                        @foreach($finishes as $finish)
+                        <span>{{ $finish->name }}</span>
+                        @endforeach
+                    </div>
+                    {{-- Render Shapes --}}
+                    <div class="right-menu-shapes">
+                        <h5>{{__('Shape')}}</h5>
+                        @foreach($shapes as $shape)
+                        <span>{{ $shape->name }}</span>
+                        @endforeach
+                    </div>
+                    {{-- Render Look & Trend --}}
+                    <div class="right-menu-shapes">
+                        <h5>{{__('Look & Trend')}}</h5>
+                        @foreach($looktrends as $looktrend)
+                        <span>{{ $looktrend->name }}</span>
+                        @endforeach
+                    </div>
+
+                  
+                    {{-- End filter options done --}}
 
                     <div class="range-slider-main">
                         <a class=" main-manu" data-toggle="collapse" data-target="#price" role="button" aria-expanded="true" aria-controls="men-cloth">
