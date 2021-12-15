@@ -10,25 +10,26 @@
     </nav>
 </div> 
 <section class="pro-content">
-    <div class="container">
+    <div class="container-fluid pl-4 pr-4">
         <div class="page-heading-title">
             <h2> {{ trans('lables.shop-shop') }} </h2>
         </div>
     </div>
     <section class="shop-content shop-two">
-        <div class="container">
+        <div class="container-fluid pl-4 pr-4">
             <div class="row">
-                <div class="col-12 col-lg-3  d-lg-block d-xl-block right-menu">
+                <div class="col-12 col-lg-4  d-lg-block d-xl-block right-menu">
+                    {{-- Render Categories --}}
                     <div class="right-menu-categories">
                         @foreach ($data['category'] as $category)
                             @if ($category->parent == null)
-                                <a class=" main-manu" data-toggle="collapse" href="#{{ $category->detail[0]->category_name }}" role="button"
-                                    aria-expanded="false" aria-controls="{{ $category->detail[0]->category_name }}">
+                                <a class=" main-manu" data-toggle="collapse" href="#{{ $category->category_slug }}" role="button"
+                                    aria-expanded="false" aria-controls="{{ $category->category_slug }}">
                                     <img class="img-fuild" src="{{ asset('gallary/'.$category->icon->name) }}">
                                     {{ $category->detail[0]->category_name }}
                                 </a>
                             @endif
-                            <div class="sub-manu collapse multi-collapse" id="{{ $category->detail[0]->category_name }}">
+                            <div class="sub-manu collapse multi-collapse" id="{{ $category->category_slug }}">
                                 <ul class="unorder-list">
                                     @foreach ($data['category'] as $childCategory)
                                         @if ($childCategory->parent != null)
@@ -121,7 +122,7 @@
                         <a href="#"><img class="img-fluid" src="{{ asset("assets/front/images/shop/side-image.jpg") }}"></a>
                     </div>
                 </div>
-                <div class="col-12 col-lg-9">
+                <div class="col-12 col-lg-8">
                     <div class="products-area">
                         <div class="top-bar">
                             <div class="row">
