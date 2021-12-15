@@ -1,3 +1,15 @@
+<style>
+    .filter-item-label{
+        position: absolute;
+        bottom: 0;
+        left: 0.5rem;
+        right: 0.5rem;
+        text-align: center;
+        background: #1a1a1a66;
+        color: #fff;
+    }
+</style>
+
 <!-- Shop Page One content -->
 <div class="container-fuild">
     <nav aria-label="breadcrumb">
@@ -48,49 +60,69 @@
                         @endforeach
                     </div>
                     {{-- Applications --}}
-                    <div class="right-menu-applications">
+                    <div class="right-menu-applications mt-4">
                         <h5>Application</h5>
-                        <span>Kitchen</span>
+                        {{-- <span>Kitchen</span>
                         <span>Foyer</span>
-                        <span>Bathroom</span>
+                        <span>Bathroom</span> --}}
+                        <div class="row">
+                            <div class="col-md-4 pl-2 pr-2">
+                                <img src='/gallary/large202112104256FOREST_LIANA.jpeg' class="w-100" />
+                                <span class='filter-item-label'>Kitchen</span>
+                            </div>
+                            <div class="col-md-4 pl-2 pr-2">
+                                <img src='/gallary/large202112103948ONE_COAL.jpeg' class="w-100" />
+                                <span class='filter-item-label'>Foyer</span>
+                            </div>
+                            <div class="col-md-4 pl-2 pr-2">
+                                <img src='/gallary/large202112103948ONE_COAL.jpeg' class="w-100" />
+                                <span class='filter-item-label'>Bathroom</span>
+                            </div>
+                        </div>
                     </div>
                     {{-- Render Materials --}}
-                    <div class="right-menu-materials">
+                    <div class="right-menu-materials mt-4">
                         <h5>{{ __('Material')}}</h5>
-                        @foreach($materials as $material)
-                        <span>{{ $material->name }}</span>
-                        @endforeach
+                        <div class="row">
+                            @foreach($materials as $material)
+                            <div class="col-md-4 pl-2 pr-2">
+                                <img src='{{ $material->media }}' class="w-100" />
+                                <span class='filter-item-label'>{{ $material->name }}</span>
+                            </div>
+                            @endforeach
+                        </div>
+                        
                     </div>
                     {{-- Render Colors --}}
-                    <div class="right-menu-colors">
+                    <div class="right-menu-colors mt-4">
                         <h5>{{__('Color')}}</h5>
                         @foreach($colors as $color)
                         <span>{{ $color->color }}</span>
                         @endforeach
                     </div>
                     {{-- Render Shades --}}
-                    <div class="right-menu-shades">
+                    <div class="right-menu-shades mt-4">
                         <h5>{{__('Shade')}}</h5>
                         @foreach($shades as $shade)
                         <span>{{ $shade->name }}</span>
                         @endforeach
                     </div>
                     {{-- Render Finishes --}}
-                    <div class="right-menu-finishes">
+                    <div class="right-menu-finishes mt-4">
                         <h5>{{__('Finish')}}</h5>
                         @foreach($finishes as $finish)
                         <span>{{ $finish->name }}</span>
                         @endforeach
                     </div>
                     {{-- Render Shapes --}}
-                    <div class="right-menu-shapes">
+                    <div class="right-menu-shapes mt-4">
                         <h5>{{__('Shape')}}</h5>
                         @foreach($shapes as $shape)
                         <span>{{ $shape->name }}</span>
                         @endforeach
                     </div>
                     {{-- Render Look & Trend --}}
-                    <div class="right-menu-shapes">
+                    <div class="right-menu-shapes mt-4">
                         <h5>{{__('Look & Trend')}}</h5>
                         @foreach($looktrends as $looktrend)
                         <span>{{ $looktrend->name }}</span>
@@ -171,9 +203,9 @@
                         </div>
                     </div>
 
-                    <div class="img-main">
+                    {{-- <div class="img-main">
                         <a href="#"><img class="img-fluid" src="{{ asset("assets/front/images/shop/side-image.jpg") }}"></a>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col-12 col-lg-8">
                     <div class="products-area">

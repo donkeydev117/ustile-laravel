@@ -44,4 +44,15 @@ class Gallary extends Model
     {
         return $this->hasMany(GallaryTag::class);
     }
+
+    public function thumbnail(){
+        $details = $this->detail();
+        $thumbnail = null;
+        foreach($details as $gallary){
+            if($gallary->gallery_type == 'thumbnail'){
+                $thumbnail = $gallary;
+            }
+        }
+        return $thumbnail;
+    }
 }
