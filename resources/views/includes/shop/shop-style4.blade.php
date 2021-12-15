@@ -15,7 +15,7 @@
     }
     .filter-application-item{
         width: 100%;
-        padding-top: 100%;
+        padding-top: 80%;
         background-size: cover;
         background-position: center;
     }
@@ -73,9 +73,6 @@
                     {{-- Applications --}}
                     <div class="right-menu-applications mt-4">
                         <h5>Application</h5>
-                        {{-- <span>Kitchen</span>
-                        <span>Foyer</span>
-                        <span>Bathroom</span> --}}
                         <div class="row">
                             <div class="col-md-4 pl-2 pr-2">
                                 <div class="filter-application-item" style='background-image:url(/images/applications/kitchen.jpeg)'></div>
@@ -97,7 +94,7 @@
                         <div class="row">
                             @foreach($materials as $material)
                             <div class="col-md-3 pl-2 pr-2">
-                                <img src='{{ $material->media }}' class="w-100" />
+                                <div class="filter-application-item" style='background-image:url({{ $material->media }})'></div>
                                 <span class='filter-item-label'>{{ $material->name }}</span>
                             </div>
                             @endforeach
