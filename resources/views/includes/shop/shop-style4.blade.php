@@ -13,6 +13,12 @@
         width: 100%;
         padding-top: 100%;
     }
+    .filter-application-item{
+        width: 100%;
+        padding-top: 100%;
+        background-size: cover;
+        background-position: center;
+    }
 </style>
 
 <!-- Shop Page One content -->
@@ -72,15 +78,15 @@
                         <span>Bathroom</span> --}}
                         <div class="row">
                             <div class="col-md-4 pl-2 pr-2">
-                                <img src='/images/applications/kitchen.jpeg' class="w-100" />
+                                <div class="filter-application-item" style='background-image:url(/images/applications/kitchen.jpeg)'></div>
                                 <span class='filter-item-label'>Kitchen</span>
                             </div>
                             <div class="col-md-4 pl-2 pr-2">
-                                <img src='/images/applications/foyer.jpg' class="w-100" />
+                                <div class="filter-application-item" style='background-image:url(/images/applications/foyer.jpg)'></div>
                                 <span class='filter-item-label'>Foyer</span>
                             </div>
                             <div class="col-md-4 pl-2 pr-2">
-                                <img src='/images/applications/bathroom.jpeg' class="w-100" />
+                                <div class="filter-application-item" style='background-image:url(/images/applications/bathroom.jpeg)'></div>
                                 <span class='filter-item-label'>Bathroom</span>
                             </div>
                         </div>
