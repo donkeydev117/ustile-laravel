@@ -85,7 +85,7 @@
                         <h5>{{ __('Material')}}</h5>
                         <div class="row">
                             @foreach($materials as $material)
-                            <div class="col-md-4 pl-2 pr-2">
+                            <div class="col-md-3 pl-2 pr-2">
                                 <img src='{{ $material->media }}' class="w-100" />
                                 <span class='filter-item-label'>{{ $material->name }}</span>
                             </div>
