@@ -47,7 +47,7 @@
     <section class="shop-content shop-two pl-4 pr-2">
         <div class="container-fluid pl-4 pr-4">
             <div class="row">
-                <div class="col-12 col-lg-4 d-lg-block d-xl-block right-menu">
+                <div class="col-12 col-lg-4 d-lg-block d-xl-block right-menu nicescroll" style="height: 100vh; overflow: auto">
                     {{-- Render Categories --}}
                     <div class="right-menu-categories">
                         <h5>{{__('Categories')}}</h5>
@@ -120,8 +120,10 @@
                             </div>
                             @endforeach
                         </div>
-                      
                     </div>
+
+                    <hr />
+
                     {{-- Render Shades --}}
                     <div class="right-menu-shades mt-4">
                         <h5>{{__('Shade')}}</h5>
@@ -134,6 +136,9 @@
                             @endforeach
                         </div>
                     </div>
+                    
+                    <hr />
+
                     {{-- Render Finishes --}}
                     <div class="right-menu-finishes mt-4">
                         <h5>{{__('Finish')}}</h5>
@@ -146,6 +151,9 @@
                             @endforeach
                         </div>
                     </div>
+
+                    <hr />
+
                     {{-- Render Shapes --}}
                     <div class="right-menu-shapes mt-4">
                         <h5>{{__('Shape')}}</h5>
@@ -158,6 +166,9 @@
                             @endforeach
                         </div>
                     </div>
+
+                    <hr />
+
                     {{-- Render Look & Trend --}}
                     <div class="right-menu-shapes mt-4">
                         <h5>{{__('Look & Trend')}}</h5>
@@ -171,7 +182,7 @@
                         </div>
                     </div>
 
-                  
+                    <hr />
                     {{-- End filter options done --}}
 
                     <div class="range-slider-main">
@@ -223,7 +234,7 @@
                         <a href="#"><img class="img-fluid" src="{{ asset("assets/front/images/shop/side-image.jpg") }}"></a>
                     </div> --}}
                 </div>
-                <div class="col-12 col-lg-8">
+                <div class="col-12 col-lg-8 nicescroll" style="height: 100vh; overflow: auto">
                     <div class="products-area">
                         <div class="top-bar d-none">
                             <div class="row">
