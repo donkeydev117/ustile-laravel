@@ -42,6 +42,10 @@
     fetchProduct(1);
   })
 
+  function showProductQuickView(input){
+
+  }
+
   function fetchProduct(page){
     var limit = "{{ isset($_GET['limit']) ? $_GET['limit']:'12' }}";
     var category = "{{ isset($_GET['category']) ? $_GET['category'] :"" }}";
@@ -111,7 +115,7 @@
             clone.querySelector(".quick-view-icon").setAttribute('data-id', data.data[i].product_id);
             clone.querySelector(".wishlist-icon").setAttribute('onclick', 'addWishlist(this)');
             clone.querySelector(".compare-icon").setAttribute('onclick', 'addCompare(this)');
-            clone.querySelector(".quick-view-icon").setAttribute('onclick', 'quiclViewData(this)');
+            clone.querySelector(".quick-view-icon").setAttribute('onclick', 'showProductQuickView(this)');
 
             if (data.data[i].product_gallary != null) {
               if (data.data[i].product_gallary.detail != null) {

@@ -17,9 +17,7 @@
                                 data-placement="bottom" title="" data-original-title="Wishlist">
                                 <i class="fas fa-heart"></i>
                             </a>
-                            <div class="icon swipe-to-top quick-view-icon" data-toggle="modal" data-target="#quickViewModal"
-                                data-tooltip="tooltip" data-placement="bottom" title=""
-                                data-original-title="Quick View">
+                            <div class="icon swipe-to-top quick-view-icon" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Quick View">
                                 <i class="fas fa-eye"></i>
                             </div>
                             <a href="javascript:void(0)" class="icon swipe-to-top compare-icon" data-toggle="tooltip"
