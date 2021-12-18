@@ -51,6 +51,12 @@
     <section class="shop-content shop-two pl-4 pr-2">
         <div class="container-fluid pl-4 pr-4">
             <div class="row">
+                <div class="col-12 col-lg-4 right-menu nicescroll d-none quick-view-right-menu">
+
+                </div>
+                <div class="col-12 col-lg-4 right-menu nicescroll d-none compare-view-right-menu">
+
+                </div>
                 <div class="col-12 col-lg-4 d-lg-block d-xl-block right-menu nicescroll">
                     {{-- Render Categories --}}
                     <div class="right-menu-categories">
