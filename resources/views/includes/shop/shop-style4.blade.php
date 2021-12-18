@@ -25,6 +25,10 @@
     .right-menu{
         padding-right: 40px !important;
     }
+    .nicescroll{
+        height: 100vh;
+        overflow: auto;
+    }
 </style>
 
 <!-- Shop Page One content -->
@@ -47,7 +51,7 @@
     <section class="shop-content shop-two pl-4 pr-2">
         <div class="container-fluid pl-4 pr-4">
             <div class="row">
-                <div class="col-12 col-lg-4 d-lg-block d-xl-block right-menu nicescroll" style="height: 100vh; overflow: auto">
+                <div class="col-12 col-lg-4 d-lg-block d-xl-block right-menu nicescroll">
                     {{-- Render Categories --}}
                     <div class="right-menu-categories">
                         <h5>{{__('Categories')}}</h5>
@@ -234,7 +238,7 @@
                         <a href="#"><img class="img-fluid" src="{{ asset("assets/front/images/shop/side-image.jpg") }}"></a>
                     </div> --}}
                 </div>
-                <div class="col-12 col-lg-8 nicescroll" style="height: 100vh; overflow: auto">
+                <div class="col-12 col-lg-8 nicescroll">
                     <div class="products-area">
                         <div class="top-bar d-none">
                             <div class="row">
