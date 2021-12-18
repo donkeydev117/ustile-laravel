@@ -58,7 +58,7 @@
                 <div class="col-12 col-lg-4 right-menu nicescroll d-none compare-view-right-menu">
 
                 </div>
-                <div class="col-12 col-lg-4 d-lg-block d-xl-block right-menu nicescroll">
+                <div class="col-12 col-lg-4 right-menu nicescroll">
                     {{-- Render Categories --}}
                     <div class="right-menu-categories">
                         <h5>{{__('Categories')}}</h5>

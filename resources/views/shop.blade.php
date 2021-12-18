@@ -43,7 +43,55 @@
   })
 
   function showProductQuickView(input){
+    const product_type = $.trim($(input).attr('data-type'));
+    const product_id = $.trim($(input).attr('data-id'));
+    $(".quick-view-right-menu").html("");
+    $.ajax({
+      type: 'get',
+      url: "{{ url('') }}" + '/api/client/products/' + product_id +
+          '?getCategory=1&getDetail=1&language_id=' + languageId + '&currency=' + localStorage.getItem(
+              "currency"),
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+          clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+      },
+      beforeSend: function() {},
+      success: function(data) {
+        if (data.status == 'Success') {
+          const templ = document.getElementById("product-quick-view-item-template");
+          const clone = templ.content.cloneNode(true);
+          if (data.data.product_gallary != null && data.data.product_gallary != 'null' && data.data.product_gallary != '') {
+            if (data.data.product_gallary.detail != null && data.data.product_gallary.detail !=
+                'null' && data.data.product_gallary.detail != '') {
+                clone.querySelector(".quick-view-image").setAttribute('src', data.data.product_gallary.detail[1].gallary_path);
+            }
+          }
+          if (data.data.detail != null && data.data.detail != 'null' && data.data.detail != '') {
+              clone.querySelector(".quick-view-image").setAttribute('alt', data.data.detail[0].title);
+          }
+          if (data.data.category != null && data.data.category != 'null' && data.data.category !='') {
+              for (j = 0; j < data.data.category.length; j++) {
+                  if (data.data.category[j].category_detail != null && data.data.category[j].category_detail != 'null' && data.data.category[j].category_detail != '') {
+                      if (data.data.category[j].category_detail.detail != null && data.data.category[j].category_detail.detail != 'null' && data.data.category[j].category_detail.detail != '') {
+                          clone.querySelector(".quick-view-categories").innerHTML ='<li><a href="javascript:void(0)">' + data.data.category[j].category_detail.detail[0].name + '</a></li>';
+                      }
+                  }
+              }
+          }
+          if (data.data.detail != null && data.data.detail != 'null' && data.data.detail != '') {
+              clone.querySelector(".product-quick-view-title").innerHTML = data.data.detail[0].title;
+              clone.querySelector(".product-quick-view-description").innerHTML = data.data.detail[0].desc.replace(/<\/?[^>]+>/gi, '').substring(0,250)
+          }
+          clone.querySelector('.product-quick-view-price').innerHTML=data.data.product_price_symbol;
+          clone.querySelector(".product-quick-view-product-id").innerHTML = data.data.product_id;
+          $(".right-menu").addClass("d-none");
+          $(".quick-view-right-menu").html(clone).removeClass("d-none");
+        }
 
+      
+      }
+    });
   }
 
   function fetchProduct(page){

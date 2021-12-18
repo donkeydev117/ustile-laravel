@@ -1,4 +1,4 @@
-<template>
+<template id="product-quick-view-item-template">
     <div class="row">
         <input type="hidden" class="product-quick-view-product-id">
         {{-- Product Title --}}
@@ -31,7 +31,7 @@
 
         {{-- Product Categories --}}
         <div class="col-sm-12 product-quick-view-categories-container">
-
+            <ul class="quick-view-categories"></ul>
         </div>
 
         {{-- Product Features --}}
