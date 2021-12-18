@@ -2,6 +2,7 @@
 @section('content')
  
 @include(isset(getSetting()['shop']) ? 'includes.shop.shop-'.getSetting()['shop'] : 'includes.shop.shop-style1')
+<link rel="stylesheet" type="text/css" href="/assets/front/css/toggle-switch.css">
 <style>
   .variation_active{
     border: 1px solid;
