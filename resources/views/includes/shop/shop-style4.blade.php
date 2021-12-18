@@ -296,18 +296,16 @@
     </section> 
 </section>
 
-<fieldset>
-    <legend>View</legend>
+<div style="width:300px;">
     <div class="switch-toggle switch-candy">
-      <input id="week" name="view" type="radio" checked>
-      <label for="week" onclick="">Compare</label>
-  
-      <input id="month" name="view" type="radio">
-      <label for="month" onclick="">Filter</label>
-  
-      <input id="day" name="view" type="radio">
-      <label for="day" onclick="">View</label>
-  
-      <a></a>
+        <input id="week" name="view" type="radio" checked>
+        <label for="week" onclick="">Compare</label>
+
+        <input id="month" name="view" type="radio">
+        <label for="month" onclick="">Filter</label>
+
+        <input id="day" name="view" type="radio">
+        <label for="day" onclick="">View</label>
+        <a></a>
     </div>
-  </fieldset>
+</div>
