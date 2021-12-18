@@ -31,6 +31,7 @@
     }
 </style>
 
+@include('product-quick-view')
 <!-- Shop Page One content -->
 <div class="container-fuild">
     <nav aria-label="breadcrumb">
