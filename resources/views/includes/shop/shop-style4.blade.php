@@ -41,6 +41,9 @@
     .switch-toggle{
         width: 300px;
     }
+    .filter-selected .filter-application-item {
+        border: 2px solid blue;
+    }
 </style>
 
 @include('product-quick-view')
@@ -100,15 +103,15 @@
                         <div class="right-menu-applications mt-4">
                             <h5>Application</h5>
                             <div class="row pr-4">
-                                <div class="col-md-4 pr-2">
+                                <div class="col-md-4 pr-2 filter-item filter-application" data-id='kitchen' data-filter="application" >
                                     <div class="filter-application-item" style='background-image:url(/images/applications/kitchen.jpeg)'></div>
                                     <span class='filter-item-label'>Kitchen</span>
                                 </div>
-                                <div class="col-md-4 pr-2">
+                                <div class="col-md-4 pr-2 filter-item filter-application" data-id="foyer" data-filter="application">
                                     <div class="filter-application-item" style='background-image:url(/images/applications/foyer.jpg)'></div>
                                     <span class='filter-item-label'>Foyer</span>
                                 </div>
-                                <div class="col-md-4 pr-2">
+                                <div class="col-md-4 pr-2 filter-item filter-application" data-id='bathroom' data-filter="application">
                                     <div class="filter-application-item" style='background-image:url(/images/applications/bathroom.jpeg)'></div>
                                     <span class='filter-item-label'>Bathroom</span>
                                 </div>
@@ -120,7 +123,7 @@
                             <h5>{{ __('Material')}}</h5>
                             <div class="row">
                                 @foreach($materials as $material)
-                                <div class="col-md-3 pr-2">
+                                <div class="col-md-3 pr-2 filter-item filter-material" data-id="{{ $material->id }}" data-filter="material">
                                     <div class="filter-application-item" style='background-image:url({{ $material->media }})'></div>
                                     <span class='filter-item-label'>{{ $material->name }}</span>
                                 </div>
@@ -133,7 +136,7 @@
                             <h5>{{__('Color')}}</h5>
                             <div class="row">
                                 @foreach($colors as $color)
-                                <div class="col-md-2 pr-2" >
+                                <div class="col-md-2 pr-2 filter-item filter-color" data-id="{{ $color->id}}" data-filter="color"  >
                                     <div class='fitler-color-item' style='background-color:{{$color->code}}'>
     
                                     </div>
@@ -149,7 +152,7 @@
                             <h5>{{__('Shade')}}</h5>
                             <div class="row">
                                 @foreach($shades as $shade)
-                                <div class="col-md-3 pr-2">
+                                <div class="col-md-3 pr-2 filter-item filter-shade" data-id="{{ $shade->id }}" data-filter="shade">
                                     <div class="filter-application-item" style='background-image:url({{ $shade->media }})'></div>
                                     <span class='filter-item-label'>{{ $shade->name }}</span>
                                 </div>
@@ -164,7 +167,7 @@
                             <h5>{{__('Finish')}}</h5>
                             <div class="row">
                                 @foreach($finishes as $finish)
-                                <div class="col-md-3 pr-2">
+                                <div class="col-md-3 pr-2 filter-item filter-finish" data-id="{{ $finish->id}}" data-filter="finish">
                                     <div class="filter-application-item" style='background-image:url({{ $finish->media }})'></div>
                                     <span class='filter-item-label'>{{ $finish->name }}</span>
                                 </div>
@@ -179,7 +182,7 @@
                             <h5>{{__('Shape')}}</h5>
                             <div class="row">
                                 @foreach($shapes as $shape)
-                                <div class="col-md-3 pr-2">
+                                <div class="col-md-3 pr-2 filter-item filter-shade" data-id="{{ $shape->id }}" data-filter="shade">
                                     <div class="filter-application-item" style='background-image:url({{ $shape->media }})'></div>
                                     <span class='filter-item-label'>{{ $shape->name }}</span>
                                 </div>
@@ -194,7 +197,7 @@
                             <h5>{{__('Look & Trend')}}</h5>
                             <div class="row">
                                 @foreach($looktrends as $looktrend)
-                                <div class="col-md-3 pr-2">
+                                <div class="col-md-3 pr-2 filter-item filter-looktrend" data-id="{{ $looktrend->id }}" data-filter="looktrend">
                                     <div class="filter-application-item" style='background-image:url({{ $looktrend->media }})'></div>
                                     <span class='filter-item-label'>{{ $looktrend->name }}</span>
                                 </div>

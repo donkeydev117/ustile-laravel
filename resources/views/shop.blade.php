@@ -25,8 +25,6 @@
   var shopStyle = "{{ getSetting()['shop'] }}";
   $(document).ready(function() {
     fetchProduct(1);
-
-
     $(".variaion-filter").each(function() {
       if($(this).val() != ""){
         attribute_id.push($(this).attr('data-attribute-id'));
@@ -34,8 +32,16 @@
         attribute.push($(this).attr('data-attribute-name'));
         variation.push($('option:selected', this).attr('data-variation-name'));
       }
-      
     });
+
+    $(".filter-item").on("click", function(){
+      var id = $(this).data("id");
+      var filter = $(this).data('filter');
+      $(this).toggleClass("filter-selected");
+      if($(this).hasClass("filter-selected")){
+        console.log("selected");
+      }
+    })
   });
 
   $('.sortBy').change(function(){
@@ -104,7 +110,6 @@
             }
             $(".compare-view-right-menu").removeClass("d-none");
             $("#switch-quick-view-compare").prop("checked", "checked");
-
           }
           
         }
