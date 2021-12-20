@@ -25,6 +25,8 @@
   var shopStyle = "{{ getSetting()['shop'] }}";
   $(document).ready(function() {
     fetchProduct(1);
+
+
     $(".variaion-filter").each(function() {
       if($(this).val() != ""){
         attribute_id.push($(this).attr('data-attribute-id'));
@@ -43,7 +45,7 @@
     fetchProduct(1);
   })
 
-  function showProductQuickView(input){
+  function showProductQuickViewOrAddCompare(input, show="show"){
     const product_type = $.trim($(input).attr('data-type'));
     const product_id = $.trim($(input).attr('data-id'));
     $(".quick-view-right-menu").html("");
@@ -85,15 +87,54 @@
               clone.querySelector(".product-quick-view-description").innerHTML = data.data.detail[0].desc.replace(/<\/?[^>]+>/gi, '').substring(0,250)
           }
           clone.querySelector('.product-quick-view-price').innerHTML=data.data.product_price_symbol;
-          clone.querySelector(".product-quick-view-product-id").innerHTML = data.data.product_id;
-          $(".right-menu").addClass("d-none");
-          $(".quick-view-right-menu").html(clone).removeClass("d-none");
-        }
+          clone.querySelector(".product-quick-view-product-id").value = data.data.product_id;
+          clone.querySelector(".product-quick-view-product-id").classList.add("product-id-" + data.data.product_id);
 
-      
+          if(show == "show"){
+            $(".right-menu-content").addClass("d-none");
+            const compare_content = $(clone).clone();
+            $(".quick-view-right-menu").html(clone).removeClass("d-none");
+            $(".compare-view-right-menu").html(compare_content);
+            $("#switch-quick-view-view").prop("checked", "checked");
+            $("#right-menu-switch-container").removeClass("d-none");
+          } else if(show == "compare"){
+            $(".right-menu-content").addClass("d-none");
+            if($(".compare-view-right-menu").find(".product-id-" + data.data.product_id).length == 0){
+              $(".compare-view-right-menu").append(clone);
+            }
+            $(".compare-view-right-menu").removeClass("d-none");
+            $("#switch-quick-view-compare").prop("checked", "checked");
+
+          }
+          
+        }
       }
     });
   }
+
+  $("#switch-quick-view-filter-label").on("click", function(){
+    $("#switch-quick-filter-view").prop("checked", "checked");
+    $(".quick-view-right-menu").addClass("d-none");
+    $(".compare-view-right-menu").addClass("d-none");
+    $(".filter-view-right-menu").removeClass("d-none");
+  });
+
+  $("#switch-quick-view-view-label").on("click", function(){
+    $("#switch-quick-view-view").prop("checked", "checked");
+    $(".filter-view-right-menu").addClass("d-none");
+    $(".compare-view-right-menu").addClass("d-none");
+    $(".quick-view-right-menu").removeClass("d-none");
+
+  });
+
+  $("#switch-quick-view-compare-label").on("click", function(){
+    $("#switch-quick-compare-view").prop("checked", "checked");
+    $(".filter-view-right-menu").addClass("d-none");
+    $(".quick-view-right-menu").addClass("d-none");
+    $(".compare-view-right-menu").removeClass("d-none");
+
+  });
+
 
   function fetchProduct(page){
     var limit = "{{ isset($_GET['limit']) ? $_GET['limit']:'12' }}";
@@ -163,8 +204,8 @@
             clone.querySelector(".compare-icon").setAttribute('data-type', data.data[i].product_type);
             clone.querySelector(".quick-view-icon").setAttribute('data-id', data.data[i].product_id);
             clone.querySelector(".wishlist-icon").setAttribute('onclick', 'addWishlist(this)');
-            clone.querySelector(".compare-icon").setAttribute('onclick', 'addCompare(this)');
-            clone.querySelector(".quick-view-icon").setAttribute('onclick', 'showProductQuickView(this)');
+            clone.querySelector(".compare-icon").setAttribute('onclick', 'showProductQuickViewOrAddCompare(this, "compare")');
+            clone.querySelector(".quick-view-icon").setAttribute('onclick', 'showProductQuickViewOrAddCompare(this, "show")');
 
             if (data.data[i].product_gallary != null) {
               if (data.data[i].product_gallary.detail != null) {

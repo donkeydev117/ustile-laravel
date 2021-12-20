@@ -20,9 +20,12 @@
                             <div class="icon swipe-to-top quick-view-icon" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Quick View">
                                 <i class="fas fa-eye"></i>
                             </div>
-                            <a href="javascript:void(0)" class="icon swipe-to-top compare-icon" data-toggle="tooltip"
+                            <div class="icon swipe-to-top compare-icon" data-tooltip="tooltip" data-placement="bottom" title="Add to Compare" data-original-title="Add to Compare">
+                                <i class="fas fa-align-right" data-fa-transform="rotate-90"></i>
+                            </div>
+                            {{-- <a href="javascript:void(0)" class="icon swipe-to-top compare-icon" data-toggle="tooltip"
                                 data-placement="bottom" title="" data-original-title="Compare"><i
-                                    class="fas fa-align-right" data-fa-transform="rotate-90"></i></a>
+                                    class="fas fa-align-right" data-fa-transform="rotate-90"></i></a> --}}
                         </div>
                         <a class="btn btn-block btn-secondary swipe-to-top product-card-link" href="javascript:void(0)"
                             data-toggle="tooltip" data-placement="bottom" title=""

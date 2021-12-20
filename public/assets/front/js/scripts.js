@@ -4534,6 +4534,7 @@ $.noConflict();
 
 jQuery( document ).ready(function() {
     (function(jQuery){
+
         var tabCarousel = jQuery('.tab-carousel-js');
             if (tabCarousel.length) {
                 

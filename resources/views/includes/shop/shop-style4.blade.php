@@ -29,6 +29,18 @@
         height: 100vh;
         overflow: auto;
     }
+    .right-menu-switch-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        bottom: 10px;
+        width: 100%;
+        z-index: 10;
+    }
+    .switch-toggle{
+        width: 300px;
+    }
 </style>
 
 @include('product-quick-view')
@@ -52,198 +64,210 @@
     <section class="shop-content shop-two pl-4 pr-2">
         <div class="container-fluid pl-4 pr-4">
             <div class="row">
-                <div class="col-12 col-lg-4 right-menu nicescroll d-none quick-view-right-menu">
-
-                </div>
-                <div class="col-12 col-lg-4 right-menu nicescroll d-none compare-view-right-menu">
-
-                </div>
                 <div class="col-12 col-lg-4 right-menu nicescroll">
+                    <div class="right-menu-content d-none quick-view-right-menu"></div>
+                    <div class="right-menu-content d-none compare-view-right-menu"></div>
                     {{-- Render Categories --}}
-                    <div class="right-menu-categories">
-                        <h5>{{__('Categories')}}</h5>
-                        @foreach ($data['category'] as $category)
-                            @if ($category->parent == null)
-                                <a class=" main-manu" data-toggle="collapse" href="#{{ $category->category_slug }}" role="button"
-                                    aria-expanded="false" aria-controls="{{ $category->category_slug }}">
-                                    <img class="img-fuild" src="{{ asset('gallary/'.$category->icon->name) }}">
-                                    {{ $category->detail[0]->category_name }}
-                                </a>
-                            @endif
-                            <div class="sub-manu collapse multi-collapse" id="{{ $category->category_slug }}">
-                                <ul class="unorder-list">
-                                    @foreach ($data['category'] as $childCategory)
-                                        @if ($childCategory->parent != null)
-                                            @if ($childCategory->parent->id === $category->id)
-                                                <li class="list-item">
-                                                    <a class="list-link" href="{{ url('/shop?category='.$childCategory->id) }}">
-                                                        <i class="fas fa-angle-right"></i>{{ $childCategory->detail[0]->category_name }}
-                                                    </a>
-                                                </li>
+                    <div class="right-menu-content filter-view-right-menu">
+                        <div class="right-menu-categories">
+                            <h5>{{__('Categories')}}</h5>
+                            @foreach ($data['category'] as $category)
+                                @if ($category->parent == null)
+                                    <a class=" main-manu" data-toggle="collapse" href="#{{ $category->category_slug }}" role="button"
+                                        aria-expanded="false" aria-controls="{{ $category->category_slug }}">
+                                        <img class="img-fuild" src="{{ asset('gallary/'.$category->icon->name) }}">
+                                        {{ $category->detail[0]->category_name }}
+                                    </a>
+                                @endif
+                                <div class="sub-manu collapse multi-collapse" id="{{ $category->category_slug }}">
+                                    <ul class="unorder-list">
+                                        @foreach ($data['category'] as $childCategory)
+                                            @if ($childCategory->parent != null)
+                                                @if ($childCategory->parent->id === $category->id)
+                                                    <li class="list-item">
+                                                        <a class="list-link" href="{{ url('/shop?category='.$childCategory->id) }}">
+                                                            <i class="fas fa-angle-right"></i>{{ $childCategory->detail[0]->category_name }}
+                                                        </a>
+                                                    </li>
+                                                @endif
                                             @endif
-                                        @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endforeach
+                        </div>
+                        {{-- Applications --}}
+                        <div class="right-menu-applications mt-4">
+                            <h5>Application</h5>
+                            <div class="row pr-4">
+                                <div class="col-md-4 pr-2">
+                                    <div class="filter-application-item" style='background-image:url(/images/applications/kitchen.jpeg)'></div>
+                                    <span class='filter-item-label'>Kitchen</span>
+                                </div>
+                                <div class="col-md-4 pr-2">
+                                    <div class="filter-application-item" style='background-image:url(/images/applications/foyer.jpg)'></div>
+                                    <span class='filter-item-label'>Foyer</span>
+                                </div>
+                                <div class="col-md-4 pr-2">
+                                    <div class="filter-application-item" style='background-image:url(/images/applications/bathroom.jpeg)'></div>
+                                    <span class='filter-item-label'>Bathroom</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        {{-- Render Materials --}}
+                        <div class="right-menu-materials mt-4">
+                            <h5>{{ __('Material')}}</h5>
+                            <div class="row">
+                                @foreach($materials as $material)
+                                <div class="col-md-3 pr-2">
+                                    <div class="filter-application-item" style='background-image:url({{ $material->media }})'></div>
+                                    <span class='filter-item-label'>{{ $material->name }}</span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <hr />
+                        {{-- Render Colors --}}
+                        <div class="right-menu-colors mt-4">
+                            <h5>{{__('Color')}}</h5>
+                            <div class="row">
+                                @foreach($colors as $color)
+                                <div class="col-md-2 pr-2" >
+                                    <div class='fitler-color-item' style='background-color:{{$color->code}}'>
+    
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+    
+                        <hr />
+    
+                        {{-- Render Shades --}}
+                        <div class="right-menu-shades mt-4">
+                            <h5>{{__('Shade')}}</h5>
+                            <div class="row">
+                                @foreach($shades as $shade)
+                                <div class="col-md-3 pr-2">
+                                    <div class="filter-application-item" style='background-image:url({{ $shade->media }})'></div>
+                                    <span class='filter-item-label'>{{ $shade->name }}</span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        
+                        <hr />
+    
+                        {{-- Render Finishes --}}
+                        <div class="right-menu-finishes mt-4">
+                            <h5>{{__('Finish')}}</h5>
+                            <div class="row">
+                                @foreach($finishes as $finish)
+                                <div class="col-md-3 pr-2">
+                                    <div class="filter-application-item" style='background-image:url({{ $finish->media }})'></div>
+                                    <span class='filter-item-label'>{{ $finish->name }}</span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+    
+                        <hr />
+    
+                        {{-- Render Shapes --}}
+                        <div class="right-menu-shapes mt-4">
+                            <h5>{{__('Shape')}}</h5>
+                            <div class="row">
+                                @foreach($shapes as $shape)
+                                <div class="col-md-3 pr-2">
+                                    <div class="filter-application-item" style='background-image:url({{ $shape->media }})'></div>
+                                    <span class='filter-item-label'>{{ $shape->name }}</span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+    
+                        <hr />
+    
+                        {{-- Render Look & Trend --}}
+                        <div class="right-menu-shapes mt-4">
+                            <h5>{{__('Look & Trend')}}</h5>
+                            <div class="row">
+                                @foreach($looktrends as $looktrend)
+                                <div class="col-md-3 pr-2">
+                                    <div class="filter-application-item" style='background-image:url({{ $looktrend->media }})'></div>
+                                    <span class='filter-item-label'>{{ $looktrend->name }}</span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+    
+                        <hr />
+                        {{-- End filter options done --}}
+    
+                        <div class="range-slider-main">
+                            <a class=" main-manu" data-toggle="collapse" data-target="#price" role="button" aria-expanded="true" aria-controls="men-cloth">
+                                {{ trans('lables.shop-price') }} 
+                            </a>
+    
+                            <div class="sub-manu collapse show multi-collapse" id="price">
+                                <ul class="unorder-list">
+                                    @foreach ($data['price_range'] as $price_range)
+                                        <li class="list-item">
+                                            @if (isset($_GET['price']) && $_GET['price'] == $price_range)
+                                                <a class="list-link price-range-list price-range-list-{{ $price_range }} price-active" style="cursor: pointer;"
+                                                    data-price-range={{ $price_range }}>{{ $price_range }}
+                                                </a>
+                                            @else
+                                                <a class="list-link price-range-list price-range-list-{{ $price_range }}" style="cursor: pointer;"
+                                                    data-price-range={{ $price_range }}>{{ $price_range }}
+                                                </a>
+                                            @endif
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>
-                        @endforeach
-                    </div>
-                    {{-- Applications --}}
-                    <div class="right-menu-applications mt-4">
-                        <h5>Application</h5>
-                        <div class="row pr-4">
-                            <div class="col-md-4 pr-2">
-                                <div class="filter-application-item" style='background-image:url(/images/applications/kitchen.jpeg)'></div>
-                                <span class='filter-item-label'>Kitchen</span>
-                            </div>
-                            <div class="col-md-4 pr-2">
-                                <div class="filter-application-item" style='background-image:url(/images/applications/foyer.jpg)'></div>
-                                <span class='filter-item-label'>Foyer</span>
-                            </div>
-                            <div class="col-md-4 pr-2">
-                                <div class="filter-application-item" style='background-image:url(/images/applications/bathroom.jpeg)'></div>
-                                <span class='filter-item-label'>Bathroom</span>
-                            </div>
                         </div>
-                    </div>
-                    <hr />
-                    {{-- Render Materials --}}
-                    <div class="right-menu-materials mt-4">
-                        <h5>{{ __('Material')}}</h5>
-                        <div class="row">
-                            @foreach($materials as $material)
-                            <div class="col-md-3 pr-2">
-                                <div class="filter-application-item" style='background-image:url({{ $material->media }})'></div>
-                                <span class='filter-item-label'>{{ $material->name }}</span>
-                            </div>
-                            @endforeach
+    
+                        <div class="range-slider-main">
+                            <button class="btn btn-primary filter-from-sidebar">{{ trans('lables.shop-apply') }}</button>
+                            <a href="{{ url('/shop') }}" class="btn btn-primary">{{ trans('lables.shop-reset') }} </a>
                         </div>
-                    </div>
-                    <hr />
-                    {{-- Render Colors --}}
-                    <div class="right-menu-colors mt-4">
-                        <h5>{{__('Color')}}</h5>
-                        <div class="row">
-                            @foreach($colors as $color)
-                            <div class="col-md-2 pr-2" >
-                                <div class='fitler-color-item' style='background-color:{{$color->code}}'>
-
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <hr />
-
-                    {{-- Render Shades --}}
-                    <div class="right-menu-shades mt-4">
-                        <h5>{{__('Shade')}}</h5>
-                        <div class="row">
-                            @foreach($shades as $shade)
-                            <div class="col-md-3 pr-2">
-                                <div class="filter-application-item" style='background-image:url({{ $shade->media }})'></div>
-                                <span class='filter-item-label'>{{ $shade->name }}</span>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    
-                    <hr />
-
-                    {{-- Render Finishes --}}
-                    <div class="right-menu-finishes mt-4">
-                        <h5>{{__('Finish')}}</h5>
-                        <div class="row">
-                            @foreach($finishes as $finish)
-                            <div class="col-md-3 pr-2">
-                                <div class="filter-application-item" style='background-image:url({{ $finish->media }})'></div>
-                                <span class='filter-item-label'>{{ $finish->name }}</span>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <hr />
-
-                    {{-- Render Shapes --}}
-                    <div class="right-menu-shapes mt-4">
-                        <h5>{{__('Shape')}}</h5>
-                        <div class="row">
-                            @foreach($shapes as $shape)
-                            <div class="col-md-3 pr-2">
-                                <div class="filter-application-item" style='background-image:url({{ $shape->media }})'></div>
-                                <span class='filter-item-label'>{{ $shape->name }}</span>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <hr />
-
-                    {{-- Render Look & Trend --}}
-                    <div class="right-menu-shapes mt-4">
-                        <h5>{{__('Look & Trend')}}</h5>
-                        <div class="row">
-                            @foreach($looktrends as $looktrend)
-                            <div class="col-md-3 pr-2">
-                                <div class="filter-application-item" style='background-image:url({{ $looktrend->media }})'></div>
-                                <span class='filter-item-label'>{{ $looktrend->name }}</span>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <hr />
-                    {{-- End filter options done --}}
-
-                    <div class="range-slider-main">
-                        <a class=" main-manu" data-toggle="collapse" data-target="#price" role="button" aria-expanded="true" aria-controls="men-cloth">
-                            {{ trans('lables.shop-price') }} 
-                        </a>
-
-                        <div class="sub-manu collapse show multi-collapse" id="price">
-                            <ul class="unorder-list">
-                                @foreach ($data['price_range'] as $price_range)
+                        <div class="range-slider-main">
+                            <a class=" main-manu" data-toggle="collapse" href="#brands" role="button" aria-expanded="true" aria-controls="men-cloth">
+                                {{ trans('lables.shop-brands') }} 
+                            </a>
+                            <div class="sub-manu collapse show multi-collapse" id="brands">
+                                <ul class="unorder-list">
+                                    @foreach ($data['brand'] as $brand )
                                     <li class="list-item">
-                                        @if (isset($_GET['price']) && $_GET['price'] == $price_range)
-                                            <a class="list-link price-range-list price-range-list-{{ $price_range }} price-active" style="cursor: pointer;"
-                                                data-price-range={{ $price_range }}>{{ $price_range }}
-                                            </a>
-                                        @else
-                                            <a class="list-link price-range-list price-range-list-{{ $price_range }}" style="cursor: pointer;"
-                                                data-price-range={{ $price_range }}>{{ $price_range }}
-                                            </a>
-                                        @endif
+                                        <a class="brands-btn list-item" href="{{ url('/shop?brand='.$brand->id) }}" role="button">
+                                            <i class="fas fa-angle-right"></i>{{ $brand->name }}
+                                        </a>
                                     </li>
-                                @endforeach
-                            </ul>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+    
+                        {{-- <div class="img-main">
+                            <a href="#"><img class="img-fluid" src="{{ asset("assets/front/images/shop/side-image.jpg") }}"></a>
+                        </div> --}}
+                    </div>
+                   
+                    <div class="right-menu-switch-container d-none" id="right-menu-switch-container">
+                        <div class="switch-toggle switch-candy">
+                            <input id="switch-quick-view-compare" name="switch-quick-view" type="radio">
+                            <label for="switch-quick-view-compare" id="switch-quick-view-compare-label">Compare</label>
+                    
+                            <input id="switch-quick-view-filter" name="switch-quick-view" type="radio">
+                            <label for="switch-quick-view-filter" id="switch-quick-view-filter-label">Filter</label>
+                    
+                            <input id="switch-quick-view-view" name="switch-quick-view" type="radio">
+                            <label for="switch-quick-view-view" id="switch-quick-view-view-label">View</label>
+                            <a></a>
                         </div>
                     </div>
-
-                    <div class="range-slider-main">
-                        <button class="btn btn-primary filter-from-sidebar">{{ trans('lables.shop-apply') }}</button>
-                        <a href="{{ url('/shop') }}" class="btn btn-primary">{{ trans('lables.shop-reset') }} </a>
-                    </div>
-                    <div class="range-slider-main">
-                        <a class=" main-manu" data-toggle="collapse" href="#brands" role="button" aria-expanded="true" aria-controls="men-cloth">
-                            {{ trans('lables.shop-brands') }} 
-                        </a>
-                        <div class="sub-manu collapse show multi-collapse" id="brands">
-                            <ul class="unorder-list">
-                                @foreach ($data['brand'] as $brand )
-                                <li class="list-item">
-                                    <a class="brands-btn list-item" href="{{ url('/shop?brand='.$brand->id) }}" role="button">
-                                        <i class="fas fa-angle-right"></i>{{ $brand->name }}
-                                    </a>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-
-                    {{-- <div class="img-main">
-                        <a href="#"><img class="img-fluid" src="{{ asset("assets/front/images/shop/side-image.jpg") }}"></a>
-                    </div> --}}
                 </div>
                 <div class="col-12 col-lg-8 nicescroll">
                     <div class="products-area">
@@ -296,16 +320,5 @@
     </section> 
 </section>
 
-<div style="width:300px;">
-    <div class="switch-toggle switch-candy">
-        <input id="week" name="view" type="radio" checked>
-        <label for="week" onclick="">Compare</label>
 
-        <input id="month" name="view" type="radio">
-        <label for="month" onclick="">Filter</label>
 
-        <input id="day" name="view" type="radio">
-        <label for="day" onclick="">View</label>
-        <a></a>
-    </div>
-</div>
