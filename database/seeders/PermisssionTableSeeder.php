@@ -756,6 +756,10 @@ class PermisssionTableSeeder extends Seeder
             'value' => 'product-look-trend',
             'parent_id' => 5
         ]);
-        
+        Permission::insertOrIgnore([
+            'key' => 'Project Tags',
+            'value' => 'project-tags',
+            'parent_id' => 78
+        ]);
     }
 }

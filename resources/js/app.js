@@ -107,7 +107,7 @@ let routes = [
             { path: '/admin/home-setting', component: require('./components/admin/HomePageSetting.vue').default, name: 'home-page-builder', meta: { auth: true } },
             { path: '/admin/slider-setting', component: require('./components/admin/SliderSetting.vue').default, name: 'slider-bannder-manage', meta: { auth: true } },
             { path: '/admin/banner-setting', component: require('./components/admin/BannerSetting.vue').default, name: 'mobile-slider-bannder-list', meta: { auth: true } },
-            
+            { path: '/admin/project-tags', component: require('./components/admin/ProjectTags.vue').default, name: 'project-tags', meta: { auth: true } },
             
             
 
