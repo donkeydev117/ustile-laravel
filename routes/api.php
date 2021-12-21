@@ -184,6 +184,7 @@ Route::group(['prefix' => 'client', 'middleware' => ['checkClientCredentials']],
     Route::resource('country', 'API\Admin\CountryController', ['names' => ['index' => 'client.country.index']])->only(['index', 'show']);
     Route::resource('state', 'API\Admin\StateController', ['names' => ['index' => 'client.state.index']])->only(['index', 'show']);
     Route::resource('products', 'API\Admin\ProductController')->only(['index', 'show']);
+    Route::post("products", 'API\Admin\ProductController@filter');
     Route::post('products/price-range', 'API\Admin\ProductController@priceRange');
     Route::resource('category', 'API\Admin\CategoryController', ['names' => ['index' => 'client.category.index', 'show' => 'client.category.show']])->except(['store', 'update', 'destroy', 'edit', 'create']);
     Route::resource('brand', 'API\Admin\BrandController', ['names' => ['index' => 'client.brand.index', 'show' => 'client.banner.show']])->except(['store', 'update', 'destroy', 'edit', 'create']);

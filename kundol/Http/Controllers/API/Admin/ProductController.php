@@ -6,10 +6,12 @@ use App\Contract\Admin\ProductInterface;
 use App\Http\Controllers\Controller as Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Admin\Product;
+use App\Models\Admin\ProductVariationAlt;
 use App\Repository\Admin\ProductRepository;
 use App\Services\Admin\ProductService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
@@ -83,5 +85,14 @@ class ProductController extends Controller
 
         }
         return $this->ProductRepository->sku($request);
+    }
+
+
+    public function filter(Request $request){
+
+        $params = $request->all();
+        
+        return $this->ProductRepository->filter($params);
+
     }
 }

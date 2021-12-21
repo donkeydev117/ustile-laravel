@@ -9,11 +9,8 @@
         color: #fff;
     }
     .fitler-color-item {
-        /* width:   */
-        width: 100%;
-        padding-top: 100%;
-        border-radius: 50%;
-        cursor: pointer;
+        padding-top: 100% !important;
+        border-radius: 50% !important;
     }
     .filter-application-item{
         width: 100%;
@@ -137,7 +134,7 @@
                             <div class="row">
                                 @foreach($colors as $color)
                                 <div class="col-md-2 pr-2 filter-item filter-color" data-id="{{ $color->id}}" data-filter="color"  >
-                                    <div class='fitler-color-item' style='background-color:{{$color->code}}'>
+                                    <div class='fitler-color-item filter-application-item' style='background-color:{{$color->code}}'>
     
                                     </div>
                                 </div>
@@ -182,7 +179,7 @@
                             <h5>{{__('Shape')}}</h5>
                             <div class="row">
                                 @foreach($shapes as $shape)
-                                <div class="col-md-3 pr-2 filter-item filter-shade" data-id="{{ $shape->id }}" data-filter="shade">
+                                <div class="col-md-3 pr-2 filter-item filter-shade" data-id="{{ $shape->id }}" data-filter="shape">
                                     <div class="filter-application-item" style='background-image:url({{ $shape->media }})'></div>
                                     <span class='filter-item-label'>{{ $shape->name }}</span>
                                 </div>
@@ -193,7 +190,7 @@
                         <hr />
     
                         {{-- Render Look & Trend --}}
-                        <div class="right-menu-shapes mt-4">
+                        <div class="right-menu-looktrend mt-4">
                             <h5>{{__('Look & Trend')}}</h5>
                             <div class="row">
                                 @foreach($looktrends as $looktrend)

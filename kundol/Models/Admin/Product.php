@@ -196,4 +196,8 @@ class Product extends Model
         $warehouse_id = Setting::type('pos', 'default_warehouse')->value('value');
         return $this->hasOne(AvailableQty::class, 'product_id', 'id')->where('warehouse_id', $warehouse_id);
     }
+
+    public function variations(){
+        return $this->hasMany('App\Models\Admin\ProductVariationAlt', "product_id", "id");
+    }
 }

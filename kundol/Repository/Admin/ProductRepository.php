@@ -512,4 +512,68 @@ class ProductRepository implements ProductInterface
             return $this->successResponseArray('SKU-s-000', 'Latest SKU get Successfully!');
         }
     }
+
+
+    public function filter($params){
+        $query = Product::with('detail')->with('productGallaryDetail')->with('category');
+
+        foreach($params as $key => $filterOptions){
+            switch($key){
+                case "application": 
+                    {
+                        foreach($filterOptions as $option){
+                            $query->orWhere("application", 'LIKE', '%'.$option.'%');
+                        }
+                    }
+                    break;
+                case "material": 
+                    {
+                        foreach($filterOptions as $option){
+                            $query->orWhere("material", $option);
+                        }
+                    }
+                    break;
+                case "shade": 
+                    {
+                        foreach($filterOptions as $option){
+                            $query->orWhereRelation("variations","shade", $option);
+                        }
+                    }
+                    break;
+                case "color": 
+                    {
+                        foreach($filterOptions as $option){
+                            $query->orWhereRelation("variations", "color", $option);
+                        }
+                    }
+                    break;
+                case "finish": 
+                    {
+                        foreach($filterOptions as $option){
+                            $query->orWhereRelation("variations","finish", $option);
+                        }
+                    }
+                    break;
+                case "shape": 
+                    {
+                        foreach($filterOptions as $option){
+                            $query->orWhereRelation("variations","shape", $option);
+                        }
+                    }
+                    break;
+                case "looktrend": 
+                    {
+                        foreach($filterOptions as $option){
+                            $query->orWhereRelation("variations","look", $option);
+                        }
+                    }
+                    break;
+                default: break;
+            }
+        }
+
+        $data = $query->get();
+        
+        return $this->successResponseArray(ProductResource::collection($data), "Filter Success");
+    }
 }

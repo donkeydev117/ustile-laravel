@@ -1,5 +1,5 @@
 <template id="product-quick-view-item-template">
-    <div class="row product-quick-view-container">
+    <div class="row product-quick-view-item-container">
         <input type="hidden" class="product-quick-view-product-id">
         {{-- Product Title --}}
         <div class="col-sm-12">
