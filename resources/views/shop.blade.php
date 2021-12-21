@@ -363,6 +363,11 @@
             
           $("."+appendTo).append(clone);
         }
+
+        if(data.data.length == 0){
+          var empty = "<p class='text-center w-100'>No tiles.</p>";
+          $("."+appendTo).html(empty);
+        }
       }
     })
 

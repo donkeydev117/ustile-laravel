@@ -103,7 +103,7 @@ class IndexController extends Controller
         $attribute = $attribute->getAttributeDetailByLanguageId($languageId);
         $attribute = $attribute->getVariationDetailByLanguageId($languageId);
         $attribute = $attribute->get();
-        $brand = Brand::all();
+        $brand = Brand::with('gallary')->get();
         $materials = Material::all();
         $colors = Color::all();
         $shades = Shade::all();

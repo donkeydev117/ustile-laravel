@@ -524,15 +524,22 @@ class ProductRepository implements ProductInterface
                         foreach($filterOptions as $option){
                             $query->orWhere("application", 'LIKE', '%'.$option.'%');
                         }
+                        break;
                     }
-                    break;
                 case "material": 
                     {
                         foreach($filterOptions as $option){
                             $query->orWhere("material", $option);
                         }
+                        break;
                     }
-                    break;
+                case "brand":
+                    {
+                        foreach($filterOptions as $option){
+                            $query->orWhere("brand_id", $option);
+                        }
+                        break;
+                    }
                 case "shade": 
                     {
                         foreach($filterOptions as $option){

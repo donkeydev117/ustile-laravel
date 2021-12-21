@@ -64,7 +64,7 @@
     <section class="shop-content shop-two pl-4 pr-2">
         <div class="container-fluid pl-4 pr-4">
             <div class="row">
-                <div class="col-12 col-lg-4 right-menu nicescroll">
+                <div class="col-12 col-lg-3 right-menu nicescroll">
                     <div class="right-menu-content d-none quick-view-right-menu"></div>
                     <div class="right-menu-content d-none compare-view-right-menu"></div>
                     {{-- Render Categories --}}
@@ -203,9 +203,23 @@
                         </div>
     
                         <hr />
+
+                        {{-- Render For Brand --}}
+                        <div class="right-menu-brand mt-4">
+                            <h5>{{ __("Brands")}}</h5>
+                            <div class="row">
+                                @foreach($data['brand'] as $brand)
+                                <div class="col-md-3 pr-2 filter-item filter-brand" data-id="{{ $brand->id }}" data-filter="brand">
+                                    <div class="filter-application-item" style='background-image:url({{ $brand->gallary->detail[0]->path }})'></div>
+                                    <span class='filter-item-label'>{{ $brand->name }}</span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
                         {{-- End filter options done --}}
-    
-                        <div class="range-slider-main">
+                        
+                        {{-- Price --}}
+                        {{-- <div class="range-slider-main">
                             <a class=" main-manu" data-toggle="collapse" data-target="#price" role="button" aria-expanded="true" aria-controls="men-cloth">
                                 {{ trans('lables.shop-price') }} 
                             </a>
@@ -228,28 +242,11 @@
                                 </ul>
                             </div>
                         </div>
-    
-                        <div class="range-slider-main">
+     --}}
+                        {{-- <div class="range-slider-main">
                             <button class="btn btn-primary filter-from-sidebar">{{ trans('lables.shop-apply') }}</button>
                             <a href="{{ url('/shop') }}" class="btn btn-primary">{{ trans('lables.shop-reset') }} </a>
-                        </div>
-                        <div class="range-slider-main">
-                            <a class=" main-manu" data-toggle="collapse" href="#brands" role="button" aria-expanded="true" aria-controls="men-cloth">
-                                {{ trans('lables.shop-brands') }} 
-                            </a>
-                            <div class="sub-manu collapse show multi-collapse" id="brands">
-                                <ul class="unorder-list">
-                                    @foreach ($data['brand'] as $brand )
-                                    <li class="list-item">
-                                        <a class="brands-btn list-item" href="{{ url('/shop?brand='.$brand->id) }}" role="button">
-                                            <i class="fas fa-angle-right"></i>{{ $brand->name }}
-                                        </a>
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-    
+                        </div> --}}
                         {{-- <div class="img-main">
                             <a href="#"><img class="img-fluid" src="{{ asset("assets/front/images/shop/side-image.jpg") }}"></a>
                         </div> --}}
@@ -269,7 +266,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-8 nicescroll">
+                <div class="col-12 col-lg-9 nicescroll">
                     <div class="products-area">
                         <div class="top-bar d-none">
                             <div class="row">
