@@ -1,7 +1,8 @@
 @extends('layouts.master')
 @section('content')
- 
+
 @include(isset(getSetting()['shop']) ? 'includes.shop.shop-'.getSetting()['shop'] : 'includes.shop.shop-style1')
+
 <link rel="stylesheet" type="text/css" href="/assets/front/css/toggle-switch.css">
 <style>
   .variation_active{
@@ -139,6 +140,7 @@
   });
 
 
+
   function fetchProduct(page){
     var limit = "{{ isset($_GET['limit']) ? $_GET['limit']:'12' }}";
     var category = "{{ isset($_GET['category']) ? $_GET['category'] :"" }}";
@@ -209,6 +211,8 @@
             clone.querySelector(".wishlist-icon").setAttribute('onclick', 'addWishlist(this)');
             clone.querySelector(".compare-icon").setAttribute('onclick', 'showProductQuickViewOrAddCompare(this, "compare")');
             clone.querySelector(".quick-view-icon").setAttribute('onclick', 'showProductQuickViewOrAddCompare(this, "show")');
+            clone.querySelector(".project-icon").setAttribute('data-id', data.data[i].product_id);
+            clone.querySelector(".project-icon").setAttribute('onclick', 'showAddToProjectModal(this)');
 
             if (data.data[i].product_gallary != null) {
               if (data.data[i].product_gallary.detail != null) {

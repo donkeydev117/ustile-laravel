@@ -26,6 +26,8 @@
     <link rel="stylesheet" type="text/css" href="{{ isset(getSetting()['color']) ? asset('assets/front/css/'.getSetting()['color'].'.css') :  asset('assets/front/css/style.css') }}">
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/front/css/dropdown.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
@@ -34,6 +36,35 @@
 </head>
 
 <body class="animation-s1 nicescroll {{ $data['direction'] === 'rtl' ? 'bodyrtl' : '' }}">
+
+    <style>
+        #addToProjectModal .dropdown-list{
+            width: 100% !important;
+            height: 100% !important;
+        }
+        #addToProjectModal .dropdown-menu {
+            margin : 0 !important;
+            width: 100% !important;
+        }
+        #addToProjectModal .dropdown-text{
+            width: 100% !important
+        }
+        #addToProjectModal .dropdown-toggle{
+            width : 100% !important
+        }
+        #addToProjectModal .dropdown,
+        #addToProjectModal .dropdown-menu-wrapper,
+        #addToProjectModal .dropdown-menu-container{
+            width: 100% !important;
+        }
+        #addToProjectModal .dropdown-toggle .dropdown-icon{
+            margin-left: 0 !important;
+
+        }
+        #addToProjectModal .dropdown-toggle::after{
+            content: none !important;
+        }
+    </style>
   
     @include('extras.preloader')
     @include(isset(getSetting()['header_style']) ? 'includes.headers.header-'.getSetting()['header_style'] :
@@ -59,18 +90,20 @@
 
     @include('extras.settings')
     @include('modals.product-quick-view')
+    @include('modals.addToProjectModal')
+    @include("modals.createProjectModal")
 
     <!-- All custom scripts here -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+    <script src="{{ asset('assets/front/js/jquery.dropdown.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('assets/front/js/scripts.js') }}"></script>
-
 
     @php
         $language_id = $data['selectedLenguage'];
         $locale = session()->get('locale');
-        //dd ($locale);
     @endphp
     <script>
         toastr.options = {
@@ -904,6 +937,21 @@
                 error: function(data) {},
             });
         }
+
+        $(document).ready(function(){
+            $("#add_to_project_select_project").dropdown({
+                titleText:'Please select a project',
+            });
+            $("#add_to_project_select_tag").select2({
+                tags: true
+            })
+        })
+
+        function showAddToProjectModal(input){
+            var pid = $(input).data('id');
+            $("#add_to_project_product_id").val(pid);
+        }
+
     </script>
 
     @yield('script')
