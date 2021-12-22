@@ -3,6 +3,7 @@ use App\Models\Admin\Setting;
 use App\Models\Admin\CurrentTheme;
 use App\Models\Admin\Currency;
 use App\Models\DemoSettings;
+use App\Models\Admin\ProjectTag;
 
 if(!function_exists("getSetting")){
 
@@ -58,5 +59,12 @@ if(!function_exists("currencyConvertor")){
                 $calculatedValue.' '.$currency->code;
             }
         }
+    }
+}
+
+if(!function_exists('getProjectTags')){
+    function getProjectTags(){
+        $tags = ProjectTag::where("is_active", 1)->get();
+        return $tags;
     }
 }

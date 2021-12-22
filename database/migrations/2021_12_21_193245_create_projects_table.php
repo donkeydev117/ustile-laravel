@@ -19,6 +19,7 @@ class CreateProjectsTable extends Migration
             $table->integer("parent_id")->default(0);
             $table->date("expired_at")->default(date('Y-m-d', strtotime("+30 days")));
             $table->boolean("is_active")->default(true);
+            $table->integer("user_id");
             $table->timestamps();
         });
     }

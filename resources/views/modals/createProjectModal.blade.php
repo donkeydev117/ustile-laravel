@@ -15,10 +15,15 @@
                     <input type="text" class="form-control" name="project_name" id="create_project_project_name" />
                 </div>
                 <div class="col-sm-12 form-group">
-                    <label>Project</label>
-                    <select class="form-control">
+                    <label>Parent Project</label>
+                    <select class="form-control" id="create_projcet_parent_id">
                         <option value="0">Select a parent project</option>
                     </select>
+                </div>
+
+                <div class="col-sm-12 form-group">
+                  <label class="control-lable">Expire at</label>
+                  <input type="date" class="form-control" id="create_project_expire_at" />
                 </div>
             </div>
         </div>
