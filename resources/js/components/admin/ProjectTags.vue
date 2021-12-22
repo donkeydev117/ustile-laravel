@@ -34,19 +34,19 @@
                                 <thead class="text-body">
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">ID</th>
-                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Shape</th>
-                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Image</th>
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Tag</th>
+                                        <th class="sorting" tabindex="0" aria-controls="productColorTable" rowspan="1" colspan="1">Active</th>
                                         <th class="no-sort sorting_disabled" rowspan="1" colspan="1">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="kt-table-tbody text-dark">
-                                    <tr class="kt-table-row kt-table-row-level-0 odd" role="row" v-for="m_shape in shapes" v-bind:key="m_shape.id">
-                                        <td class="sorting_1">{{m_shape.id}}</td>
-                                        <td>{{ m_shape.name }}</td>
-                                        <td><img :src='m_shape.media' style='width: 50px; height:50px' /></td>
+                                    <tr class="kt-table-row kt-table-row-level-0 odd" role="row" v-for="m_tag in tags" v-bind:key="m_tag.id">
+                                        <td class="sorting_1">{{m_tag.id}}</td>
+                                        <td>{{ m_tag.title }}</td>
+                                        <td>{{ m_tag.is_active ? "Active" : "Inactive" }}</td>
                                         <td>
-                                            <a href="javascript:void(0)" class=" click-edit" id="click-edit1" data-toggle="tooltip" title="" data-placement="right" data-original-title="Check out more demos" @click="editShape(m_shape)"><i class="fa fa-edit"></i></a>
-                                            <a class="" href="#" @click="deleteShape(m_shape.id)"><i class="fa fa-trash"></i></a>
+                                            <a href="javascript:void(0)" class=" click-edit" id="click-edit1" data-toggle="tooltip" title="" data-placement="right" data-original-title="Check out more demos" @click="editTag(m_tag)"><i class="fa fa-edit"></i></a>
+                                            <a class="" href="#" @click="deleteTag(m_tag.id)"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -60,7 +60,7 @@
    </div>
     <div class="offcanvas offcanvas-right kt-color-panel p-5 kt_notes_panel" v-if="displayForm" :class="displayForm ? 'offcanvas-on' : ''">
         <div class="offcanvas-header d-flex align-items-center justify-content-between pb-3">
-            <h4 class="font-size-h4 font-weight-bold m-0">Add Shape</h4>
+            <h4 class="font-size-h4 font-weight-bold m-0">Add Tag</h4>
             <a href="#" class="btn btn-sm btn-icon btn-light btn-hover-primary kt_notes_panel_close" v-on:click="clearForm()">
                 <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
@@ -71,24 +71,24 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
-                        <label class="text-dark">Shape Name</label>
-                        <input type="text" v-model='shape.name' class="form-control" />
-                        <small class="form-text text-danger" v-if="errors.has('name')" v-text="errors.get('name')"></small>
+                        <label class="text-dark">Tag Name</label>
+                        <input type="text" v-model='tag.title' class="form-control" />
+                        <small class="form-text text-danger" v-if="errors.has('title')" v-text="errors.get('title')"></small>
                     </div>
                     
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary" @click="toggleImageSelect()">Upload Shape Thumbnail</button>
-                        <small id="textHelp" class="form-text text-muted">Select Image file from gallary.</small>
-                        <small class="form-text text-danger" v-if="errors.has('media')" v-text="errors.get('media')"></small>
-
-                        <img v-if="shape.media != ''" :src="shape.media" style="width:100px;height:100px;"/>
+                        <label class="text-dark">Status</label>
+                        <select class="form-control" v-model="tag.is_active">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                        <small class="form-text text-danger" v-if="errors.has('is_active')" v-text="errors.get('is_active')"></small>
                     </div>
                 </div>
             </div>
-            <button type="button" @click="addUpdateShape()" class="btn btn-primary">Submit</button>
+            <button type="button" @click="addUpdateTag()" class="btn btn-primary">Submit</button>
         </form>
     </div>
-    <attach-image @toggleImageSelect="toggleImageSelect" :showModal="showMediaSelector" @setImage="setImage"/>
 </div>
 </template>
 
@@ -106,49 +106,47 @@ export default {
             token: [],
             selectedLanguage:'',
             edit: false,
-            shapes:[],
-            shape: {
+            tags:[],
+            tag: {
                 id:"",
-                key: "",
-                name: "",
-                media: "",
+                title: "",
+                is_active: "active",
             },
-            showMediaSelector: false,
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
         };
     },
     methods: {
-        fetchShapes(){
+        fetchTags(){
             this.$parent.loading = true;
-            let page_url = "/api/admin/shape";
+            let page_url = "/api/admin/project_tags";
             axios.get(page_url, this.token).then(res => {
-                this.shapes = res.data;
+                this.tags = res.data;
             }).finally(() => (this.$parent.loading = false));
         },
         clearForm(){
             this.displayForm = !this.displayForm;
-            this.shape.id = '';
-            this.shape.name = '';
-            this.shape.media = '';
+            this.tag.id = '';
+            this.tag.title = '';
+            this.tag.is_active = 'active' ;
             this.edit = false;
         },
-        addUpdateShape(){
+        addUpdateTag(){
             this.$parent.loading = true;
-            var url = '/api/admin/shape';
+            var url = '/api/admin/project_tags';
             if (this.edit === false) {
                 // Add
                 this.request_method = 'post'
             } else {
                 // Update
-                var url = '/api/admin/shape/' + this.shape.id;
+                var url = '/api/admin/project_tags/' + this.tag.id;
                 this.request_method = 'put'
             }
-            axios[this.request_method](url, this.shape, this.token)
+            axios[this.request_method](url, this.tag, this.token)
                 .then(res => {
                     if (res.data.status == "success") {
-                        this.$toaster.success('Shape has been updated successfully')
+                        this.$toaster.success('Project Tag has been updated successfully')
                         this.clearForm();
-                        this.fetchShapes();
+                        this.fetchTags();
                     } else {
                         this.$toaster.error(res.message)
                     }
@@ -166,23 +164,23 @@ export default {
 					}
 				}).finally(() => (this.$parent.loading = false));
         },
-        editShape(m){
+        editTag(m){
             this.edit = true;
             this.displayForm = 1;
             this.errors = new ErrorHandling();
-            this.shape.id = m.id;
-            this.shape.name = m.name;
-            this.shape.media = m.media;
+            this.tag.id = m.id;
+            this.tag.title = m.title;
+            this.tag.is_active = m.is_active ? "active" : "inactive";
         },
-        deleteShape(id){
+        deleteTag(id){
             let confirm = window.confirm("Are you sure?");
             if(!confirm) return;
             this.$parent.loading = true;
-            axios.delete(`/api/admin/shape/${id}`,this.token)
+            axios.delete(`/api/admin/project_tags/${id}`,this.token)
             .then(res => {
                 console.log(res);
                 this.$toaster.success('Shape has been removed successfully')
-                this.fetchShapes();
+                this.fetchTags();
             })
             .catch(error => {
                 console.log(error);
@@ -191,12 +189,6 @@ export default {
             .finally(() => this.$parent.loading = false );
             
         },
-        toggleImageSelect(){
-            this.showMediaSelector = !this.showMediaSelector;
-        },
-        setImage(gallery){
-            this.shape.media = gallery.gallary_path;
-        }
     },
     mounted() {
         
@@ -206,7 +198,7 @@ export default {
                 Authorization: `Bearer ${token}`
             }
         };
-        this.fetchShapes();
+        this.fetchTags();
      
     }
 };
