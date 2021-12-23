@@ -119,6 +119,12 @@
                 <ul class="pro-header-right-options">
                   <li>
                     <a href="{{ url('/wishlist') }}" class="btn" data-toggle="tooltip" data-placement="bottom" title="{{ trans('lables.header-wishlist') }}">
+                      <i class="far fa-folder"></i>
+                      <span class="badge badge-secondary wishlist-count">0</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{ url('/wishlist') }}" class="btn" data-toggle="tooltip" data-placement="bottom" title="{{ trans('lables.header-wishlist') }}">
                       <i class="far fa-heart"></i>
                       <span class="badge badge-secondary wishlist-count">0</span>
                     </a>
