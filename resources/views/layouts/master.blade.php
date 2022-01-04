@@ -938,13 +938,94 @@
             });
         }
 
+        function renderProjectOptions(projects, parent = ""){
+            if(projects == null || projects.length == 0) return;
+
+            projects.map(function(project){
+                var title = project.project.title;
+                if(parent !== "") title = parent + "/" + title;
+                var id = project.project.id;
+                var option = "<option value='"+ id +"'>" + title + "</option>";
+                $("#add_to_project_select_project").append(option);
+                $("#create_projcet_parent_id").append(option);
+                if(project.children.length){
+                    renderProjectOptions(project.children, title);
+                }
+            })
+
+        }
+
+        function getAllProject(){
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'Authorization': 'Bearer ' + customerToken,
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                    clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+                },
+                url: "{{ route('projects.getAll')}}",
+                dataType: "json",
+                success: function(res){
+                    console.log(res);
+                    var projects = res.projects;
+                    renderProjectOptions(projects);
+                    
+                }
+            })
+        }
+
+
         $(document).ready(function(){
-            $("#add_to_project_select_project").dropdown({
-                titleText:'Please select a project',
-            });
+            // $("#add_to_project_select_project").dropdown({
+            //     titleText:'Please select a project',
+            // });
             $("#add_to_project_select_tag").select2({
                 tags: true
             })
+
+            // Create Project Button
+            $("#create_project_btn").on("click", function(){
+                var title = $("#create_project_project_name").val();
+                var parent_id = $("#create_projcet_parent_id").val();
+                var expire_at = $("#create_project_expire_at").val();
+                if(title === "" || expire_at === "" ){
+                    return ;
+                }
+
+                $.ajax({
+                    headers: {
+                        'Authorization': 'Bearer ' + customerToken,
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                        clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+                    },
+                    type: "post",
+                    url: "/api/client/projects",
+                    data: {
+                        title: title,
+                        parent_id: parent_id,
+                        expire_at: expire_at
+                    },
+                    success: function(res){
+                        if(res.status == "success"){
+                            var defaultOption = "<option value='0'>Select a project</option>";
+                            $("#add_to_project_select_project").html(defaultOption);
+                            $("#create_projcet_parent_id").html(defaultOption);
+                            getAllProject();
+                            $("#close_create_project_modal").trigger("click");
+                        } else if( res.status == "error"){
+                            if(res.error == "auth_error"){
+                                alert("Please login first!");
+                            }
+                        }
+                    }
+                })
+
+            });
+
+            // Get all Projects
+            getAllProject();
         })
 
         function showAddToProjectModal(input){

@@ -14,35 +14,9 @@
                 <div class="col-sm-12 form-group">
                     <label>Project</label>
                     <div class="w-100">
-                        <ul id="add_to_project_select_project">
-                            <li>Item 1</li>
-                            <li data-dropdown-text="Item 2">
-                                <ul>
-                                    <li data-dropdown-text="Item 2.1">
-                                        <ul>
-                                            <li>Item 2.1.1</li>
-                                            <li>Item 2.1.2</li>
-                                            <li>Item 2.1.3</li>
-                                        </ul>
-                                    </li>
-                                    <li data-dropdown-text="Item 2.2">
-                                        <ul>
-                                            <li>Item 2.2.1</li>
-                                            <li>Item 2.2.2</li>
-                                            <li>Item 2.2.3</li>
-                                        </ul>
-                                    </li>
-                                    <li data-dropdown-text="Item 2.3">
-                                        <ul>
-                                            <li>Item 2.3.1</li>
-                                            <li>Item 2.3.2</li>
-                                            <li>Item 2.3.3</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>Item 3</li>
-                        </ul>
+                        <select class="form-control" id="add_to_project_select_project">
+                            <option>Select a project</option>
+                        </select>
                     </div>
                     <p class="mt-2 text-right mb-0 d-flex justify-content-between">Can't you find the project? <a data-toggle="modal" data-target="#createProjectModal" href="#">Create Project</a></p>
                 </div>

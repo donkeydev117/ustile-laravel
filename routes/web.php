@@ -106,6 +106,7 @@ Route::group(['middleware' => ['general','installer']], function () {
     Route::get('/orders/{id}', 'Web\IndexController@ordersDetail');
     Route::get('/profile', 'Web\IndexController@profile');
     Route::get('/thankyou', 'Web\IndexController@thankyou');
+    Route::get("/my-projects", 'Web\IndexController@myProject');
     Route::get('/shipping-address', 'Web\IndexController@shippingAddress');
 
     Route::get('/wishlist', 'Web\IndexController@wishlist');
@@ -144,9 +145,5 @@ Route::group(['middleware' => ['general','installer']], function () {
     
     Route::get('update-settings-by-user', 'Web\IndexController@updateSettingsByUser');
     Route::get('reset-demo-settings', 'Web\IndexController@ResetDemoSettings');
-
-    
-
-    
 
 });

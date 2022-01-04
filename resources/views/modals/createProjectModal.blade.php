@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Add to Project</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_create_project_modal">Close</button>
+          <button type="button" class="btn btn-primary" id="create_project_btn">Create Project</button>
         </div>
       </div>
     </div>

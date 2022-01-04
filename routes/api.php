@@ -167,6 +167,8 @@ Route::group(['prefix' => 'client', 'middleware' => ['auth:customer-api', 'scope
     Route::post('review', 'API\Web\ReviewController@store');
     Route::post('comment', 'API\Web\CommentController@store');
     Route::resource('cart', 'API\Web\CartController', ['names' => ['index' => 'client.cart.index', 'store' => 'client.cart.store', 'destroy' => 'client.cart.delete']])->except(['edit', 'create', 'update']);
+    Route::resource('projects', 'API\Web\ProjectController');
+    Route::post("projects/get_projects", 'API\Web\ProjectController@getProjects')->name('projects.getAll');
     Route::delete('cart/delete', 'API\Web\CartController@destroy');
     Route::resource('customer_address_book', 'API\Web\CustomerAddressBookController', ['names' => ['index' => 'admin.customer_address_book.index', 'store' => 'admin.customer_address_book.store', 'update' => 'admin.customer_address_book.update', 'destroy' => 'admin.customer_address_book.delete']])->except(['edit', 'create']);
     Route::resource('customer/order', 'API\Admin\OrderController')->only(['index', 'show']);

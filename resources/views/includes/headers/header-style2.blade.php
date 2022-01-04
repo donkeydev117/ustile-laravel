@@ -118,9 +118,9 @@
               <div class="col-6 col-sm-6 col-md-4 col-lg-3">
                 <ul class="pro-header-right-options">
                   <li>
-                    <a href="{{ url('/wishlist') }}" class="btn" data-toggle="tooltip" data-placement="bottom" title="{{ trans('lables.header-wishlist') }}">
+                    <a href="{{ url('/my-projects') }}" class="btn" data-toggle="tooltip" data-placement="bottom" title="{{ __("My Projects") }}">
                       <i class="far fa-folder"></i>
-                      <span class="badge badge-secondary wishlist-count">0</span>
+                      <span class="badge badge-secondary projects-count"></span>
                     </a>
                   </li>
                   <li>
