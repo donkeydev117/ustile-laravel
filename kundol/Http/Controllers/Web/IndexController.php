@@ -501,19 +501,22 @@ class IndexController extends Controller
         foreach($parents as $key => $p){
             $data = [
                 'project' => $p,
-                'children' => []
+                'children' => [],
+                'products' => []
             ];
             $secondLevel = Project::where('is_active', 1)->where("parent_id", $p->id)->get();
             foreach($secondLevel as $sk => $sp){
                 $schild = [
                     'project' => $sp,
-                    'children' => []
+                    'children' => [],
+                    'products' => []
                 ];
                 $lastLevel = Project::where("is_active", 1)->where("parent_id", $sp->id) -> get();
                 foreach($lastLevel as $lk => $lp){
                     $lchild = [
                         'project' => $lp,
-                        'children' => []
+                        'children' => [],
+                        'products' => []
                     ];
                     $schild['children'][] = $lchild;
                 }

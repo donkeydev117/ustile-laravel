@@ -9,7 +9,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <input type="hidden" name="add_to_project_product_id" />
+            <input type="hidden" name="add_to_project_product_id" id="add_to_project_product_id"/>
             <div class="row">
                 <div class="col-sm-12 form-group">
                     <label>Project</label>
@@ -32,8 +32,8 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Add to Project</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_add_to_project_btn">Close</button>
+          <button type="button" class="btn btn-primary" id="add_to_project_btn">Add to Project</button>
         </div>
       </div>
     </div>

@@ -1024,6 +1024,36 @@
 
             });
 
+            $("#add_to_project_btn").on("click", function(){
+                var project_id = $("#add_to_project_select_project").val();
+                var tags = $("#add_to_project_select_tag").val();
+                var product_id = $("#add_to_project_product_id").val();
+
+                if(product_id === "" || project_id === "") return;
+
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        'Authorization': 'Bearer ' + customerToken,
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                        clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+                    },
+                    url: "{{ route('projects.addProduct')}}",
+                    data: {
+                        product_id : product_id,
+                        project_id: project_id,
+                        tags: tags
+                    },
+                    success: function(res){
+                        console.log(res);
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                });
+            })
+
             // Get all Projects
             getAllProject();
         })

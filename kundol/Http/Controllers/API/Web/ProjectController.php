@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Web\Project;
+use App\Models\Web\ProjectProduct;
+use App\Models\Web\ProjectProductTag;
 
 class ProjectController extends Controller
 {
@@ -152,5 +154,32 @@ class ProjectController extends Controller
         }
 
         return response()->json(['projects' => $projects, "status" => "success"], 200);
+    }
+
+    public function addProductToProject(Request $request){
+
+        $request->validate([
+            'project_id' => 'required',
+            'product_id' => 'required',
+            'tags' => 'required'
+        ]);
+
+        $data = [
+            'product_id' => $request->product_id,
+            'project_id' => $request->project_id,
+        ];
+
+        $m = ProjectProduct::create($data);
+
+        $tags = $request->tags;
+        
+        foreach($tags as $tag){
+            ProjectProductTag::create([
+                'project_product_id' => $m->id,
+                "tag" => $tag
+            ]);
+        }
+
+        return response()->json(["status" => "success"], 200);
     }
 }
