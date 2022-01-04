@@ -1047,6 +1047,8 @@
                     },
                     success: function(res){
                         console.log(res);
+                        alert("Product added successful!");
+                        $("#close_add_to_project_btn").trigger("click");
                     },
                     error: function(error){
                         console.log(error);
