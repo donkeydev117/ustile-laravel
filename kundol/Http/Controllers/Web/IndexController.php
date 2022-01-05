@@ -22,6 +22,8 @@ use App\Models\Admin\Shape;
 use App\Models\Admin\Finish;
 use App\Models\Admin\LookTrend;
 use App\Models\Web\Project;
+use App\Models\Web\ProjectProduct;
+use App\Models\Web\ProjectProductTag;
 use Carbon\Carbon;
 use DB;
 use App\Jobs\OrderProcess;
@@ -504,6 +506,7 @@ class IndexController extends Controller
                 'children' => [],
                 'products' => []
             ];
+            $data['products'] = ProjectProduct::where("project_id", $p->id)->get();
             $secondLevel = Project::where('is_active', 1)->where("parent_id", $p->id)->get();
             foreach($secondLevel as $sk => $sp){
                 $schild = [
@@ -511,6 +514,7 @@ class IndexController extends Controller
                     'children' => [],
                     'products' => []
                 ];
+                $schild['products'] = ProjectProduct::where("project_id", $sp->id)->get();
                 $lastLevel = Project::where("is_active", 1)->where("parent_id", $sp->id) -> get();
                 foreach($lastLevel as $lk => $lp){
                     $lchild = [
@@ -518,6 +522,7 @@ class IndexController extends Controller
                         'children' => [],
                         'products' => []
                     ];
+                    $lchild['products'] = ProjectProduct::where("project_id", $lp->id)->get();
                     $schild['children'][] = $lchild;
                 }
 

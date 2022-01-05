@@ -3,13 +3,7 @@
         <div class="product product13 ratingstar">
             <article>
                 <div class="thumb">
-                    {{-- <div class="badges">
 
-                        <span class="badge badge-success label-circle">featured</span>
-                        <span class="badge badge-info label-circle">New</span>
-                        <span class="badge badge-danger  label-circle">50%</span>
-
-                    </div> --}}
                     <div class="product-hover d-none d-lg-block d-xl-block">
                         <div class="icons">
 

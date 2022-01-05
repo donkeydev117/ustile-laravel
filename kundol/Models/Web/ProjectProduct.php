@@ -9,4 +9,15 @@ class ProjectProduct extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function product(){
+        return $this->hasOne("App\Models\Admin\Product", 'id', 'product_id');
+    }
+
+    public function tags(){
+        return $this->hasMany("App\Models\Web\ProjectProductTag");
+    }
+
+
+
 }
