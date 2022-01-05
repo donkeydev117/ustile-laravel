@@ -11,7 +11,7 @@ class ProjectProduct extends Model
     protected $guarded = [];
 
     public function product(){
-        return $this->hasOne("App\Models\Admin\Product", 'id', 'product_id');
+        return $this->hasOne("App\Models\Admin\Product", 'id', 'product_id')->with('detail')->with("gallary")->with("gallary.detail");
     }
 
     public function tags(){

@@ -32,6 +32,7 @@ use App\Services\Admin\OrderService;
 use Illuminate\Support\Facades\Log;
 use Mollie\Laravel\Facades\Mollie;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
@@ -495,47 +496,12 @@ class IndexController extends Controller
         return redirect()->back();
     }
 
-    public function myProject(){
-
-        $projects = [];
-        $parents = Project::where('is_active', 1)->where("parent_id", 0)->get();
-
-        foreach($parents as $key => $p){
-            $data = [
-                'project' => $p,
-                'children' => [],
-                'products' => []
-            ];
-            $data['products'] = ProjectProduct::where("project_id", $p->id)->get();
-            $secondLevel = Project::where('is_active', 1)->where("parent_id", $p->id)->get();
-            foreach($secondLevel as $sk => $sp){
-                $schild = [
-                    'project' => $sp,
-                    'children' => [],
-                    'products' => []
-                ];
-                $schild['products'] = ProjectProduct::where("project_id", $sp->id)->get();
-                $lastLevel = Project::where("is_active", 1)->where("parent_id", $sp->id) -> get();
-                foreach($lastLevel as $lk => $lp){
-                    $lchild = [
-                        'project' => $lp,
-                        'children' => [],
-                        'products' => []
-                    ];
-                    $lchild['products'] = ProjectProduct::where("project_id", $lp->id)->get();
-                    $schild['children'][] = $lchild;
-                }
-
-                $data['children'][] = $schild;
-            }
-
-            $projects[] = $data;
-        }
+    public function myProject(Request $request){
 
         $homeService = new HomeService;
         $data = $homeService->homeIndex();
         
-        return view("myproject", compact('data', 'projects'));
+        return view("myproject", compact('data'));
     }
 
     

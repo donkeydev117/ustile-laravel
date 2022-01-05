@@ -156,6 +156,46 @@ class ProjectController extends Controller
         return response()->json(['projects' => $projects, "status" => "success"], 200);
     }
 
+    public function getProjectsWithProducts(Request $request, $customerId){
+
+        $projects = [];
+        $parents = Project::where('is_active', 1)->where("parent_id", 0)->where("user_id", $customerId)->get();
+
+        foreach($parents as $key => $p){
+            $data = [
+                'project' => $p,
+                'children' => [],
+                'products' => []
+            ];
+            $data['products'] = ProjectProduct::where("project_id", $p->id)->with('product')->with('tags')->get();
+            $secondLevel = Project::where('is_active', 1)->where("parent_id", $p->id)->get();
+            foreach($secondLevel as $sk => $sp){
+                $schild = [
+                    'project' => $sp,
+                    'children' => [],
+                    'products' => []
+                ];
+                $schild['products'] = ProjectProduct::where("project_id", $sp->id)->with('product')->with('tags')->get();
+                $lastLevel = Project::where("is_active", 1)->where("parent_id", $sp->id) -> get();
+                foreach($lastLevel as $lk => $lp){
+                    $lchild = [
+                        'project' => $lp,
+                        'children' => [],
+                        'products' => []
+                    ];
+                    $lchild['products'] = ProjectProduct::where("project_id", $lp->id)->with('product')->with('tags')->get();
+                    $schild['children'][] = $lchild;
+                }
+
+                $data['children'][] = $schild;
+            }
+
+            $projects[] = $data;
+        }
+
+        return response()->json(['data' => $projects], 200);
+    }
+
     public function addProductToProject(Request $request){
 
         $request->validate([
