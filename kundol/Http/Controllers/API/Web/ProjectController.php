@@ -222,4 +222,16 @@ class ProjectController extends Controller
 
         return response()->json(["status" => "success"], 200);
     }
+
+    public function removeProductFromProject(Request $request){
+
+        $pid = $request->projectProductId;
+
+        ProjectProductTag::where('project_product_id', $pid)->delete();
+        ProjectProduct::find($pid)->delete();
+
+        return response()->json(['status' => 'success'], 200);
+
+    }
+
 }

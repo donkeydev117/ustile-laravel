@@ -90,8 +90,10 @@
                                                                 data-placement="bottom" 
                                                                 title="Remove from project" 
                                                                 data-original-title="Remove from project" 
-                                                                data-id="${product.product.id}"
-                                                                data-projectId="${item.project.id}" 
+                                                                data-productid='${product.product.id}'
+                                                                data-id="${product.id}"
+                                                                data-projectid="${item.project.id}" 
+                                                                onclick='removeProduct(this)'
                                                             >
                                                                 <i class="fas fa-trash" data-fa-transform="rotate-90"></i>
                                                             </div>
@@ -124,6 +126,38 @@
             </div>`;
         });
         return html;
+    }
+
+    function removeProduct(input){
+        var confirm = window.confirm("Are you sure?");
+        if(!confirm) return;
+        var product_id = $(input).data('id');
+        var project_id = $(input).data('projectid');
+        var id = $(input).data("id");
+
+        $.ajax({
+            type: 'post',
+            url: "{{ url('') }}" + '/api/client/projects/removeProduct' ,
+            headers: {
+                'Authorization': 'Bearer ' + customerToken,
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+            },
+            data: {
+                projectProductId : id
+            },
+            success: function(res){
+                // console.log(res);
+                window.location.reload();
+            },
+            error: function(error){
+                console.log(error);
+            }
+
+        })
+
+        
     }
 
     $(document).ready(function(){
