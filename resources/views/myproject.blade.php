@@ -178,6 +178,8 @@
                 $(productClone).find(".product-template-container-li").data("value", "product");
                 $(productClone).find(".product-title").text(product.product.detail[0].title)
                 $(productClone).find(".product-price").text(product.product.price);
+                $(productClone).find(".btn-remove").data("id", product.id);
+                $(productClone).find(".btn-remove").attr("onclick", "removeProduct(this)");
                 $(clone).find("ul:first").append(productClone);
             })
             html.append(clone);

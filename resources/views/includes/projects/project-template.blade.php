@@ -5,10 +5,10 @@
                 <h5 class="project-title mb-0"></h5>
                 <div class="actions">
                     <button class='btn btn-link float-right btn-icon btn-remove'>
-                        <i class='fa fa-trash'></i>
+                        <i class='fa fa-trash' style='color: white'></i>
                     </button>
                     <button class='btn btn-link float-right btn-icon btn-share'>
-                        <i class='fa fa-share'></i>
+                        <i class='fa fa-share' style="color: white"></i>
                     </button>
                 </div>
             </div>

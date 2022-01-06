@@ -12,7 +12,9 @@
                         <div class="product-tags"></div>
                     </div>
                     <div class="col-xs-4 col-sm-4">
-
+                        <button class="btn btn-link btn-icon btn-remove">
+                            <i class="fa fa-close"></i>
+                        </button>
                     </div>
                 </div>
             </article>
