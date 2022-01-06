@@ -78,7 +78,6 @@
             },
             success: function(res){
                 const projects = res.data;
-                console.log("Project:", projects);
                 const html = renderProject(projects);
                 html.addClass("sortable");
                 $("#project_container").append(html);
@@ -86,6 +85,7 @@
                     insertZonePlus: true,
                     placeholderCss: {'background-color': 'green'},
                     hintCss: {'background-color':'blue'},
+                    ignoreClass : 'btn',
                     onChange: function( cEl )
                     {
                         console.log( 'onChange' );
@@ -147,7 +147,6 @@
                             'font-size': '1.1em'
                         }
                     },
-                    ignoreClass: 'clickable'
                 };
                 $(".sortable").sortableLists(options);
             }
@@ -164,8 +163,10 @@
             $(clone).find(".project-template-li-container").prop("id", project.project.id);
             $(clone).find(".project-template-li-container").data("value", "project");
             $(clone).find(".project-title").text(project.project.title);
-            $(clone).find(".btn-icon").prop("id", project.project.id);
+            $(clone).find(".btn-icon").data("id", project.project.id);
             $(clone).find(".project-template-li-container").data("module", "project");
+            $(clone).find(".btn-remove").attr("onclick", "removeProject(this)");
+
             var childClone = renderProject(project.children);
             $(clone).find(".project-template-li-container").append(childClone);
             var products = project.products;
