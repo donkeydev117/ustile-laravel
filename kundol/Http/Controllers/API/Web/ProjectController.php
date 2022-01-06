@@ -167,7 +167,7 @@ class ProjectController extends Controller
                 'children' => [],
                 'products' => []
             ];
-            $data['products'] = ProjectProduct::where("project_id", $p->id)->with('product')->with('tags')->get();
+            $data['products'] = ProjectProduct::where("project_id", $p->id)->where("active", 1)->with('product')->with('tags')->get();
             $secondLevel = Project::where('is_active', 1)->where("parent_id", $p->id)->get();
             foreach($secondLevel as $sk => $sp){
                 $schild = [
@@ -175,7 +175,7 @@ class ProjectController extends Controller
                     'children' => [],
                     'products' => []
                 ];
-                $schild['products'] = ProjectProduct::where("project_id", $sp->id)->with('product')->with('tags')->get();
+                $schild['products'] = ProjectProduct::where("project_id", $sp->id)->where("active", 1)->with('product')->with('tags')->get();
                 $lastLevel = Project::where("is_active", 1)->where("parent_id", $sp->id) -> get();
                 foreach($lastLevel as $lk => $lp){
                     $lchild = [
@@ -183,7 +183,7 @@ class ProjectController extends Controller
                         'children' => [],
                         'products' => []
                     ];
-                    $lchild['products'] = ProjectProduct::where("project_id", $lp->id)->with('product')->with('tags')->get();
+                    $lchild['products'] = ProjectProduct::where("project_id", $lp->id)->where("active", 1)->with('product')->with('tags')->get();
                     $schild['children'][] = $lchild;
                 }
 
@@ -227,11 +227,40 @@ class ProjectController extends Controller
 
         $pid = $request->projectProductId;
 
-        ProjectProductTag::where('project_product_id', $pid)->delete();
-        ProjectProduct::find($pid)->delete();
+        // ProjectProductTag::where('project_product_id', $pid)->update(['active']);
+        $product = ProjectProduct::find($pid);
+        $product->active = 0;
+        $product->save();
 
         return response()->json(['status' => 'success'], 200);
 
+    }
+
+    public function removeProject(Request $request){
+        $id = $request->project_id;
+        $project = Project::find($id);
+        $project->is_active = 0;
+        $project->save();
+        return response()->json(['status' => 'success'], 200);
+    }
+
+    public function updateTree(Request $request){
+        // die(print_r($request->data));
+        $data = $request->data;
+        foreach($data as $item){
+            $parent_id = isset($item['parentId']) ? $item['parentId'] : 0;
+            $id = $item['id'];
+            if($item['value'] === "project") {
+                $project = Project::find($id);
+                $project->parent_id = $parent_id;
+                $project->save();
+            } else if($item['value'] === "product" && $parent_id !== 0){
+                $product = ProjectProduct::find($id);
+                $product->project_id = $parent_id;
+                $product->save();
+            }
+        }
+        return response()->json(['status' => "success"], 200);
     }
 
 }

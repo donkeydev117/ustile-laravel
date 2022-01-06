@@ -99,6 +99,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="{{ asset('assets/front/js/jquery.dropdown.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="/assets/front/js/jquery-sortable-lists.min.js"></script>
     <script src="{{ asset('assets/front/js/scripts.js') }}"></script>
 
     @php

@@ -173,6 +173,9 @@ Route::group(['prefix' => 'client', 'middleware' => ['auth:customer-api', 'scope
     Route::post('projects/add_product', 'API\Web\ProjectController@addProductToProject')->name('projects.addProduct');
     Route::get('projects/get_projects_with_products/{customerId}', "API\Web\ProjectController@getProjectsWithProducts")->name("projects.getAllWithProducts");
     Route::post('projects/removeProduct', "API\Web\ProjectController@removeProductFromProject")->name('projects.removeProduct');
+    Route::post('projects/removeProject', "API\Web\ProjectController@removeProject")->name("projects.removeProject");
+    Route::post('projects/updateProjects', "API\Web\ProjectController@updateTree")->name("projects.updateTree");
+
 
     Route::delete('cart/delete', 'API\Web\CartController@destroy');
     Route::resource('customer_address_book', 'API\Web\CustomerAddressBookController', ['names' => ['index' => 'admin.customer_address_book.index', 'store' => 'admin.customer_address_book.store', 'update' => 'admin.customer_address_book.update', 'destroy' => 'admin.customer_address_book.delete']])->except(['edit', 'create']);

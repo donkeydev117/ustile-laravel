@@ -1,10 +1,42 @@
 @extends('layouts.master')
 @section('content')
-
+<style>
+    .btn-icon{
+        padding: 0.25rem 0.375rem;
+    }
+    .product-image{
+        width:  100px;
+        height: 100px;
+    }
+    .sortable  li, #s-l-base li { 
+        padding-left:50px 
+    }
+    .product-template-container-li{
+        padding: 0.25rem 0.375rem;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding:0; 
+    }
+    .project-content{
+        padding: 0.375rem 0.5rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgb(124, 122, 122);
+        margin-bottom: 0.5rem;
+        color: #fff
+    }
+    .c3{
+        color: #f77720
+    }
+    
+</style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12" id="project_container">
-
         </div>
     </div>
 
@@ -14,6 +46,8 @@
         <input type="hidden" id="remove_product_project_id" name="project_id" />
     </form>
 </div>
+@include("includes.projects.product-template")
+@include("includes.projects.project-template")
 
    
 @endsection
@@ -44,87 +78,109 @@
             },
             success: function(res){
                 const projects = res.data;
+                console.log("Project:", projects);
                 const html = renderProject(projects);
-                $("#project_container").html(html);
+                html.addClass("sortable");
+                $("#project_container").append(html);
+                var options = {
+                    insertZonePlus: true,
+                    placeholderCss: {'background-color': 'green'},
+                    hintCss: {'background-color':'blue'},
+                    onChange: function( cEl )
+                    {
+                        console.log( 'onChange' );
+                    },
+                    complete: function( cEl )
+                    {
+                        console.log( 'complete' );
+                        const arrayData = $(".sortable").sortableListsToArray();
+                        $.ajax({
+                            type: 'post',
+                            url: "{{ url('') }}" + '/api/client/projects/updateProjects' ,
+                            headers: {
+                                'Authorization': 'Bearer ' + customerToken,
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                                clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+                            },
+                            data: {
+                                data: arrayData
+                            },
+                            success: function(res){
+                                console.log(res);
+                                // window.location.reload();
+                            },
+                            error: function(error){
+                                console.log(error);
+                            }
+
+                        })
+                        // console.log(cEl);
+                        // console.log(cEl.data("module"));
+                    },
+                    isAllowed: function( cEl, hint, target )
+                    {
+                        // Be carefull if you test some ul/ol elements here.
+                        // Sometimes ul/ols are dynamically generated and so they have not some attributes as natural ul/ols.
+                        // Be careful also if the hint is not visible. It has only display none so it is at the previous place where it was before(excluding first moves before showing).
+                        if( target.data('module') === 'product' )
+                        {
+                            hint.css('background-color', '#ff9999');
+                            return false;
+                        }
+                        else
+                        {
+                            hint.css('background-color', '#99ff99');
+                            return true;
+                        }
+                    },
+                    opener: {
+                        active: true,
+                        as: 'html',  // if as is not set plugin uses background image
+                        close: '<i class="fa fa-minus c3"></i>',  // or 'fa-minus c3'
+                        open: '<i class="fa fa-plus"></i>',  // or 'fa-plus'
+                        openerCss: {
+                            'display': 'inline-block',
+                            'float': 'left',
+                            'margin-left': '-35px',
+                            'margin-right': '5px',
+                            'font-size': '1.1em'
+                        }
+                    },
+                    ignoreClass: 'clickable'
+                };
+                $(".sortable").sortableLists(options);
             }
         });
     }
 
-    function renderProject(projects){
-        var html = "";
-        projects.forEach(function(item){
-            html += `<div id='accordian-${item.project.id}'>
-                <div class='card'>
-                    <div class="card-header" id='headingOne-${item.project.id}'>
-                        <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle='collapse' data-target="#project-${item.project.id}" aria-expanded='true' aria-controls='collapseOne' >
-                                ${item.project.title}
-                            </button>
-                        </h5>
-                    </div>
-                    <div class='collapse show' id='project-${item.project.id}' aria-labelledby='headingOne-${item.project.id}' data-parent='#accordian-${item.project.id}'>
-                        <div class="card-body">
-                            <div class="row">`
-                             item.products.forEach(function(product){
-                                 console.log(product);
-                                html += `<div class="col-sm-4 col-md-3">
-                                    <div class="div-class">
-                                        <div class="product product13 ratingstar">
-                                            <article>
-                                                <div class="thumb">
-                                                    <div class="product-hover d-none d-lg-block d-xl-block">
-                                                        <div class="icons">
-                                                            <a href="javascript:void(0)" class="wishlist-icon icon active swipe-to-top" data-toggle="tooltip"
-                                                                data-placement="bottom" title="" data-original-title="Wishlist" data-id="${product.product.id}" >
-                                                                <i class="fas fa-heart"></i>
-                                                            </a>
-                                                            <div class="icon swipe-to-top quick-view-icon" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Quick View" data-id="${product.product.id}">
-                                                                <i class="fas fa-eye"></i>
-                                                            </div>
-                                                            <div class="icon swipe-to-top project-icon" data-tooltip="tooltip" data-placement="bottom" title="Add to Project" data-original-title="Add to Project" data-toggle="modal" data-target="#addToProjectModal" data-id="${product.product.id}>">
-                                                                <i class="fas fa-folder" data-fa-transform="rotate-90"></i>
-                                                            </div>
-                                                            <div 
-                                                                class="icon swipe-to-top remove-icon" 
-                                                                data-tooltip="tooltip" 
-                                                                data-placement="bottom" 
-                                                                title="Remove from project" 
-                                                                data-original-title="Remove from project" 
-                                                                data-productid='${product.product.id}'
-                                                                data-id="${product.id}"
-                                                                data-projectid="${item.project.id}" 
-                                                                onclick='removeProduct(this)'
-                                                            >
-                                                                <i class="fas fa-trash" data-fa-transform="rotate-90"></i>
-                                                            </div>
-                                                        </div>
-                                                        <a class="btn btn-block btn-secondary swipe-to-top product-card-link" href="javascript:void(0)"
-                                                        data-toggle="tooltip" data-placement="bottom" title=""
-                                                        data-original-title="View Detail">View Detail</a>
-                                                    </div>
-                                                    <img class="img-fluid product-card-image" src="${product.product.gallary.detail[0].path}" alt="${product.product.detail[0].title}">
-                                                </div>
-                                                <div class="content">
-                                                    <h5 class="title"><a href="javascript:void(0)" class="product-card-name">${product.product.detail[0].title}</a></h5>
-                                                </div>
-                                            </article>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">`;
-                                    product.tags.forEach(function(tag){
-                                        html += `<span class="badge badge-secondary">${tag.tag}</span>`;
-                                    })
-                                html += `</div>
-                                </div>`;
-                             })
 
-            html +=        `</div>`
-            html += renderProject(item.children);
-            html +=   `</div>
-                    </div>
-                </div>
-            </div>`;
-        });
+    function renderProject(projects){
+        var html = $("<ul class=''></ul>");
+        const templ = document.getElementById("project_template");
+        const productTempl = document.getElementById('product_template');
+        projects.forEach(function(project){
+            const clone = templ.content.cloneNode(true);
+            $(clone).find(".project-template-li-container").prop("id", project.project.id);
+            $(clone).find(".project-template-li-container").data("value", "project");
+            $(clone).find(".project-title").text(project.project.title);
+            $(clone).find(".btn-icon").prop("id", project.project.id);
+            $(clone).find(".project-template-li-container").data("module", "project");
+            var childClone = renderProject(project.children);
+            $(clone).find(".project-template-li-container").append(childClone);
+            var products = project.products;
+            products.forEach(function(product){
+                const productClone = productTempl.content.cloneNode(true);
+                $(productClone).find(".product-image").prop("src",product.product.gallary.detail[0].path);
+                $(productClone).find(".product-template-container-li").data("module", "product");
+                $(productClone).find(".product-template-container-li").prop("id", product.id);
+                $(productClone).find(".product-template-container-li").data("value", "product");
+                $(productClone).find(".product-title").text(product.product.detail[0].title)
+                $(productClone).find(".product-price").text(product.product.price);
+                $(clone).find("ul:first").append(productClone);
+            })
+            html.append(clone);
+        })
         return html;
     }
 
@@ -148,7 +204,6 @@
                 projectProductId : id
             },
             success: function(res){
-                // console.log(res);
                 window.location.reload();
             },
             error: function(error){
@@ -156,8 +211,33 @@
             }
 
         })
+    }
 
-        
+    function removeProject(input){
+        var confirm = window.confirm("Are you sure?");
+        if(!confirm) return;
+        var id = $(input).data("id");
+
+        $.ajax({
+            type: 'post',
+            url: "{{ url('') }}" + '/api/client/projects/removeProject' ,
+            headers: {
+                'Authorization': 'Bearer ' + customerToken,
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+            },
+            data: {
+                project_id : id
+            },
+            success: function(res){
+                console.log(res);
+                window.location.reload();
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
     }
 
     $(document).ready(function(){
