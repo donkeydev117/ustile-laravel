@@ -24,6 +24,7 @@ use App\Models\Admin\LookTrend;
 use App\Models\Web\Project;
 use App\Models\Web\ProjectProduct;
 use App\Models\Web\ProjectProductTag;
+use App\Models\Web\ProjectShare;
 use Carbon\Carbon;
 use DB;
 use App\Jobs\OrderProcess;
@@ -504,5 +505,46 @@ class IndexController extends Controller
         return view("myproject", compact('data'));
     }
 
+
+    public function shareProject($code){
+
+        $homeService = new HomeService;
+        $data = $homeService->homeIndex();
+
+        $sharingProject = ProjectShare::where("code", $code)->first();
+        $project_id = $sharingProject->project_id;
+        $p = Project::find($project_id);
+        $project = [
+            'project' => $p,
+            'children' => [],
+            'products' => []
+        ];
+
+        $project['products'] = ProjectProduct::where("project_id", $p->id)->where("active", 1)->with('product')->with('tags')->get();
+        $secondLevel = Project::where('is_active', 1)->where("parent_id", $p->id)->get();
+        foreach($secondLevel as $sk => $sp){
+            $schild = [
+                'project' => $sp,
+                'children' => [],
+                'products' => []
+            ];
+            $schild['products'] = ProjectProduct::where("project_id", $sp->id)->where("active", 1)->with('product')->with('tags')->get();
+            $lastLevel = Project::where("is_active", 1)->where("parent_id", $sp->id) -> get();
+            foreach($lastLevel as $lk => $lp){
+                $lchild = [
+                    'project' => $lp,
+                    'children' => [],
+                    'products' => []
+                ];
+                $lchild['products'] = ProjectProduct::where("project_id", $lp->id)->where("active", 1)->with('product')->with('tags')->get();
+                $schild['children'][] = $lchild;
+            }
+
+            $project['children'][] = $schild;
+        }
+        $projects=[$project];
+        return view("share.project", compact('data', 'projects'));
+
+    }
     
 }

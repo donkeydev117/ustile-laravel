@@ -175,6 +175,7 @@ Route::group(['prefix' => 'client', 'middleware' => ['auth:customer-api', 'scope
     Route::post('projects/removeProduct', "API\Web\ProjectController@removeProductFromProject")->name('projects.removeProduct');
     Route::post('projects/removeProject', "API\Web\ProjectController@removeProject")->name("projects.removeProject");
     Route::post('projects/updateProjects', "API\Web\ProjectController@updateTree")->name("projects.updateTree");
+    Route::post('projects/shareProject', "API\Web\ProjectController@shareProject")->name("projects.share");
 
 
     Route::delete('cart/delete', 'API\Web\CartController@destroy');

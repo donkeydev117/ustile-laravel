@@ -35,7 +35,7 @@
     
 </style>
 <div class="container-fluid">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-sm-12" id="project_container">
         </div>
     </div>
@@ -166,7 +166,7 @@
             $(clone).find(".btn-icon").data("id", project.project.id);
             $(clone).find(".project-template-li-container").data("module", "project");
             $(clone).find(".btn-remove").attr("onclick", "removeProject(this)");
-
+            $(clone).find(".btn-share").attr("onclick", "shareProject(this)");
             var childClone = renderProject(project.children);
             $(clone).find(".project-template-li-container").append(childClone);
             var products = project.products;
@@ -178,6 +178,12 @@
                 $(productClone).find(".product-template-container-li").data("value", "product");
                 $(productClone).find(".product-title").text(product.product.detail[0].title)
                 $(productClone).find(".product-price").text(product.product.price);
+                var tags = product.tags;
+                tags.forEach(function(tag){
+                    var tagElement = `<span class='badge badge-secondary ml-1'>${tag.tag}</span>`;
+                    $(productClone).find('.product-tags').append(tagElement);
+                });
+
                 $(productClone).find(".btn-remove").data("id", product.id);
                 $(productClone).find(".btn-remove").attr("onclick", "removeProduct(this)");
                 $(clone).find("ul:first").append(productClone);
@@ -241,6 +247,35 @@
                 console.log(error);
             }
         });
+    }
+
+    function shareProject(input){
+        var projectId = $(input).data("id");
+
+        $.ajax({
+            type: 'post',
+            url: "{{ url('') }}" + '/api/client/projects/shareProject',
+            dataType: "json",
+            headers: {
+                'Authorization': 'Bearer ' + customerToken,
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+            },
+            data: {
+                project_id : projectId
+            },
+            success: function(res){
+                console.log(res);
+                // window.location.reload();
+                window.open("{{url('')}}/share/projects/" + res.code, "_blank");
+            },
+            error: function(error){
+                console.log("Error", error);
+            }
+
+        })
+
     }
 
     $(document).ready(function(){

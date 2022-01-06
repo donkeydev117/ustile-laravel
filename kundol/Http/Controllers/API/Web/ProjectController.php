@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Web\Project;
 use App\Models\Web\ProjectProduct;
 use App\Models\Web\ProjectProductTag;
+use App\Models\Web\ProjectShare;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -261,6 +263,23 @@ class ProjectController extends Controller
             }
         }
         return response()->json(['status' => "success"], 200);
+    }
+
+    public function shareProject(Request $request){
+
+        $project_id = $request->project_id;
+        $code = Str::random(23);
+
+        $share = new ProjectShare;
+
+        $share->project_id = $project_id;
+        $share->code = $code;
+        $share->expired_at = Date("y-m-d", strtotime('+30 days'));
+
+        $share->save();
+
+        return response()->json(['code' => $code, 'status' => "success"], 200);
+
     }
 
 }
