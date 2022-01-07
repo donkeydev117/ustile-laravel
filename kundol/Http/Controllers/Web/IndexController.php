@@ -546,5 +546,12 @@ class IndexController extends Controller
         return view("share.project", compact('data', 'projects'));
 
     }
+
+    public function projectRecylebin(){
+        $homeService = new HomeService;
+        $data = $homeService->homeIndex();
+
+        return view("recylebin", compact('data'));
+    }
     
 }

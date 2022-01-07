@@ -32,6 +32,18 @@
     .c3{
         color: #f77720
     }
+    .recylebin-container{
+        width: 60px;
+        height: 60px;
+        background-color: #958383;
+        float: right;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 30px;
+        cursor: pointer;
+        margin-right: 20px;
+    }
     
 </style>
 <div class="container-fluid">
@@ -40,11 +52,17 @@
         </div>
     </div>
 
-    <form id="remove_product_form">
-        @csrf
-        <input type="hidden" id="remove_product_product_id" name="product_id"/>
-        <input type="hidden" id="remove_product_project_id" name="project_id" />
-    </form>
+    <a 
+        href="{{url('')}}/projects/recylebin" 
+        class="recylebin-container"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title="View Recylebin"
+        data-original-title="View Recylebin"
+    >
+        <i class="fa fa-trash" style="color: white; font-size:20px"></i>
+    </a>
+    
 </div>
 @include("includes.projects.product-template")
 @include("includes.projects.project-template")

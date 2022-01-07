@@ -9,6 +9,7 @@ use App\Models\Web\ProjectProduct;
 use App\Models\Web\ProjectProductTag;
 use App\Models\Web\ProjectShare;
 use Illuminate\Support\Str;
+use Illuminate\Datebase\Eloquent\Builder;
 
 class ProjectController extends Controller
 {
@@ -280,6 +281,87 @@ class ProjectController extends Controller
 
         return response()->json(['code' => $code, 'status' => "success"], 200);
 
+    }
+
+    public function getRecylebinItems(Request $request, $customerId){
+        // get removed project
+        $projects = Project::where('user_id', $customerId)->where("is_active", 0)->with('parent')->orderBy("updated_at")->get()->toArray();
+        $products = ProjectProduct::where("active", 0)->with('project')->with('product')
+                        ->whereHas('project', function ($query) use ($customerId)
+                        {
+                            $query->where('user_id', $customerId);                           
+                        })->orderBy('updated_at')->get()->toArray();
+        
+        $projectItems = [];
+        $productItems = [];
+        foreach($projects as $project){
+            $data = [
+                'type' => 'project',
+                'title' => $project['title'],
+                'parentTitle' => $project['parent']['title'],
+                'parent_id' => $project['parent_id'],
+                'id' => $project['id'],
+                'image' => '',
+                'updated_at' => $project['updated_at']
+            ];
+
+            $projectItems[] = $data;
+        }
+
+        foreach($products as $product){
+            $data = [
+                'type' => 'product',
+                'title' => $product['product']['detail'][0]['title'],
+                'parentTitle' => $product['project']['title'],
+                'parent_id' => $product['project']['id'],
+                'id' => $product['id'],
+                'image' => $product['product']['gallary']['detail'][0]['path'],
+                'updated_at' => $product['updated_at']
+            ];
+
+            $productItems[] = $data;
+        }
+
+        
+        $items = array_merge($projectItems, $productItems);
+
+        usort($items, function($a, $b){
+            return $a['updated_at'] > $b['updated_at'];
+        });
+
+        return response()->json(['items' => $items], 200);
+    }
+
+    public function restoreItemRecylebin(Request $request){
+        $type = $request->type;
+        $id = $request->id;
+
+        if($type == "project"){
+            $project = Project::find($id);
+            $project->is_active = 1;
+            $project->save();
+        } else if( $type == 'product'){
+            $product = ProjectProduct::find($id);
+            $product->active = 1;
+            $product->save();
+        }
+
+        return response()->json(['status' => 'success'], 200);
+
+    }
+
+    public function deleteItemRecylebin( Request $request){
+        $type = $request->type;
+        $id = $request->id;
+
+        if($type == "project"){
+            $project = Project::find($id);
+            $project->delete();
+        } else if( $type == 'product'){
+            $product = ProjectProduct::find($id);
+            $product->delete();
+        }
+        return response()->json(['status' => 'success'], 200);
     }
 
 }

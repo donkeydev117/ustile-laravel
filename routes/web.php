@@ -120,7 +120,8 @@ Route::group(['middleware' => ['general','installer']], function () {
     Route::get('/contact-us', 'Web\IndexController@contactUs');
     Route::get('/about-us', 'Web\IndexController@aboutUs');
 
-    Route::get("/share/projects/{cpde}", 'Web\IndexController@shareProject');
+    Route::get("/share/projects/{code}", 'Web\IndexController@shareProject');
+    Route::get("/projects/recylebin", "Web\IndexController@projectRecylebin");
 
     Route::get('set_currency/{currency}', 'Web\IndexController@setCurrency');
     Route::post('paytm-pay', 'Web\IndexController@paytmPayment');
