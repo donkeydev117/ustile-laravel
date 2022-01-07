@@ -92,17 +92,35 @@ if(!function_exists('renderProjects')){
                                                 <div class="thumb">
                                                     <div class="product-hover d-none d-lg-block d-xl-block">
                                                         <div class="icons">
-                                                            <a href="javascript:void(0)" class="wishlist-icon icon active swipe-to-top" data-toggle="tooltip"
-                                                                data-placement="bottom" title="" data-original-title="Wishlist" data-id="<?php echo $product->product->id;?>" >
+                                                            <a 
+                                                                href="javascript:void(0)" 
+                                                                class="wishlist-icon icon active swipe-to-top" 
+                                                                data-toggle="tooltip"
+                                                                data-placement="bottom" 
+                                                                title="" 
+                                                                data-original-title="Wishlist" 
+                                                                data-id="<?php echo $product->product->id;?>"
+                                                                onclick="addWishlist(this)" 
+                                                            >
                                                                 <i class="fas fa-heart"></i>
                                                             </a>
-                                                            <div class="icon swipe-to-top quick-view-icon" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Quick View" data-id="<?php echo $product->product->id;?>">
+                                                            <div 
+                                                                class="icon swipe-to-top quick-view-icon"
+                                                                data-tooltip="tooltip" 
+                                                                data-placement="bottom" 
+                                                                title="Quick View" 
+                                                                data-original-title="Quick View" 
+                                                                data-toggle="modal" 
+                                                                data-target="#quickViewModal"
+                                                                data-id="<?php echo $product->product->id;?>"
+                                                                onclick='quiclViewData(this)'
+                                                            >
                                                                 <i class="fas fa-eye"></i>
                                                             </div>
                                                             <div class="icon swipe-to-top project-icon" data-tooltip="tooltip" data-placement="bottom" title="Add to Project" data-original-title="Add to Project" data-toggle="modal" data-target="#addToProjectModal" data-id="<?php echo $product->product->id;?>">
                                                                 <i class="fas fa-folder" data-fa-transform="rotate-90"></i>
                                                             </div>
-                                                            <div 
+                                                            <!-- <div 
                                                                 class="icon swipe-to-top remove-icon" 
                                                                 data-tooltip="tooltip" 
                                                                 data-placement="bottom" 
@@ -110,13 +128,21 @@ if(!function_exists('renderProjects')){
                                                                 data-original-title="Remove from project" 
                                                                 data-id="<?php echo $product->product->id;?>"
                                                                 data-projectId="<?php echo $project['project']->id;?>" 
+
                                                             >
                                                                 <i class="fas fa-trash" data-fa-transform="rotate-90"></i>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
-                                                        <a class="btn btn-block btn-secondary swipe-to-top product-card-link" href="javascript:void(0)"
-                                                            data-toggle="tooltip" data-placement="bottom" title=""
-                                                            data-original-title="View Detail">View Detail</a>
+                                                        <a 
+                                                            class="btn btn-block btn-secondary swipe-to-top product-card-link" 
+                                                            href="<?php echo url('').'/product/'.$product->product->id.'/'.$product->product->product_slug; ?>"
+                                                            data-toggle="tooltip" 
+                                                            data-placement="bottom" 
+                                                            title=""
+                                                            data-original-title="View Detail" 
+                                                            
+                                                            data-id="<?php echo $product->product->id; ?>"
+                                                        >View Detail</a>
                                                     </div>
                                                     <img class="img-fluid product-card-image" src="<?php echo $product->product->gallary->detail[0]->path; ?>" alt="<?php echo $product->product->detail[0]->title; ?>">
                                                 </div>
