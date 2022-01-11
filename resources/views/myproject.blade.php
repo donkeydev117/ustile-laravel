@@ -129,12 +129,10 @@
       </div>
     </div>
   </div>
-  
-  
-
    
 @endsection
 @section('script')
+<script async src="https://static.addtoany.com/menu/page.js"></script>
 <script>
     loggedIn = $.trim(localStorage.getItem("customerLoggedin"));
     if (loggedIn != '1') {
@@ -205,7 +203,7 @@
                     },
                     complete: function( cEl )
                     {
-                        console.log( 'complete' );
+                        console.log('onComplete');
                         const arrayData = $(".sortable").sortableListsToArray();
                         $.ajax({
                             type: 'post',
@@ -220,7 +218,6 @@
                                 data: arrayData
                             },
                             success: function(res){
-                                console.log(res);
                                 // window.location.reload();
                             },
                             error: function(error){
@@ -363,7 +360,6 @@
                 project_id : id
             },
             success: function(res){
-                console.log(res);
                 window.location.reload();
             },
             error: function(error){
@@ -489,9 +485,17 @@
                 project_id : projectId
             },
             success: function(res){
-                console.log(res);
-                // window.location.reload();
-                window.open("{{url('')}}/share/projects/" + res.code, "_blank");
+                var $addToAnyElement = $('<div class="a2a_kit a2a_kit_size_32 a2a_default_style share-this"></div>');
+                $addToAnyElement.append("<a class='a2a_button_facebook'></a>");
+                $addToAnyElement.append("<a class='a2a_button_twitter'></a>");
+                $addToAnyElement.append("<a class='a2a_button_pinterest'></a>");
+                $addToAnyElement.append("<a class='a2a_button_whatsapp'></a>");
+                $addToAnyElement.append("<a class='a2a_button_email'></a>");
+                $addToAnyElement.attr("data-a2a-url", "{{url('')}}/share/projects/" + res.code);
+                $addToAnyElement.attr("data-a2a-title", "Project");
+                $(`.project_${projectId}`).find(".project-content").find('.actions').prepend($addToAnyElement);
+                a2a.init("page");
+                $(`.project_${projectId}`).find(".project-content").find('.actions').find(".btn-share").remove();
             },
             error: function(error){
                 console.log("Error", error);
