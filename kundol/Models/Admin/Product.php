@@ -200,4 +200,8 @@ class Product extends Model
     public function variations(){
         return $this->hasMany('App\Models\Admin\ProductVariationAlt', "product_id", "id");
     }
+
+    public function materialDetail(){
+        return $this->hasOne('App\Models\Admin\Material', 'id', "material");
+    }
 }

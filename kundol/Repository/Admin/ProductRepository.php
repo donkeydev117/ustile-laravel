@@ -216,6 +216,25 @@ class ProductRepository implements ProductInterface
         }
     }
 
+    public function showAlt($singleProduct){
+
+        $product = Product::where("id", $singleProduct->id)
+                        ->with("review")
+                        ->with("brand")
+                        ->with('gallary')
+                        ->with('category')
+                        ->with('detail')
+                        ->with('productDetail')
+                        ->with('productGallaryDetail')
+                        ->with('variations')
+                        ->with('materialDetail')
+                        ->get();
+
+
+        return $this->successResponse(new ProductResource($product->first()), 'Data Get Successfully!');
+
+    }
+
     public function store(array $parms)
     {
 

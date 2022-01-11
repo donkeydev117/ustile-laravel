@@ -29,9 +29,10 @@ class ProductController extends Controller
         return $this->ProductRepository->all();
     }
 
-    public function show(Product $product)
+    public function show($product)
     {
-        return $this->ProductRepository->show($product);
+        // return $this->ProductRepository->show($product);
+        return $this->ProductRepository->showAlt($product);
     }
 
     public function store(ProductRequest $request)

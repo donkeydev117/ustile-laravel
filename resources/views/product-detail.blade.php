@@ -8,20 +8,48 @@
     .price-active {
         border: 1px solid;
     }
+    .product-hero{
+        height: 470px;
+    }
 </style>
+<div class="container-fuild">
+    <nav aria-label="breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">{{ trans('lables.bread-crumb-home') }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ trans('lables.bread-product-page') }}</li>
+            </ol>
+        </div>
+    </nav>
+</div>
 
-@include(isset(getSetting()['product_detail']) ? 'includes.productdetail.product-'.getSetting()['product_detail'] :
-'includes.productdetail.product-style1')
+<section class="pro-content pt-0">
+    <div class="product-hero">
+        <div class="product-summary-container container">
+            <h4 class="product-title"></h4>
+            <span class="product-material"></span>
+            <p class="product-brand"></p>
+            <ul class="product-application">
 
-@include(isset(getSetting()['product_detail']) ?
-'includes.productdetail.product-'.getSetting()['product_detail']."-template" :
-'includes.productdetail.product-style1-template')
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="page-heading-title">
+            <h2> {{ trans('lables.product-detail-product') }}</h2>
+        </div>
+    </div>
+
+    <section class="product-page"></section>
+    @include('includes.productdetail.related-product-section');
+</section>
+
+@include('includes.productdetail.product-template')
 
 @include(isset(getSetting()['card_style']) ?
 'includes.cart.product_card_'.getSetting()['card_style'] : "includes.cart.product_card_style1")
 
 <input type="hidden" id="product_id" value="{{ $product }}" />
-
 @endsection
 
 
@@ -62,22 +90,35 @@
             beforeSend: function() {},
             success: function(data) {
                 if (data.status == 'Success') {
+                    var product = data.data;
+                    console.log("product:", product);
+                    var product_gallary = product.product_gallary;
+                    $(".product-hero").css("background-image", `url(${product_gallary.detail[0].gallary_path})`);
+
+                    $(".product-title").text(product.detail[0].title);
+                    $(".product-material").text(product.material.name);
+                    $(".product-brand").text(product.product_brand.brand_name);
+                    var application = product.application.split(",");
+                    application.forEach(function(item){
+                        var element = `<li>${item}</li>`;
+                        $(".product-application").append(element);
+                    })
+
                     const templ = document.getElementById("product-detail-section");
-
                     const clone = templ.content.cloneNode(true);
-                    // clone.querySelector(".single-text-chat-li").classList.add("bg-blue-100");
-                    clone.querySelector(".wishlist-icon").setAttribute('data-id', data.data.product_id);
-                    clone.querySelector(".wishlist-icon").setAttribute('onclick', 'addWishlist(this)');
-                    clone.querySelector(".wishlist-icon").setAttribute('data-type', data.data.product_type);
-                    clone.querySelector(".compare-icon").setAttribute('data-id', data.data.product_id);
-                    clone.querySelector(".compare-icon").setAttribute('data-type', data.data.product_type);
-                    clone.querySelector(".compare-icon").setAttribute('onclick', 'addCompare(this)');
-                    clone.querySelector(".product-detail-section-product-id").innerHTML = data.data
-                        .product_id;
+                    // // clone.querySelector(".single-text-chat-li").classList.add("bg-blue-100");
+                    // clone.querySelector(".wishlist-icon").setAttribute('data-id', data.data.product_id);
+                    // clone.querySelector(".wishlist-icon").setAttribute('onclick', 'addWishlist(this)');
+                    // clone.querySelector(".wishlist-icon").setAttribute('data-type', data.data.product_type);
+                    // clone.querySelector(".compare-icon").setAttribute('data-id', data.data.product_id);
+                    // clone.querySelector(".compare-icon").setAttribute('data-type', data.data.product_type);
+                    // clone.querySelector(".compare-icon").setAttribute('onclick', 'addCompare(this)');
+                    // clone.querySelector(".product-detail-section-product-id").innerHTML = data.data
+                    //     .product_id;
 
-                    clone.querySelector(".add-to-cart").setAttribute('onclick', 'addToCart(this)');
-                    clone.querySelector(".add-to-cart").setAttribute('data-id', data.data.product_id);
-                    clone.querySelector(".add-to-cart").setAttribute('data-type', data.data.product_type);
+                    // clone.querySelector(".add-to-cart").setAttribute('onclick', 'addToCart(this)');
+                    // clone.querySelector(".add-to-cart").setAttribute('data-id', data.data.product_id);
+                    // clone.querySelector(".add-to-cart").setAttribute('data-type', data.data.product_type);
 
 
                     if (data.data.product_gallary_detail != null) {
