@@ -948,6 +948,7 @@
                 var option = "<option value='"+ id +"'>" + title + "</option>";
                 $("#add_to_project_select_project").append(option);
                 $("#create_projcet_parent_id").append(option);
+                $("#clone_product_project_select").append(option);
                 if(project.children.length){
                     renderProjectOptions(project.children, title);
                 }
@@ -970,7 +971,8 @@
                     console.log(res);
                     var projects = res.projects;
                     renderProjectOptions(projects);
-                    
+                    var projectCount = projects.length;
+                    $(".projects-count").text(projectCount);
                 }
             })
         }

@@ -20,6 +20,9 @@
                         <button class="btn btn-link btn-icon btn-edit">
                             <i class="fa fa-edit"></i>
                         </button>
+                        <button class="btn btn-link btn-icon btn-clone">
+                            <i class="fa fa-clone"></i>
+                        </button>
                     </div>
                 </div>
             </article>

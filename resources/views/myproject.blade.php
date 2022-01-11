@@ -98,6 +98,38 @@
       </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="cloneProductModal" tabindex="-1" role="dialog" aria-labelledby="cloneProductModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cloneProductModalTitle">Clone Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="clone_product_project_product_id"/>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <label>Project</label>
+                    <div class="w-100">
+                        <select class="form-control" id="clone_product_project_select">
+                            <option>Select a project</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_clone_product_modal_btn">Close</button>
+          <button type="button" class="btn btn-primary" id="clone_product_submit">Clone</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   
 
    
@@ -272,7 +304,11 @@
                 $(productClone).find(".btn-edit").data("id", product.id);
                 $(productClone).find(".btn-edit").attr("onclick", "editTags(this)");
                 $(productClone).find(".btn-edit").attr("data-toggle", 'modal');
-                $(productClone).find(".btn-edit").attr("data-target", "#editProductTagsModal")
+                $(productClone).find(".btn-edit").attr("data-target", "#editProductTagsModal");
+                $(productClone).find(".btn-clone").attr("data-toggle", "modal");
+                $(productClone).find(".btn-clone").attr("data-target", "#cloneProductModal");
+                $(productClone).find(".btn-clone").attr("onclick", "cloneProject(this)");
+
                 $(clone).find("ul:first").append(productClone);
             })
             html.append(clone);
@@ -392,6 +428,10 @@
             }
         })
     })
+
+    function cloneProject(input){
+
+    }
 
     function shareProject(input){
         var projectId = $(input).data("id");
