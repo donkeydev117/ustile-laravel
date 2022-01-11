@@ -9,11 +9,9 @@
                     <div class="col-xs-4 col-sm-4 col-md-4">
                         <a class="product-title clickable" href="#" target="_blank"></a>
                         <div class="product-price"></div>
-                        <div class="product-tags">
-
-                        </div>
+                        <div class="product-tags"></div>
                     </div>
-                    <div class="col-xs-4 col-sm-4">
+                    <div class="col-xs-4 col-sm-4 clickable">
                         <button class="btn btn-link btn-icon btn-remove">
                             <i class="fa fa-close"></i>
                         </button>
