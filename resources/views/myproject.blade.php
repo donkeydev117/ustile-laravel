@@ -147,6 +147,73 @@
     customerToken = $.trim(localStorage.getItem("customerToken"));
     customerId = $.trim(localStorage.getItem("customerId"));
     
+    var sortabelOptions = {
+        insertZonePlus: true,
+        placeholderCss: {'background-color': 'green'},
+        hintCss: {'background-color':'blue'},
+        ignoreClass : 'clickable',
+        onChange: function( cEl )
+        {
+            console.log( 'onChange' );
+        },
+        complete: function( cEl )
+        {
+            console.log('onComplete');
+            const arrayData = $(".sortable").sortableListsToArray();
+            $.ajax({
+                type: 'post',
+                url: "{{ url('') }}" + '/api/client/projects/updateProjects' ,
+                headers: {
+                    'Authorization': 'Bearer ' + customerToken,
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                    clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+                },
+                data: {
+                    data: arrayData
+                },
+                success: function(res){
+                    // window.location.reload();
+                },
+                error: function(error){
+                    console.log(error);
+                }
+
+            })
+            // console.log(cEl);
+            // console.log(cEl.data("module"));
+        },
+        isAllowed: function( cEl, hint, target )
+        {
+            // Be carefull if you test some ul/ol elements here.
+            // Sometimes ul/ols are dynamically generated and so they have not some attributes as natural ul/ols.
+            // Be careful also if the hint is not visible. It has only display none so it is at the previous place where it was before(excluding first moves before showing).
+            if( target.data('module') === 'product' )
+            {
+                hint.css('background-color', '#ff9999');
+                return false;
+            }
+            else
+            {
+                hint.css('background-color', '#99ff99');
+                return true;
+            }
+        },
+        opener: {
+            active: true,
+            as: 'html',  // if as is not set plugin uses background image
+            close: '<i class="fa fa-minus c3"></i>',  // or 'fa-minus c3'
+            open: '<i class="fa fa-plus"></i>',  // or 'fa-plus'
+            openerCss: {
+                'display': 'inline-block',
+                'float': 'left',
+                'margin-left': '-35px',
+                'margin-right': '5px',
+                'font-size': '1.1em'
+            }
+        },
+    };
+
     function getProjectTags(){
         $.ajax({
             type: "get",
@@ -192,73 +259,8 @@
                 const html = renderProject(projects);
                 html.addClass("sortable");
                 $("#project_container").append(html);
-                var options = {
-                    insertZonePlus: true,
-                    placeholderCss: {'background-color': 'green'},
-                    hintCss: {'background-color':'blue'},
-                    ignoreClass : 'btn',
-                    onChange: function( cEl )
-                    {
-                        console.log( 'onChange' );
-                    },
-                    complete: function( cEl )
-                    {
-                        console.log('onComplete');
-                        const arrayData = $(".sortable").sortableListsToArray();
-                        $.ajax({
-                            type: 'post',
-                            url: "{{ url('') }}" + '/api/client/projects/updateProjects' ,
-                            headers: {
-                                'Authorization': 'Bearer ' + customerToken,
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                                clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
-                                clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
-                            },
-                            data: {
-                                data: arrayData
-                            },
-                            success: function(res){
-                                // window.location.reload();
-                            },
-                            error: function(error){
-                                console.log(error);
-                            }
-
-                        })
-                        // console.log(cEl);
-                        // console.log(cEl.data("module"));
-                    },
-                    isAllowed: function( cEl, hint, target )
-                    {
-                        // Be carefull if you test some ul/ol elements here.
-                        // Sometimes ul/ols are dynamically generated and so they have not some attributes as natural ul/ols.
-                        // Be careful also if the hint is not visible. It has only display none so it is at the previous place where it was before(excluding first moves before showing).
-                        if( target.data('module') === 'product' )
-                        {
-                            hint.css('background-color', '#ff9999');
-                            return false;
-                        }
-                        else
-                        {
-                            hint.css('background-color', '#99ff99');
-                            return true;
-                        }
-                    },
-                    opener: {
-                        active: true,
-                        as: 'html',  // if as is not set plugin uses background image
-                        close: '<i class="fa fa-minus c3"></i>',  // or 'fa-minus c3'
-                        open: '<i class="fa fa-plus"></i>',  // or 'fa-plus'
-                        openerCss: {
-                            'display': 'inline-block',
-                            'float': 'left',
-                            'margin-left': '-35px',
-                            'margin-right': '5px',
-                            'font-size': '1.1em'
-                        }
-                    },
-                };
-                $(".sortable").sortableLists(options);
+              
+                $(".sortable").sortableLists(sortabelOptions);
             }
         });
     }
@@ -282,6 +284,7 @@
             $(clone).find(".project-template-li-container").append(childClone);
             var products = project.products;
             products.forEach(function(product){
+                console.log(product);
                 const productClone = productTempl.content.cloneNode(true);
                 
                 $(productClone).find(".product-image").prop("src",product.product.gallary.detail[0].path);
@@ -289,7 +292,7 @@
                 $(productClone).find(".product-template-container-li").prop("id", product.id).addClass(`product_${product.id}`);
 
                 $(productClone).find(".product-template-container-li").data("value", "product");
-                $(productClone).find(".product-title").text(product.product.detail[0].title)
+                $(productClone).find(".product-title").text(product.product.detail[0].title).attr("href", `/product/${product.product.id}/${product.product.product_slug}`);
                 $(productClone).find(".product-price").text(product.product.price);
                 var tags = product.tags;
                 tags.forEach(function(tag){
@@ -486,11 +489,11 @@
             },
             success: function(res){
                 var $addToAnyElement = $('<div class="a2a_kit a2a_kit_size_32 a2a_default_style share-this"></div>');
-                $addToAnyElement.append("<a class='a2a_button_facebook'></a>");
-                $addToAnyElement.append("<a class='a2a_button_twitter'></a>");
-                $addToAnyElement.append("<a class='a2a_button_pinterest'></a>");
-                $addToAnyElement.append("<a class='a2a_button_whatsapp'></a>");
-                $addToAnyElement.append("<a class='a2a_button_email'></a>");
+                $addToAnyElement.append("<a class='a2a_button_facebook a2a-share-btn'></a>");
+                $addToAnyElement.append("<a class='a2a_button_twitter a2a-share-btn'></a>");
+                $addToAnyElement.append("<a class='a2a_button_pinterest a2a-share-btn'></a>");
+                $addToAnyElement.append("<a class='a2a_button_whatsapp a2a-share-btn'></a>");
+                $addToAnyElement.append("<a class='a2a_button_email a2a-share-btn'></a>");
                 $addToAnyElement.attr("data-a2a-url", "{{url('')}}/share/projects/" + res.code);
                 $addToAnyElement.attr("data-a2a-title", "Project");
                 $(`.project_${projectId}`).find(".project-content").find('.actions').prepend($addToAnyElement);

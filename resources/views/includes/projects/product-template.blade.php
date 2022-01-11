@@ -7,7 +7,7 @@
                         <img class="product-image" />
                     </div>
                     <div class="col-xs-4 col-sm-4 col-md-4">
-                        <div class="product-title"></div>
+                        <a class="product-title clickable" href="#" target="_blank"></a>
                         <div class="product-price"></div>
                         <div class="product-tags">
 
