@@ -67,6 +67,39 @@
 @include("includes.projects.product-template")
 @include("includes.projects.project-template")
 
+
+<div class="modal fade" id="editProductTagsModal" tabindex="-1" role="dialog" aria-labelledby="editProductTagsModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProductTagsModalTitle">Edit Product Tags</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="edit_project_product_id"/>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <label>Tags</label>
+                    <select class="form-control select2" multiple="multiple" id="edit_project_select_tag" style="width: 100%; display: block">
+                        <?php $tags = getProjectTags(); ?>
+                        @foreach($tags as $tag)
+                        <option value="{{ $tag->title }}">{{ $tag->title }}</option>
+                        @endforeach
+                      </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_edit_product_tags_btn">Close</button>
+          <button type="button" class="btn btn-primary" id="submit_edit_product_btn">Submit</button>
+        </div>
+      </div>
+    </div>
+</div>
+  
+
    
 @endsection
 @section('script')
@@ -84,6 +117,36 @@
     customerToken = $.trim(localStorage.getItem("customerToken"));
     customerId = $.trim(localStorage.getItem("customerId"));
     
+    function getProjectTags(){
+        $.ajax({
+            type: "get",
+            url: "{{ url('') }}" + '/api/client/projects/product/get_tags',
+            dataType: "json",
+            headers: {
+                'Authorization': 'Bearer ' + customerToken,
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+            },
+            success: function(res){
+                // console.log(res);
+                const tags = res.tags;
+                $("#edit_project_select_tag").html("");
+                tags.forEach(function(tag){
+                    var option = `<option value='${tag.title}'>${tag.title}</option>`;
+                    $("#edit_project_select_tag").append(option);
+                })
+                $("#edit_project_select_tag").select2({
+                    tags: true
+                });
+            },
+            error: function(error){
+                console.log(error);
+            }
+        })
+    }
+
+
     function getProjects(){
         $.ajax({
             type: 'get',
@@ -190,9 +253,11 @@
             var products = project.products;
             products.forEach(function(product){
                 const productClone = productTempl.content.cloneNode(true);
+                
                 $(productClone).find(".product-image").prop("src",product.product.gallary.detail[0].path);
                 $(productClone).find(".product-template-container-li").data("module", "product");
-                $(productClone).find(".product-template-container-li").prop("id", product.id);
+                $(productClone).find(".product-template-container-li").prop("id", product.id).addClass(`product_${product.id}`);
+
                 $(productClone).find(".product-template-container-li").data("value", "product");
                 $(productClone).find(".product-title").text(product.product.detail[0].title)
                 $(productClone).find(".product-price").text(product.product.price);
@@ -204,6 +269,10 @@
 
                 $(productClone).find(".btn-remove").data("id", product.id);
                 $(productClone).find(".btn-remove").attr("onclick", "removeProduct(this)");
+                $(productClone).find(".btn-edit").data("id", product.id);
+                $(productClone).find(".btn-edit").attr("onclick", "editTags(this)");
+                $(productClone).find(".btn-edit").attr("data-toggle", 'modal');
+                $(productClone).find(".btn-edit").attr("data-target", "#editProductTagsModal")
                 $(clone).find("ul:first").append(productClone);
             })
             html.append(clone);
@@ -214,8 +283,6 @@
     function removeProduct(input){
         var confirm = window.confirm("Are you sure?");
         if(!confirm) return;
-        var product_id = $(input).data('id');
-        var project_id = $(input).data('projectid');
         var id = $(input).data("id");
 
         $.ajax({
@@ -266,6 +333,65 @@
             }
         });
     }
+
+    function editTags(input){
+        var id = $(input).data("id");
+        $.ajax({
+            type: 'get',
+            url: "{{ url('') }}" + '/api/client/projects/product/' + id + "/tags",
+            dataType: "json",
+            headers: {
+                'Authorization': 'Bearer ' + customerToken,
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+            },
+            success: function(res){
+                var tags = res.tags.map(function(tag) { return tag.tag});
+                $("#edit_project_product_id").val(id);
+                $("#edit_project_select_tag").val(tags);
+                $("#edit_project_select_tag").trigger('change.select2');
+
+            }
+        })
+    }
+
+    $("#submit_edit_product_btn").on("click", function(){
+
+        var id = $("#edit_project_product_id").val();
+        var tags = $("#edit_project_select_tag").val();
+
+        var $this = $(this);
+        if(tags.length === 0 ) return;
+
+        $.ajax({
+            type: 'post',
+            url: "{{ url('') }}" + '/api/client/projects/product/' + id + "/update",
+            dataType: "json",
+            headers: {
+                'Authorization': 'Bearer ' + customerToken,
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+            },
+            data: {
+                tags : tags
+            }, 
+            success: function(res){
+                toastr.success("Product has been updated successfully!");
+                $(`.product_${id}`).find('.product-tags').html("");
+                tags.forEach(function(tag){
+                    var element = `<span class='badge badge-secondary ml-1'>${tag}</span>`;
+                    $(`.product_${id}`).find('.product-tags').append(element);
+                });
+                $("#close_edit_product_tags_btn").trigger("click");
+                getProjectTags();
+            },
+            error: function (error) {
+                toastr.error("{{ trans('response.some_thing_went_wrong') }}");
+            }
+        })
+    })
 
     function shareProject(input){
         var projectId = $(input).data("id");

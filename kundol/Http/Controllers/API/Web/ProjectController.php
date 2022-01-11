@@ -8,6 +8,7 @@ use App\Models\Web\Project;
 use App\Models\Web\ProjectProduct;
 use App\Models\Web\ProjectProductTag;
 use App\Models\Web\ProjectShare;
+use App\Models\Admin\ProjectTag;
 use Illuminate\Support\Str;
 use Illuminate\Datebase\Eloquent\Builder;
 
@@ -215,13 +216,16 @@ class ProjectController extends Controller
         $m = ProjectProduct::create($data);
 
         $tags = $request->tags;
-        
+        $newTag = [];
         foreach($tags as $tag){
             ProjectProductTag::create([
                 'project_product_id' => $m->id,
                 "tag" => $tag
             ]);
+            $newTag[] = ['title' => $tag, 'is_active' => 1]; 
         }
+
+        ProjectTag::insertOrIgnore($newTag);
 
         return response()->json(["status" => "success"], 200);
     }
@@ -345,9 +349,7 @@ class ProjectController extends Controller
             $product->active = 1;
             $product->save();
         }
-
         return response()->json(['status' => 'success'], 200);
-
     }
 
     public function deleteItemRecylebin( Request $request){
@@ -362,6 +364,39 @@ class ProjectController extends Controller
             $product->delete();
         }
         return response()->json(['status' => 'success'], 200);
+    }
+
+    public function getTags($id){
+        $tags = ProjectProductTag::where("project_product_id", $id)->get();
+        return response()->json(['status' => 'success', 'tags' => $tags], 200);
+    }
+
+    public function updateTags(Request $request, $id){
+        $tags = $request->tags;
+        if(count($tags) === 0) {
+            return response()->json(['status' => 'error'], 500);
+        }
+
+        ProjectProductTag::where("project_product_id", $id)->delete();
+        $newTags = [];
+        foreach($tags as $tag){
+            ProjectProductTag::create([
+                'project_product_id' => $id,
+                'tag' => $tag        
+            ]);
+
+            $newTags[] = ['title' => $tag, 'is_active' => 1];
+        }
+
+        ProjectTag::insertOrIgnore($newTags);
+
+        return response()->json(['status' => 'success'], 200);
+
+    }
+
+    public function getAllTags(Request $request){
+        $tags = ProjectTag::where("is_active", 1)->get();
+        return response()->json(['tags' => $tags], 200);
     }
 
 }

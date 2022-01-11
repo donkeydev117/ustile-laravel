@@ -208,6 +208,8 @@ class ProductRepository implements ProductInterface
                 ]);
             }
 
+            // die(print_r($product->first()));
+
             return $this->successResponse(new ProductResource($product->first()), 'Data Get Successfully!');
         } catch (Exception $e) {
             return $this->errorResponse();

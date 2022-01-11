@@ -127,54 +127,37 @@
 
                     if (data.data.product_type == 'simple') {
                             if (data.data.product_discount_price == '' || data.data
-                                .product_discount_price == null || data.data.product_discount_price ==
-                                'null') {
-                                clone.querySelector(".product-card-price").innerHTML = data.data
-                                    .product_price_symbol;
+                                .product_discount_price == null || data.data.product_discount_price == 'null') {
+                                clone.querySelector(".product-card-price").innerHTML = data.data.product_price_symbol;
                             } else {
-
-                                clone.querySelector(".product-card-price").innerHTML = data.data
-                                    .product_discount_price_symbol + '<span>' + data.data
-                                    .product_price_symbol + '</span>';
+                                clone.querySelector(".product-card-price").innerHTML = data.data.product_discount_price_symbol + '<span>' + data.data.product_price_symbol + '</span>';
                             }
                         } else {
                             if (data.data.product_combination != null) {
-                                clone.querySelector(".product-card-price").innerHTML = data.data
-                          .product_combination[0].product_price_symbol;
+                                // clone.querySelector(".product-card-price").innerHTML = data.data.product_combination[0].product_price_symbol;
                         }
                         if (data.data.attribute != null) {
                             var combination = '';
                             var attribute = data.data.attribute
                             for (var a = 0; a < attribute.length; a++) {
-
                                 if (attribute[a].attributes != null) {
-
                                     if (attribute[a].attributes.detail != null) {
-
                                         combination += '<div class="color-selection">';
-                                        combination += '<h4><b>' + attribute[a].attributes.detail[0].name +
-                                            '</b></h4>';
+                                        combination += '<h4><b>' + attribute[a].attributes.detail[0].name +'</b></h4>';
                                         combination += '</div>';
                                     }
                                     combination += '<ul class="variations">';
                                     if (attribute[a].variations != null) {
-                                        for (var v = 0; v < attribute[a].variations
-                                            .length; v++) {
-                                            combination +=
-                                                '<li class="btn size-btn variation_list_item attribute_' +
-                                                attribute[a].attributes.detail[0].name.split(' ').join(
-                                                    '_') + '_div  ' + attribute[a].variations[v]
-                                                .product_variation.detail[0].name + '-' + attribute[a]
-                                                .attributes.detail[0].name.split(' ').join('_') +
-                                                '" data-attribute-id="' + attribute[a].attributes
-                                                .attribute_id + '" data-attribute-name="' + attribute[a]
-                                                .attributes.detail[0].name + '" data-variation-id="' +
-                                                attribute[a].variations[v]
-                                                .product_variation.id + '" data-variation-name="' +
-                                                attribute[a].variations[v]
-                                                .product_variation.detail[0].name + '">' + attribute[a]
-                                                .variations[v]
-                                                .product_variation.detail[0].name + '</li>';
+                                        for (var v = 0; v < attribute[a].variations.length; v++) {
+                                            combination +='<li class="btn size-btn variation_list_item attribute_' +
+                                                attribute[a].attributes.detail[0].name.split(' ').join('_') + '_div  ' 
+                                                + attribute[a].variations[v].product_variation.detail[0].name 
+                                                + '-' + attribute[a].attributes.detail[0].name.split(' ').join('_') +
+                                                '" data-attribute-id="' + attribute[a].attributes.attribute_id + 
+                                                '" data-attribute-name="' + attribute[a].attributes.detail[0].name + 
+                                                '" data-variation-id="' + attribute[a].variations[v].product_variation.id + 
+                                                '" data-variation-name="' + attribute[a].variations[v].product_variation.detail[0].name + 
+                                                '">' + attribute[a].variations[v].product_variation.detail[0].name + '</li>';
                                         }
                                     }
                                     combination += '</ul>';
@@ -182,11 +165,9 @@
                                 clone.querySelector(".pro-options").innerHTML = combination;
                             }
                         }
-
                     }
                     if (data.data.reviews !== null) {
-                        clone.querySelector(".review-count").innerHTML = data.data.reviews.length +
-                            " Reviews";
+                        clone.querySelector(".review-count").innerHTML = data.data.reviews.length + " Reviews";
                             rating = '';
                             sum = 0;
                             for(review = 0; review < data.data.reviews.length; review++){
@@ -219,12 +200,9 @@
                     if (data.data.rating !== null) {
                         clone.querySelector(".rating").innerHTML = data.data.rating;
                     }
-
-
                     $("." + appendTo).append(clone);
                     getProductReview();
                     slideInital();
-
                 }
             },
             error: function(data) {},
@@ -263,8 +241,6 @@
             }
 
         }
-
-        // console.log(attribute_id, variation_id, attribute, variation);
         var url = "{{ url('') }}" + '/api/client/products/{{ $product }}?getCategory=1&getDetail=1&language_id=' + languageId + '&currency='+localStorage.getItem("currency");
         $.ajax({
             type: 'get',

@@ -67,7 +67,18 @@
                         <div class="col-lg-12 col-xl-12">
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade" :class="{ 'active show': isActive('info-tab') }">
-                                    <BasicInfo @setCategoryInChild="setCategory" @setTitleInChild="setTitle" @setDescInChild="setDesc" @setGallaryIdInChild="setGallaryId" @setActiveInChild="setActiveFromChild" @isActiveInChild="isActiveFromChild" @setVideoUrlInChild="setVideoUrl" :errors="errors" :product="product" :edit="edit" />
+                                    <BasicInfo 
+                                        @setCategoryInChild="setCategory" 
+                                        @setTitleInChild="setTitle" 
+                                        @setDescInChild="setDesc" 
+                                        @setGallaryIdInChild="setGallaryId" 
+                                        @setActiveInChild="setActiveFromChild" 
+                                        @isActiveInChild="isActiveFromChild" 
+                                        @setVideoUrlInChild="setVideoUrl" 
+                                        :errors="errors" 
+                                        :product="product" 
+                                        :edit="edit" 
+                                    />
                                 </div>
                                 <div class="tab-pane fade" :class="{ 'active show': isActive('ad-info-tab') }">
                                     <AdvanceInfo 
@@ -435,7 +446,6 @@ export default {
             this.fetchProduct(this.$route.params.id);
 
         }
-
         //   this.getLastSku();
 
     }

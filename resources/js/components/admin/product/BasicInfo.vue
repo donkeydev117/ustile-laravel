@@ -238,6 +238,9 @@ export default {
     },
     watch: {
         product(newVal, oldVal) {
+            console.log("New Val:", newVal);
+            console.log("Old Val:", oldVal);
+
             this.video_url = newVal.video_url;
             newVal.cat_id.map((cId) => {
                 this.category_id.push(cId);
@@ -254,6 +257,8 @@ export default {
             newVal.gallary_detail_path.map((gallary_detail_path_single, index) => {
                 this.gallary_detail_path.push(gallary_detail_path_single);
             });
+            
+            console.log("Gallary Path:", this.gallary_detail_path);
         }
     },
     mounted() {

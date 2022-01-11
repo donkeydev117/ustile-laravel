@@ -980,7 +980,7 @@
             // $("#add_to_project_select_project").dropdown({
             //     titleText:'Please select a project',
             // });
-            $("#add_to_project_select_tag").select2({
+            $(".select2").select2({
                 tags: true
             })
 

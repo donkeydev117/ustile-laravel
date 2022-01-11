@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-sm-12 form-group">
                     <label>Tags</label>
-                    <select class="form-control" multiple="multiple" id="add_to_project_select_tag" style="width: 100%; display: block">
+                    <select class="form-control select2" multiple="multiple" id="add_to_project_select_tag" style="width: 100%; display: block">
                         <?php $tags = getProjectTags(); ?>
                         @foreach($tags as $tag)
                         <option value="{{ $tag->title }}">{{ $tag->title }}</option>
