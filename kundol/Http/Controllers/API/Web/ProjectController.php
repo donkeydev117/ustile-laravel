@@ -399,4 +399,33 @@ class ProjectController extends Controller
         return response()->json(['tags' => $tags], 200);
     }
 
+    public function cloneProduct(Request $request, $id){
+
+        $request->validate([
+            'project' => 'required|string'
+        ]);
+        $new_project_id = $request->project;
+
+        $product = ProjectProduct::find($id);
+
+        $newRecord = new ProjectProduct;
+        $newRecord->product_id = $product->product_id;
+        $newRecord->project_id = $new_project_id;
+        $newRecord->active = $product->active;
+
+        $newRecord->save();
+
+        $tags = ProjectProductTag::where("project_product_id", $product->id)->get();
+
+        foreach($tags as $tag){
+            ProjectProductTag::create([
+                'project_product_id' => $newRecord->id,
+                'tag' => $tag->tag
+            ]);
+        }
+
+        return response()->json(['status' => 'success', "id" => $newRecord->id], 200);
+
+    }
+
 }

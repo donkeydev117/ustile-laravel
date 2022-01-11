@@ -178,6 +178,7 @@ Route::group(['prefix' => 'client', 'middleware' => ['auth:customer-api', 'scope
     Route::post('projects/shareProject', "API\Web\ProjectController@shareProject")->name("projects.share");
     Route::get("projects/product/{id}/tags", "API\Web\ProjectController@getTags");
     Route::post("projects/product/{id}/update", "API\Web\ProjectController@updateTags");
+    Route::post("projects/product/{id}/clone", "API\Web\ProjectController@cloneProduct");
     Route::get("projects/product/get_tags", "API\Web\ProjectController@getAllTags");
 
     Route::get("projects/get_recylebin_items/{customerId}", "API\Web\ProjectController@getRecylebinItems")->name("projects.getRecylebinItems");

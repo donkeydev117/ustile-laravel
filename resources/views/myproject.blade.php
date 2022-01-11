@@ -274,6 +274,7 @@
         projects.forEach(function(project){
             const clone = templ.content.cloneNode(true);
             $(clone).find(".project-template-li-container").prop("id", project.project.id);
+            $(clone).find(".project-template-li-container").addClass(`project_${project.project.id}`);
             $(clone).find(".project-template-li-container").data("value", "project");
             $(clone).find(".project-title").text(project.project.title);
             $(clone).find(".btn-icon").data("id", project.project.id);
@@ -305,6 +306,7 @@
                 $(productClone).find(".btn-edit").attr("onclick", "editTags(this)");
                 $(productClone).find(".btn-edit").attr("data-toggle", 'modal');
                 $(productClone).find(".btn-edit").attr("data-target", "#editProductTagsModal");
+                $(productClone).find(".btn-clone").data("id", product.id);
                 $(productClone).find(".btn-clone").attr("data-toggle", "modal");
                 $(productClone).find(".btn-clone").attr("data-target", "#cloneProductModal");
                 $(productClone).find(".btn-clone").attr("onclick", "cloneProject(this)");
@@ -430,8 +432,45 @@
     })
 
     function cloneProject(input){
-
+        var id = $(input).data("id");
+        $("#clone_product_project_product_id").val(id);
     }
+
+    $("#clone_product_submit").on("click", function(){
+        var id = $("#clone_product_project_product_id").val();
+        var project = $("#clone_product_project_select").val();
+        if(id === "" || id === undefined || project === null || project === "" || project === undefined) return;
+
+        $.ajax({
+            type: "post",
+            url: "{{ url('') }}" + '/api/client/projects/product/' + id + "/clone",
+            dataType: "json",
+            headers: {
+                'Authorization': 'Bearer ' + customerToken,
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+            },
+            data: {
+                project: project
+            }, 
+            success: function(res){
+                const newId = res.id;
+                var $clone = $(`.product_${id}`).clone();
+                $clone.removeClass(`.product_${id}`).addClass(`.product_${newId}`);
+                $clone.attr("id", newId);
+                $(`.project_${project}`).append($clone);
+                $("#close_clone_product_modal_btn").trigger("click");
+                toastr.success("Product has been cloned successfully!");
+            },
+            error: function(error){
+                console.log(error);
+                toastr.error("Something went wrong!");
+            }
+        })
+
+
+    });
 
     function shareProject(input){
         var projectId = $(input).data("id");
