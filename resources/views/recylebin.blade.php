@@ -55,19 +55,22 @@
                 const items = res.items;
                 items.forEach(function(item){
                     const $tr = $("<tr></tr>");
-                    // Title
                     if(item.image != "") {
                         $tr.append(`<td><img src='${item.image}' style='width: 50px; height: 50px;' /></td>`);
                     } else {
                         $tr.append("<td></td>");
                     }
-                    $tr.append(`<td>${item.title}</td>`);
+                    if(item.type === "project"){
+                        $tr.append(`<td>${item.title}</td>`);
+                    } else if(item.type === "product"){
+                        $tr.append(`<td><a href="/product/${item.product.id}/${item.product.product_slug}" target='_blank'>${item.title}</a></td>`);
+                    }
                     $tr.append(`<td>${item.type}</td>`);
                     $tr.append(`<td>${item.parentTitle ?? ""}</td>`);
                     $tr.append(`<td>${new Date(item.updated_at).toLocaleDateString()}</td>`);
                     $tr.append(`<td>
-                        <button class='btn btn-link' data-type='${item.type}' data-id='${item.id}' onclick='restoreItem(this)'>Restore</button>
-                        <button class='btn btn-link' data-type='${item.type}' data-id='${item.id}' onclick='deleteItem(this)'>Delete</button>
+                        <button class='btn btn-secondary' data-type='${item.type}' data-id='${item.id}' onclick='restoreItem(this)'>Restore</button>
+                        <button class='btn btn-danger' data-type='${item.type}' data-id='${item.id}' onclick='deleteItem(this)'>Delete</button>
                     </td>`);
 
                     $("#recylebin-main-table-body").append($tr);

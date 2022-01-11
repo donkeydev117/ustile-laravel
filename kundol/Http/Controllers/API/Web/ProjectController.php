@@ -320,7 +320,8 @@ class ProjectController extends Controller
                 'parent_id' => $product['project']['id'],
                 'id' => $product['id'],
                 'image' => $product['product']['gallary']['detail'][0]['path'],
-                'updated_at' => $product['updated_at']
+                'updated_at' => $product['updated_at'],
+                "product" => $product['product']
             ];
 
             $productItems[] = $data;
