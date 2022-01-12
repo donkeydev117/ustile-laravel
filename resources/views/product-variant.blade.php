@@ -47,11 +47,19 @@
         color: #333;
     }
     .calculator-container{
-        display: block;
-        color: #333
+        display: none;
+        color: #333;
+        background-color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-bottom: 10px;
     }
     b{
         font-family:  "Montserrat-Bold"
+    }
+    .tile-info{
+        display: flex;
+        justify-content: space-between;
     }
 </style>
 
@@ -79,11 +87,9 @@
                    <div class="col-sm-12 col-md-6">
                         <h4 class="product-title">{{ $product->detail[0]->title}}</h4>
                         <div class="variation-attribute">SKU: {{ $variant['sku']}}</div>
-                        <div class="variation-attribute">Color: {{ $variant['color']['color']}} </div>
-                        <div class="variation-attribute">Finish: {{$variant['finish']['name']}} </div>
-                        <div class="variation-attribute">Shade: {{$variant['shade']['name']}}</div>
-                        <div class="variation-attribute">Look: {{ $variant['look']['name']}}</div>
-                        <div class="variation-attribute">Shape: {{ $variant['shape']['name'] }}</div>
+                        <div class="variation-attribute">
+                            {{ $variant['color']['color']}}/ {{$variant['finish']['name']}} / {{$variant['shade']['name']}} / {{ $variant['look']['name']}} / {{ $variant['shape']['name'] }} 
+                        </div>
                         <div class="variation-attribute">Price: $ {{ $variant['price']}}</div>
                         <div class="pro-counter">
                             <div class="input-group item-quantity">
@@ -97,9 +103,9 @@
                                     </button>
                                 </span>
                             </div>
-                            <a href="javascript:void()" class="d-block">Use Calculator?</a>
+                            <a href="javascript:void(0)" class="d-block" id="show_calculator">Use Calculator?</a>
                             <div class="calculator-container">
-                                <div class="tile-info">
+                                <div class="tile-info mb-2">
                                     <span><b>Tile Size : </b>{{ intval($variant['width'])}}" x {{intval($variant['length'])}}"</span>
                                     <span><b>Pieces per Box: </b> {{ $variant['box_size']}}</span>
                                     <span><b>Sq.Ft. per Box: </b> {{ intval($variant['width']) * intval($variant['length']) * intval($variant['box_size']) / 144}} </span>
@@ -108,24 +114,24 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label class="control-label">Width of Room(ft)</label>
-                                            <input type="number" step="0.1" class="form-control" />
+                                            <input type="number" step="0.1" class="form-control" id="calculator_room_width" />
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Length of Room(ft)</label>
-                                            <input type="number" step="0.1" class="form-control" />
+                                            <input type="number" step="0.1" class="form-control" id="calculator_room_length" />
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">
-                                                Total Amount(boxes) : <span class="calculator_result"></span>
+                                                Total Amount(boxes) : <span id="calculator_result"></span> 
                                             </label>
                                             <br>
-                                            <span>*It includes 10% waste.</span>
+                                            <span style="font-size:12px">*It includes 10% waste.</span>
                                         </div>
                                     </div>
                                 </div>
                                 
                             </div>
-                            <button type="button" class="btn btn-secondary btn-lg swipe-to-top add-to-cart">Add to Cart</button>
+                            <button type="button" class="btn btn-secondary btn-lg swipe-to-top add-to-cart mb-2">Add to Cart</button>
                         </div>
                         <!-- AddToAny BEGIN -->
                         <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
@@ -176,7 +182,7 @@
 
         </div>
     </section>
-    @include('includes.productdetail.related-product-section');
+    @include('includes.productdetail.related-product-section')
 </section>
 
 @include('includes.productdetail.product-template')
@@ -201,12 +207,42 @@
 
     customerToken = $.trim(localStorage.getItem("customerToken"));
 
-    function fetchProduct(){
+    // For calculator
+    var tileWidth = parseInt("{{ $variant['width'] }}"); // tile width in inch
+    var tileLength = parseInt("{{ $variant['length']}}");
+    var tileBoxSize = parseInt("{{$variant['box_size']}}");
+    var sqFtBox = (tileWidth * tileLength * tileBoxSize) / 144;
+    var price = parseFloat("{{ $variant['price']}}");
+
+    function getCalculatorResult() {
+        var roomWidth = $("#calculator_room_width").val();
+        var roomLength = $("#calculator_room_length").val();
+
+        if(roomWidth == "" || roomLength == "") return;
+
+        var sqFtRoom = roomLength * roomLength;
+
+        var estimated = Math.ceil(sqFtRoom / sqFtBox);
+        var estimatedPrice = estimated * price;
+
+        $("#calculator_result").text(`${estimated} boxes ($${estimatedPrice.toFixed(2)})`);
+        $("#quantity-input").val(estimated);
 
     }
 
     $(document).ready(function(){
-        fetchProduct();
+        
+        $("#show_calculator").on("click", function(){
+            $(".calculator-container").slideToggle(400);
+        })
+
+        $("#calculator_room_width").on("input", function(){
+            getCalculatorResult();
+        });
+        $("#calculator_room_length").on("input", function(){
+            getCalculatorResult();
+        });
+
     });
 
 
