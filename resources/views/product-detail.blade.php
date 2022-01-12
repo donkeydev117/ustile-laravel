@@ -28,6 +28,9 @@
     .product-brand{
         margin-left: 10px;
     }
+    .variation-image img{
+        width: 100%;
+    }
     
 </style>
 <div class="container-fuild">
@@ -63,7 +66,11 @@
         </div>
     </div>
 
-    <section class="product-page container"></section>
+    <section class="product-page container">
+        <div class="row " id="variations-container">
+
+        </div>
+    </section>
     @include('includes.productdetail.related-product-section');
 </section>
 
@@ -98,6 +105,8 @@
 
     customerToken = $.trim(localStorage.getItem("customerToken"));
 
+    var productImagePath;
+
     function fetchProduct() {
         var url = "{{ url('') }}" + '/api/client/products/' + "{{ $product }}" +
             '?getCategory=1&getDetail=1&language_id=' + languageId + '&currency='+localStorage.getItem("currency");
@@ -116,7 +125,13 @@
                     var product = data.data;
                     console.log("product:", product);
                     var product_gallary = product.product_gallary;
-                    $(".product-hero").css("background-image", `url(${product_gallary.detail[0].gallary_path})`);
+                    if(product_gallary){
+                        productImagePath = product_gallary.detail[0].gallary_path;
+                        $(".product-hero").css("background-image", `url(${product_gallary.detail[0].gallary_path})`);
+                    } else {
+                        // Default image
+                    }
+                   
 
                     $(".product-title").text(product.detail[0].title);
                     $(".product-material").text(product.material.name);
@@ -142,7 +157,8 @@
                     variations.forEach(function(v){
                         console.log(v);
                         var clone = temp.content.cloneNode(true);
-                        $(clone).find(".variation-image").find('img').prop('src', v.media.detail[1].path);
+                        var imagePath = v.media ? v.media.detail[1].path : productImagePath;
+                        $(clone).find(".variation-image").find('img').prop('src', imagePath);
                         var colorShape = `${v.color.color}-${v.shape.name}`;
                         $(clone).find('.variation-color-shape').text(colorShape);
                         var finishLook = `${v.finish.name}-${v.look.name}`;
@@ -150,8 +166,10 @@
 
                         var size = `${v.width}mm x ${v.length}mm x ${v.box_size}`;
                         $(clone).find('.variation-size').text(size);
+                        var $variatinContainer = $("<div class='col-sm-6 col-md-4 col-lg-3'></div>");
+                        $variatinContainer.append(clone);
 
-                        $(appendTo).append(clone);
+                        $("#variations-container").append($variatinContainer);
 
                     })
 
