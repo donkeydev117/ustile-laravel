@@ -23,6 +23,29 @@
     .product-title{
         color: #333
     }
+    .variation-image img{
+        width: 100%;
+    }
+    .product-variation-card-container{
+        display: block;
+        padding: 5px;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0px 1px 2px 0px #888;
+    }
+    .variation-color-shape{
+        font-size: 18px;
+        font-family: "Montserrat-Bold", sans-serif;
+        color: #8b4d16;
+    }
+
+    .variatin-finish-look{
+        font-size: 12px;
+        color: #cd2378;
+    }
+    .variation-attribute{
+        color: #333;
+    }
 </style>
 
 <div class="container-fuild">
@@ -48,12 +71,13 @@
                    </div>
                    <div class="col-sm-12 col-md-6">
                         <h4 class="product-title">{{ $product->detail[0]->title}}</h4>
-                        <p>SKU: {{ $variant['sku']}}</p>
-                        <p>Color: {{ $variant['color']['color']}} </p>
-                        <p>Shade: {{$variant['shade']['name']}}</p>
-                        <p>Look: {{ $variant['look']['name']}}</p>
-                        <p>Shape: {{ $variant['shape']['name'] }}</p>
-                        <p>Price: $ {{ $variant['price']}}</p>
+                        <div class="variation-attribute">SKU: {{ $variant['sku']}}</div>
+                        <div class="variation-attribute">Color: {{ $variant['color']['color']}} </div>
+                        <div class="variation-attribute">Finish: {{$variant['finish']['name']}} </div>
+                        <div class="variation-attribute">Shade: {{$variant['shade']['name']}}</div>
+                        <div class="variation-attribute">Look: {{ $variant['look']['name']}}</div>
+                        <div class="variation-attribute">Shape: {{ $variant['shape']['name'] }}</div>
+                        <div class="variation-attribute">Price: $ {{ $variant['price']}}</div>
                         <div class="pro-counter">
                             <div class="input-group item-quantity">
                               <input type="text" id="quantity-input" name="quantity" class="form-control" value="1">
@@ -85,6 +109,30 @@
     <div class="container mt-4">
         <div class="page-heading-title">
             <h2>Other Variations</h2>
+        </div>
+        <div class="row">
+            @foreach($other_variants as $ov)
+            <div class="col-sm-4 col-md-3">
+                <a class="product-variation-card-container" href="/product/{{$product->id}}/{{$product->product_slug}}/variation/{{$ov['id']}}" target="_blank">
+                    <div class="variation-image">
+                        <img class="" src="{{ $ov['media']['detail'][0]['path']}}" />
+                    </div>
+            
+                    <div class="variation-color-shape text-center">
+                        {{ $ov['color']['color'] }}-{{ $ov['shape']['name']}} 
+                    </div>
+            
+                    <div class="variatin-finish-look text-center">
+                        {{$ov['finish']['name']}}-{{$ov['look']['name']}}
+                    </div>
+            
+                    <div class="variation-size text-center">
+                        {{intval($ov['width'])}}mm x {{ intval($ov['length'])}}mm x {{ intval($ov['box_size'])}}
+                    </div>
+            
+                </a>
+            </div>
+            @endforeach
         </div>
     </div>
 

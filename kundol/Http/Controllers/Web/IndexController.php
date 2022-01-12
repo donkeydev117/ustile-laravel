@@ -561,17 +561,30 @@ class IndexController extends Controller
                     ->with('media')
                     ->with('color')
                     ->with('shade')
+                    ->with("finish")
                     ->with('look')
                     ->with('shape')
                     ->firstOrFail()
                     ->toArray();
 
+        $other_variants = ProductVariationAlt::where("product_id", $product_id)
+                            ->where("id", "!=", $id)
+                            ->with('media')
+                            ->with('finish')
+                            ->with('color')
+                            ->with('shade')
+                            ->with('look')
+                            ->with('shape')
+                            ->get()
+                            ->toArray();
+
+            
 
 
         $homeService = new HomeService;
         $data = $homeService->homeIndex();
 
-        return view('product-variant', compact('data', 'variant', 'product'));
+        return view('product-variant', compact('data', 'variant', 'product', 'other_variants'));
 
     }
     
