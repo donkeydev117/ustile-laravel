@@ -303,7 +303,7 @@
                                     <td>
                                         <button v-if='v.media==""' class="btn btn-sm btn-primary" @click.prevent="toggleImageSelect(index)">Add</button>
                                         <img 
-                                            v-if="v.media != ''"
+                                            v-if="v.media != null"
                                             :src="v.media.gallary_path"
                                             class='variant-image'
                                         />
@@ -713,11 +713,15 @@ export default {
             this.sku = newVal.sku;
             this.brand_id = newVal.brand_id;
             newVal.variants.map((variant, index) => {
-                const media = {
-                    gallary_id: variant.media.id,
-                    gallary_path : "/gallary/" + variant.media.name
-                };
-                this.variants = [...this.variants, {...variant, media}]
+                if(variant.media){
+                    const media = {
+                        gallary_id: variant.media.id,
+                        gallary_path : "/gallary/" + variant.media.name
+                    };
+                    this.variants = [...this.variants, {...variant, media}]
+                } else {
+                    this.variants = [...this.variants, variant]
+                }
             })
 
             this.material = newVal.material;

@@ -204,7 +204,6 @@ export default {
                 }
             } else if (type === 'remove') {
                 if (this.product.applications.indexOf(value) !== -1) {
-                    console.log(this.product.applications);
                     this.product.applications.splice(this.product.applications.indexOf(value), 1);
                 }
             }
@@ -356,7 +355,7 @@ export default {
                 this.product.product_type = res.data.data.product_type;
                 this.product.product_status = res.data.data.product_status;
                 this.product.brand_id = res.data.data.brand_id;
-                this.product.material = res.data.data.material;
+                this.product.material = res.data.data.material.id;
                 this.product.made_in_usa = res.data.data.made_in_usa;
                 this.product.variants = res.data.data.variations;
                 this.product.applications = res.data.data.application.split(",");
@@ -370,8 +369,6 @@ export default {
                 }
                 if (res.data.data.detail != null) {
                     for (var i = 0; i < res.data.data.detail.length; i++) {
-                        // this.product.title.push(res.data.data.detail[i].title);
-                        // this.product.desc.push(res.data.data.detail[i].desc);
                         this.product.title[res.data.data.detail[i].language.id] = res.data.data.detail[i].title;
                         this.product.desc[res.data.data.detail[i].language.id] = res.data.data.detail[i].desc;
                         this.product.title_lang[res.data.data.detail[i].language.id] = res.data.data.detail[i].title;
@@ -379,14 +376,19 @@ export default {
                         this.product.languages.push(res.data.data.detail[i].language.id);
                     }
                 }
-                if (res.data.data.product_gallary_detail != null) {
-                    for (var i = 0; i < res.data.data.product_gallary_detail.length; i++) {
-                        if (i == 0) {
-                            this.product.gallary_id = res.data.data.product_gallary_detail[i].id;
-                        }
-                        this.product.gallary_detail_path.push('/gallary/' + res.data.data.product_gallary_detail[i].gallary_name);
-                        this.product.gallary_detail_id.push(res.data.data.product_gallary_detail[i].id);
-                    }
+                // if (res.data.data.product_gallary_detail != null) {
+                //     for (var i = 0; i < res.data.data.product_gallary_detail.length; i++) {
+                //         if (i == 0) {
+                //             this.product.gallary_id = res.data.data.product_gallary_detail[i].id;
+                //         }
+                //         this.product.gallary_detail_path.push('/gallary/' + res.data.data.product_gallary_detail[i].gallary_name);
+                //         this.product.gallary_detail_id.push(res.data.data.product_gallary_detail[i].id);
+                //     }
+                // }
+                if(res.data.data.product_gallary != null){
+                    this.product.gallary_detail_path = res.data.data.product_gallary.detail[0].gallary_path;
+                    this.product.gallary_detail_id = res.data.data.product_gallary.id;
+                    this.product.gallary_id = res.data.data.product_gallary.id;
                 }
 
                 if (res.data.data.product_type == 'variable') {

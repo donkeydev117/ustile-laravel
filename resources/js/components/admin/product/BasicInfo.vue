@@ -46,15 +46,25 @@
                     <div class="row mt-2">
                         <div class="col-12">
                             <hr>
-                            <a data-toggle="pill" href="#" @click="toggleImageSelect()" class="btn btn-primary cta btn-add-media">Add Media</a>
+                            <a data-toggle="pill" href="#" @click="toggleImageSelect()" class="btn btn-primary cta btn-add-media">{{ gallary_detail_path === "" ? "Add Media" : 'Change Media'}}</a>
                             <hr>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-12">
                     <label>Categories</label>
-                    <multiselect v-model="category_id" :options="categories" :custom-label="nameWithLang" placeholder="Select one" label="name" track-by="id" :multiple="true" :taggable="true" @input="setCat" @remove='removeCat'>
-                    </multiselect>
+                    <multiselect 
+                        v-model="category_id" 
+                        :options="categories" 
+                        :custom-label="nameWithLang" 
+                        placeholder="Select one" 
+                        label="name" 
+                        track-by="id" 
+                        :multiple="true" 
+                        :taggable="true" 
+                        @input="setCat" 
+                        @remove='removeCat'
+                    />
 
                     <small class="form-text text-danger" v-if="errors.has('category_id')" v-text="errors.get('category_id')"></small>
 
@@ -228,8 +238,6 @@ export default {
     },
     watch: {
         product(newVal, oldVal) {
-            console.log("New Val:", newVal);
-            console.log("Old Val:", oldVal);
 
             this.video_url = newVal.video_url;
             newVal.cat_id.map((cId) => {
@@ -240,15 +248,16 @@ export default {
                 this.desc[languageId] = newVal.desc_lang[languageId];
             });
 
-            newVal.gallary_detail_id.map((gallary_detail_id, index) => {
-                this.gallary_detail_id.push(gallary_detail_id);
-            });
+            // newVal.gallary_detail_id.map((gallary_detail_id, index) => {
+            //     this.gallary_detail_id.push(gallary_detail_id);
+            // });
 
-            newVal.gallary_detail_path.map((gallary_detail_path_single, index) => {
-                this.gallary_detail_path.push(gallary_detail_path_single);
-            });
+            // newVal.gallary_detail_path.map((gallary_detail_path_single, index) => {
+            //     this.gallary_detail_path.push(gallary_detail_path_single);
+            // });
+            this.gallary_detail_path = newVal.gallary_detail_path;
+            this.gallary_detail_id = newVal.gallary_detail_id;
             
-            console.log("Gallary Path:", this.gallary_detail_path);
         }
     },
     mounted() {
