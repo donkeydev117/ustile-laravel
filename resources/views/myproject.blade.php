@@ -307,6 +307,7 @@
                 $(productClone).find(".btn-edit").attr("data-toggle", 'modal');
                 $(productClone).find(".btn-edit").attr("data-target", "#editProductTagsModal");
                 $(productClone).find(".btn-clone").data("id", product.id);
+                $(productClone).find(".btn-clone").data('slug', product.product.product_slug);
                 $(productClone).find(".btn-clone").attr("data-toggle", "modal");
                 $(productClone).find(".btn-clone").attr("data-target", "#cloneProductModal");
                 $(productClone).find(".btn-clone").attr("onclick", "cloneProject(this)");
@@ -432,12 +433,16 @@
 
     function cloneProject(input){
         var id = $(input).data("id");
+        var slug = $(input).data("slug");
         $("#clone_product_project_product_id").val(id);
+        $("#clone_product_project_product_id").data('slug', slug);
+
     }
 
     $("#clone_product_submit").on("click", function(){
         var id = $("#clone_product_project_product_id").val();
         var project = $("#clone_product_project_select").val();
+        var slug = $("#clone_product_project_product_id").data('slug');
         if(id === "" || id === undefined || project === null || project === "" || project === undefined) return;
 
         $.ajax({
@@ -458,7 +463,26 @@
                 var $clone = $(`.product_${id}`).clone();
                 $clone.removeClass(`.product_${id}`).addClass(`.product_${newId}`);
                 $clone.attr("id", newId);
-                $(`.project_${project}`).append($clone);
+                $clone.find(".product-template-container-li").prop("id", newId);
+                $clone.find(".product-template-container-li").data("value", "product");
+                $clone.find(".product-title").attr("href", `/product/${newId}/${slug}`);
+                $clone.find(".btn-remove").data("id", newId);
+                $clone.find(".btn-remove").attr("onclick", "removeProduct(this)");
+                $clone.find(".btn-edit").data("id", newId);
+                $clone.find(".btn-edit").attr("onclick", "editTags(this)");
+                $clone.find(".btn-edit").attr("data-toggle", 'modal');
+                $clone.find(".btn-edit").attr("data-target", "#editProductTagsModal");
+                $clone.find(".btn-clone").data("id", newId);
+                $clone.find(".btn-clone").attr("data-toggle", "modal");
+                $clone.find(".btn-clone").attr("data-target", "#cloneProductModal");
+                $clone.find(".btn-clone").attr("onclick", "cloneProject(this)");
+                if($(`.project_${project}`).find("ul:first")){
+                    $(`.project_${project}`).find("ul:first").append($clone);
+                } else {
+                    $(`.project_${project}`).append("ul");
+                    $(`.project_${project}`).find("ul:first").append($clone);
+                }
+
                 $("#close_clone_product_modal_btn").trigger("click");
                 toastr.success("Product has been cloned successfully!");
             },
