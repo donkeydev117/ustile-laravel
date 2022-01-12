@@ -184,7 +184,7 @@
                         var finishLook = `${v.finish.name}-${v.look.name}`;
                         $(clone).find('.variatin-finish-look').text(finishLook);
 
-                        var size = `${parseInt(v.width)}mm x ${parseInt(v.length)}mm x ${parseInt(v.box_size)}`;
+                        var size = `${parseInt(v.width)}" x ${parseInt(v.length)}" x ${parseInt(v.box_size)}ps`;
                         $(clone).find('.variation-size').text(size);
                         var $variatinContainer = $("<div class='col-sm-6 col-md-4 col-lg-3'></div>");
                         $variatinContainer.append(clone);

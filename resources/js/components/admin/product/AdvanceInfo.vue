@@ -236,7 +236,7 @@
                     <input 
                         type="number" 
                         class="form-control" 
-                        placeholder="Width(mm) *" 
+                        placeholder="Width(inch) *" 
                         v-model='variant.width' 
                     > 
                 </div>
@@ -244,7 +244,7 @@
                     <input 
                         type="number" 
                         class="form-control" 
-                        placeholder="Length(mm) *" 
+                        placeholder="Length(inch) *" 
                         v-model='variant.length'
                     >
                 </div>
@@ -296,8 +296,8 @@
                                     <td>{{v.look.name}}</td>
                                     <td>{{v.shape.name}}</td>
                                     <td>{{v.box_size}}</td>
-                                    <td>{{v.width == "" ? "" : v.width + "mm"}} </td>
-                                    <td>{{v.length == "" ? "" : v.length + "mm"}}</td>
+                                    <td>{{v.width == "" ? "" : v.width + '"'}} </td>
+                                    <td>{{v.length == "" ? "" : v.length + '"'}}</td>
                                     <td>{{v.price}}</td>
                                     <td>{{v.sku}}</td>
                                     <td>

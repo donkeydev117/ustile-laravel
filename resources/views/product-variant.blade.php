@@ -46,6 +46,13 @@
     .variation-attribute{
         color: #333;
     }
+    .calculator-container{
+        display: block;
+        color: #333
+    }
+    b{
+        font-family:  "Montserrat-Bold"
+    }
 </style>
 
 <div class="container-fuild">
@@ -80,15 +87,43 @@
                         <div class="variation-attribute">Price: $ {{ $variant['price']}}</div>
                         <div class="pro-counter">
                             <div class="input-group item-quantity">
-                              <input type="text" id="quantity-input" name="quantity" class="form-control" value="1">
-                              <span class="input-group-btn">
-                                <button type="button" class="quantity-plus btn" data-type="plus" data-field="">
-                                  <i class="fas fa-plus"></i>
-                                </button>
-                                <button type="button" class="quantity-minus btn" data-type="minus" data-field="">
-                                  <i class="fas fa-minus"></i>
-                                </button>
-                              </span>
+                                <input type="text" id="quantity-input" name="quantity" class="form-control" value="1">
+                                <span class="input-group-btn">
+                                    <button type="button" class="quantity-plus btn" data-type="plus" data-field="">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button type="button" class="quantity-minus btn" data-type="minus" data-field="">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <a href="javascript:void()" class="d-block">Use Calculator?</a>
+                            <div class="calculator-container">
+                                <div class="tile-info">
+                                    <span><b>Tile Size : </b>{{ intval($variant['width'])}}" x {{intval($variant['length'])}}"</span>
+                                    <span><b>Pieces per Box: </b> {{ $variant['box_size']}}</span>
+                                    <span><b>Sq.Ft. per Box: </b> {{ intval($variant['width']) * intval($variant['length']) * intval($variant['box_size']) / 144}} </span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Width of Room(ft)</label>
+                                            <input type="number" step="0.1" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Length of Room(ft)</label>
+                                            <input type="number" step="0.1" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Total Amount(boxes) : <span class="calculator_result"></span>
+                                            </label>
+                                            <br>
+                                            <span>*It includes 10% waste.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
                             <button type="button" class="btn btn-secondary btn-lg swipe-to-top add-to-cart">Add to Cart</button>
                         </div>
@@ -127,7 +162,7 @@
                     </div>
             
                     <div class="variation-size text-center">
-                        {{intval($ov['width'])}}mm x {{ intval($ov['length'])}}mm x {{ intval($ov['box_size'])}}
+                        {{intval($ov['width'])}}" x {{ intval($ov['length'])}}" x {{ intval($ov['box_size'])}}ps
                     </div>
             
                 </a>
