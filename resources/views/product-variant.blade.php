@@ -54,7 +54,30 @@
                         <p>Look: {{ $variant['look']['name']}}</p>
                         <p>Shape: {{ $variant['shape']['name'] }}</p>
                         <p>Price: $ {{ $variant['price']}}</p>
-                   </div>
+                        <div class="pro-counter">
+                            <div class="input-group item-quantity">
+                              <input type="text" id="quantity-input" name="quantity" class="form-control" value="1">
+                              <span class="input-group-btn">
+                                <button type="button" class="quantity-plus btn" data-type="plus" data-field="">
+                                  <i class="fas fa-plus"></i>
+                                </button>
+                                <button type="button" class="quantity-minus btn" data-type="minus" data-field="">
+                                  <i class="fas fa-minus"></i>
+                                </button>
+                              </span>
+                            </div>
+                            <button type="button" class="btn btn-secondary btn-lg swipe-to-top add-to-cart">Add to Cart</button>
+                        </div>
+                        <!-- AddToAny BEGIN -->
+                        <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                            <a class="a2a_button_facebook"></a>
+                            <a class="a2a_button_twitter"></a>
+                            <a class="a2a_button_email"></a>
+                            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                        </div>
+                        <script async src="https://static.addtoany.com/menu/page.js"></script>
+                        <!-- AddToAny END -->
+                    </div>
                </div>
             </div>
         </div>
