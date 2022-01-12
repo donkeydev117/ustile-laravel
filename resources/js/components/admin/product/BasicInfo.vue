@@ -28,25 +28,25 @@
         <div class="card-body" id="printableTable">
             <div class="row">
                 <div class="col-md-6 col-12">
-                    <div class="slide-v" v-if="gallary_detail_path.length > 0">
+                    <div class="slide-v" v-if="gallary_detail_path != ''">
                         <div class="slide">
-                            <img :src="gallary_detail_path[currentSelectedImg]" style="width: 80%" @click="toggleImageSelect(currentSelectedImg)" />
+                            <img :src="gallary_detail_path" style="width: 80%" />
                         </div>
                     </div>
 
-                    <div class="row mt-2">
+                    <!-- <div class="row mt-2">
                         <template v-for="(gallary_detail, index) in gallary_detail_path">
                             <div class="col-2 float-left" v-if="gallary_detail != ''" :key="index">
                                 <img :src="gallary_detail" alt="..." class="img-thumbnail" @click="toggleImageSelect(index)" style="cursor:pointer;" />
                                 <button v-if="index != currentSelectedImg" class="btn btn-block btn-danger btn-xs py-0" @click="removeImage(index)">-</button>
                             </div>
                         </template>
-                    </div>
+                    </div> -->
 
                     <div class="row mt-2">
                         <div class="col-12">
                             <hr>
-                            <a data-toggle="pill" href="#" @click="toggleImageSelect()" class="btn btn-primary cta">Add Media</a>
+                            <a data-toggle="pill" href="#" @click="toggleImageSelect()" class="btn btn-primary cta btn-add-media">Add Media</a>
                             <hr>
                         </div>
                     </div>
@@ -121,8 +121,8 @@ export default {
             selectedLanguage: "",
             showModal: false,
             gallary_path: "",
-            gallary_detail_path: [],
-            gallary_detail_id: [],
+            gallary_detail_path: "",
+            gallary_detail_id: "",
             currentSelectedIndex: -1,
             currentSelectedImg: 0,
             currentSelectedImgClass: "",
@@ -214,21 +214,11 @@ export default {
         },
         setImage(gallary) {
             this.gallary_path = gallary.gallary_path;
-
-            // if (this.gallary_detail_id.indexOf(gallary.gallary_id) > -1) {
-            //   return;
-            // }
-
-            if (this.currentSelectedIndex > -1) {
-                this.gallary_detail_path[this.currentSelectedIndex] =
-                    gallary.gallary_path;
-                this.gallary_detail_id[this.currentSelectedIndex] = gallary.gallary_id;
-                this.currentSelectedIndex = -1;
-            } else {
-                this.gallary_detail_path.push(gallary.gallary_path);
-                this.gallary_detail_id.push(gallary.gallary_id);
-            }
+            this.gallary_detail_path = gallary.gallary_path;
+            this.gallary_detail_id = gallary.gallary_id;
             this.$emit("setGallaryIdInChild", this.gallary_detail_id);
+            $(".btn-add-media").text("Change Media");
+
         },
         removeImage(index) {
             this.gallary_detail_path.splice(index, 1);

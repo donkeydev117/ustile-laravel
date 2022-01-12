@@ -216,7 +216,7 @@ export default {
             this.product.desc[index] = value;
         },
         setGallaryId(value) {
-            this.product.gallary_id = value[0];
+            this.product.gallary_id = value;
             this.product.gallary_detail_id = value;
         },
         setVideoUrl(value) {

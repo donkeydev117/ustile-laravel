@@ -19,7 +19,7 @@ class ProductVariationAlt extends Model
 
     public function media()
     {
-        return $this->hasOne(Gallary::class, 'id', "media_id");
+        return $this->hasOne(Gallary::class, 'id', "media_id")->with("detail");
     }
 
     public function color()
