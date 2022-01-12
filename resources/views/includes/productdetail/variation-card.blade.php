@@ -1,5 +1,5 @@
 <template id="product-variation-card-template">
-    <a class="product-variation-card-container" href="#">
+    <a class="product-variation-card-container" href="#" target="_blank">
         <div class="variation-image">
             <img class="" />
         </div>

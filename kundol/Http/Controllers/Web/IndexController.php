@@ -25,6 +25,7 @@ use App\Models\Web\Project;
 use App\Models\Web\ProjectProduct;
 use App\Models\Web\ProjectProductTag;
 use App\Models\Web\ProjectShare;
+use App\Models\Admin\ProductVariationAlt;
 use Carbon\Carbon;
 use DB;
 use App\Jobs\OrderProcess;
@@ -552,6 +553,17 @@ class IndexController extends Controller
         $data = $homeService->homeIndex();
 
         return view("recylebin", compact('data'));
+    }
+
+    public function showVariation($product_id, $product_slug, $id){
+        $product = Product::find($product_id);
+        $variant = ProductVariationAlt::findOrFail($id);
+
+        $homeService = new HomeService;
+        $data = $homeService->homeIndex();
+
+        return view('product-variant', compact('data', 'variant'));
+
     }
     
 }

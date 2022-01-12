@@ -174,8 +174,9 @@
                     var variations = product.variations;
                     var temp = document.getElementById("product-variation-card-template");
                     variations.forEach(function(v){
-                        console.log(v);
                         var clone = temp.content.cloneNode(true);
+                        var variationPath = `/product/${product.product_id}/${product.product_slug}/variation/${v.id}`;
+                        $(clone).find(".product-variation-card-container").prop("href", variationPath);
                         var imagePath = v.media ? v.media.detail[1].path : productImagePath;
                         $(clone).find(".variation-image").find('img').prop('src', imagePath);
                         var colorShape = `${v.color.color}-${v.shape.name}`;

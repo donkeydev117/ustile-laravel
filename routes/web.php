@@ -58,6 +58,8 @@ Route::group(['middleware' => ['general','installer']], function () {
     Route::get('/', 'Web\IndexController@index');
 
     Route::get('/product/{id}/{slug}', 'Web\IndexController@productDetail');
+    Route::get('/product/{product_id}/{product_slug}/variation/{id}', 'Web\IndexController@showVariation');
+
     Route::get('/shop', 'Web\IndexController@shop');
     Route::get('/cart', 'Web\IndexController@cartPage');
     Route::get('/blog-detail/{slug}', 'Web\IndexController@blogDetail');
