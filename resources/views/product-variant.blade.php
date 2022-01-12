@@ -11,47 +11,20 @@
     .product-hero{
         height: 470px;
         position: relative;
-
     }
     .product-summary-container{
-        position: absolute;
         width : 100%;
-        bottom: 10px;
-        color: #fff
-    }
-    .product-title{
-        font-size: 48px;
         color: #fff;
-        font-weight: bold;
+        margin-top: 20px
     }
-
-    .product-brand{
-        margin-left: 10px;
-    }
-    .variation-image img{
+    .product-variation-image img{
         width: 100%;
     }
-    .product-variation-card-container{
-        display: block;
-        padding: 5px;
-        background: #fff;
-        border-radius: 2px;
-        box-shadow: 0px 1px 2px 0px #888;
-    }
-    .variation-color-shape{
-        font-size: 18px;
-        font-family: "Montserrat-Bold", sans-serif;
-        color: #8b4d16;
-    }
-
-    .variatin-finish-look{
-        font-size: 12px;
-        color: #cd2378;
-    }
-    .variation-size{
-
+    .product-title{
+        color: #333
     }
 </style>
+
 <div class="container-fuild">
     <nav aria-label="breadcrumb">
         <div class="container">
@@ -67,21 +40,28 @@
     <div class="product-hero">
         <div class="product-summary-container">
             <div class="container">
-                <span class="product-title"></span>
-                <span class="product-brand"></span>
-                <span class="product-material"></span>
-                <ul class="product-application">
-    
-                </ul>
+               <div class="row">
+                   <div class="col-sm-12 col-md-6">
+                       <div class="product-variation-image">
+                           <img src="{{ $variant['media']['detail'][0]['path']}}" />
+                       </div>
+                   </div>
+                   <div class="col-sm-12 col-md-6">
+                        <h4 class="product-title">{{ $product->detail[0]->title}}</h4>
+                        <p>SKU: {{ $variant['sku']}}</p>
+                        <p>Color: {{ $variant['color']['color']}} </p>
+                        <p>Shade: {{$variant['shade']['name']}}</p>
+                        <p>Look: {{ $variant['look']['name']}}</p>
+                        <p>Shape: {{ $variant['shape']['name'] }}</p>
+                        <p>Price: $ {{ $variant['price']}}</p>
+                   </div>
+               </div>
             </div>
         </div>
     </div>
     <div class="container mt-4">
-        <div class="p-4">
-            <p class="product-description"></p>
-        </div>
         <div class="page-heading-title">
-            <h2>Variations</h2>
+            <h2>Other Variations</h2>
         </div>
     </div>
 
@@ -99,9 +79,30 @@
 @include(isset(getSetting()['card_style']) ?
 'includes.cart.product_card_'.getSetting()['card_style'] : "includes.cart.product_card_style1")
 
-<input type="hidden" id="product_id" value="{{ $variant->product_id }}" />
-<input type="hidden" id="variant_id" value="{{ $variant->id}}" />
+<input type="hidden" id="product_id" value="{{ $product->product_id }}" />
+<input type="hidden" id="variant_id" value="{{ $variant['id']}}" />
 @endsection
 
-
 @section('script')
+<script>
+    languageId = localStorage.getItem("languageId");
+    if (languageId == null || languageId == 'null') {
+        localStorage.setItem("languageId", '1');
+        $(".language-default-name").html('Endlish');
+        localStorage.setItem("languageName", 'English');
+        languageId = 1;
+    }
+
+    customerToken = $.trim(localStorage.getItem("customerToken"));
+
+    function fetchProduct(){
+
+    }
+
+    $(document).ready(function(){
+        fetchProduct();
+    });
+
+
+</script>
+@endsection

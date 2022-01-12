@@ -556,13 +556,22 @@ class IndexController extends Controller
     }
 
     public function showVariation($product_id, $product_slug, $id){
-        $product = Product::find($product_id);
-        $variant = ProductVariationAlt::findOrFail($id);
+        $product = Product::where("id", $product_id)->with('detail')->firstOrFail();
+        $variant = ProductVariationAlt::where("id", $id)
+                    ->with('media')
+                    ->with('color')
+                    ->with('shade')
+                    ->with('look')
+                    ->with('shape')
+                    ->firstOrFail()
+                    ->toArray();
+
+
 
         $homeService = new HomeService;
         $data = $homeService->homeIndex();
 
-        return view('product-variant', compact('data', 'variant'));
+        return view('product-variant', compact('data', 'variant', 'product'));
 
     }
     
