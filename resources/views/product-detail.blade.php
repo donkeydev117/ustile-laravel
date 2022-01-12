@@ -22,7 +22,7 @@
     .product-title{
         font-size: 48px;
         color: #fff;
-        font-weight: bold
+        font-weight: bold;
     }
 
     .product-brand{
@@ -31,7 +31,26 @@
     .variation-image img{
         width: 100%;
     }
-    
+    .product-variation-card-container{
+        display: block;
+        padding: 5px;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0px 1px 2px 0px #888;
+    }
+    .variation-color-shape{
+        font-size: 18px;
+        font-family: "Montserrat-Bold", sans-serif;
+        color: #8b4d16;
+    }
+
+    .variatin-finish-look{
+        font-size: 12px;
+        color: #cd2378;
+    }
+    .variation-size{
+
+    }
 </style>
 <div class="container-fuild">
     <nav aria-label="breadcrumb">
@@ -164,7 +183,7 @@
                         var finishLook = `${v.finish.name}-${v.look.name}`;
                         $(clone).find('.variatin-finish-look').text(finishLook);
 
-                        var size = `${v.width}mm x ${v.length}mm x ${v.box_size}`;
+                        var size = `${parseInt(v.width)}mm x ${parseInt(v.length)}mm x ${parseInt(v.box_size)}`;
                         $(clone).find('.variation-size').text(size);
                         var $variatinContainer = $("<div class='col-sm-6 col-md-4 col-lg-3'></div>");
                         $variatinContainer.append(clone);

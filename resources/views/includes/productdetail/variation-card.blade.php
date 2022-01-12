@@ -4,13 +4,13 @@
             <img class="" />
         </div>
 
-        <div class="variation-color-shape">
+        <div class="variation-color-shape text-center">
 
         </div>
 
-        <div class="variatin-finish-look"></div>
+        <div class="variatin-finish-look text-center"></div>
 
-        <div class="variation-size"></div>
+        <div class="variation-size text-center"></div>
 
     </a>
 </template>
