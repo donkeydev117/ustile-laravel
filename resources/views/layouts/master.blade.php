@@ -420,6 +420,7 @@
 
 
         function addToCart(input) {
+
             product_type = $.trim($(input).attr('data-type'));
             product_id = $.trim($(input).attr('data-id'));
             product_combination_id = '';

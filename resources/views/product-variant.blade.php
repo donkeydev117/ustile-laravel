@@ -131,7 +131,15 @@
                                 </div>
                                 
                             </div>
-                            <button type="button" class="btn btn-secondary btn-lg swipe-to-top add-to-cart mb-2">Add to Cart</button>
+                            <button 
+                                type="button" 
+                                class="btn btn-secondary btn-lg swipe-to-top add-to-cart mb-2" 
+                                onclick="addToCart(this)"
+                                data-type="variable"
+                                data-id="{{$product->id}}"
+                            >
+                                Add to Cart
+                            </button>
                         </div>
                         <!-- AddToAny BEGIN -->
                         <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
@@ -192,7 +200,7 @@
 'includes.cart.product_card_'.getSetting()['card_style'] : "includes.cart.product_card_style1")
 
 <input type="hidden" id="product_id" value="{{ $product->product_id }}" />
-<input type="hidden" id="variant_id" value="{{ $variant['id']}}" />
+<input type="hidden" id="product_combination_id" value="{{ $variant['id']}}" />
 @endsection
 
 @section('script')

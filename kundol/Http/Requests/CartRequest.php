@@ -15,7 +15,7 @@ class CartRequest extends FormRequest
     {
         return [
             'product_id' => 'required|integer|exists:products,id',
-            'product_combination_id' => 'nullable|integer|exists:product_combination,id',
+            'product_combination_id' => 'nullable|integer|exists:product_variations_alt,id',
             'qty' => 'exclude_if:product_type,digital|required|integer',
         ];
     }

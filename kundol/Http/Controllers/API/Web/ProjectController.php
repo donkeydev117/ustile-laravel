@@ -205,7 +205,6 @@ class ProjectController extends Controller
         $request->validate([
             'project_id' => 'required',
             'product_id' => 'required',
-            'tags' => 'required'
         ]);
 
         $data = [
@@ -216,6 +215,9 @@ class ProjectController extends Controller
         $m = ProjectProduct::create($data);
 
         $tags = $request->tags;
+        if(!$tags){
+            $tags = [];
+        }
         $newTag = [];
         foreach($tags as $tag){
             ProjectProductTag::create([
