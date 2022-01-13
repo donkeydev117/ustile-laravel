@@ -22,10 +22,10 @@ class CartRepository implements CartInterface
 
         $sql = Cart::type()->where('is_order', '0');
         if (Auth::check()) {
-            $sql = $sql->customerId(Auth::id());
+            $sql = $sql->customerId(Auth::id())->with('variant');
         }
         if (isset($params['session_id']) && $params['session_id'] != '') {
-            $sql = $sql->where('session_id', $params['session_id']);
+            $sql = $sql->where('session_id', $params['session_id'])->with('variant');
         } else {
             if (!Auth::check())
                 return $this->errorResponse('cart is empty please check if you have sent the session_id or you are logged in');
@@ -43,7 +43,6 @@ class CartRepository implements CartInterface
                 $languageId = $language->id;
             }
             $sql = $sql->getProductDetailByLanguageId($languageId);
-            $sql = $sql->getProductVariationByLanguageId($languageId);
             $sql = $sql->productCategoryDetail($languageId)->availableQtys();
             $sql = $sql->paginate($numOfResult);
             $sql = $sql->unique();

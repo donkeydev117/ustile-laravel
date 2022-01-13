@@ -25,12 +25,6 @@
             }
         });
 
-        
-
-
-      
-
-
         function couponCartItem() {
             coupon_code = $.trim($("#coupon_code").val());
             if (coupon_code == '') {

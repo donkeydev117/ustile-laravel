@@ -17,6 +17,16 @@ class Cart extends Model
         return $this->belongsTo('App\Models\Admin\Product', 'product_id', 'id');
     }
 
+    public function variant(){
+        return $this->belongsTo('App\Models\Admin\ProductVariationAlt', 'product_combination_id', "id")
+                ->with('media')
+                ->with('color')
+                ->with('shade')
+                ->with('finish')
+                ->with('look')
+                ->with('shape');
+    }
+
     public function customer()
     {
         return $this->belongsTo('App\Models\Admin\Customer', 'customer_id', 'id');
