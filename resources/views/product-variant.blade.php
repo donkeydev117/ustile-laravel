@@ -230,7 +230,7 @@
 
         var sqFtRoom = roomLength * roomLength;
 
-        var estimated = Math.ceil(sqFtRoom / sqFtBox);
+        var estimated = Math.ceil(sqFtRoom / sqFtBox * 1.1 );
         var estimatedPrice = estimated * price;
 
         $("#calculator_result").text(`${estimated} boxes ($${estimatedPrice.toFixed(2)})`);
