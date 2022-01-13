@@ -128,6 +128,7 @@
         customerFname = $.trim(localStorage.getItem("customerFname"));
         customerLname = $.trim(localStorage.getItem("customerLname"));
         customerEmail = $.trim(localStorage.getItem("customerEmail"));
+        customerId = $.trim(localStorage.getItem("customerId"));
 
         if (loggedIn != '1') {
             $(".auth-login").remove();
@@ -716,9 +717,9 @@
                         localStorage.removeItem("customerFname");
                         localStorage.removeItem("customerLname");
                         localStorage.removeItem("cartSession", '');
-                        localStorage.removeItem("customerEmail",data.data.email);
-                        localStorage.removeItem("customerFname",data.data.first_name);
-                        localStorage.removeItem("customerLname",data.data.last_name);
+                        localStorage.removeItem("customerEmail");
+                        localStorage.removeItem("customerFname");
+                        localStorage.removeItem("customerLname");
                         location.reload();
                     }
                 },
@@ -968,6 +969,9 @@
                 },
                 url: "{{ route('projects.getAll')}}",
                 dataType: "json",
+                data:{
+                    customerId: customerId
+                },
                 success: function(res){
                     console.log(res);
                     var projects = res.projects;

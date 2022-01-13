@@ -127,9 +127,10 @@ class ProjectController extends Controller
         }
     }
 
-    public function getProjects(){
+    public function getProjects(Request $request){
+        $customerId = $request->customerId;
         $projects = [];
-        $parents = Project::where('is_active', 1)->where("parent_id", 0)->get();
+        $parents = Project::where('is_active', 1)->where("user_id", $customerId)->where("parent_id", 0)->get();
 
         foreach($parents as $key => $p){
             $data = [
