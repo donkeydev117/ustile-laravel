@@ -305,7 +305,7 @@ class ProjectController extends Controller
             $data = [
                 'type' => 'project',
                 'title' => $project['title'],
-                'parentTitle' => $project['parent']['title'],
+                'parentTitle' => $project['parent'] ? $project['parent']['title'] : '',
                 'parent_id' => $project['parent_id'],
                 'id' => $project['id'],
                 'image' => '',
