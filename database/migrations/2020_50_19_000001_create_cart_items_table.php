@@ -27,7 +27,7 @@ class CreateCartItemsTable extends Migration
 
             $table->foreign('product_id')->references('id')->on('products');
             // $table->foreign('customer_id')->references('id')->on('customers');
-            $table->foreign('product_combination_id')->references('id')->on('product_combination');
+            $table->foreign('product_combination_id')->references('id')->on('product_variations_alt');
 
         });
     }
