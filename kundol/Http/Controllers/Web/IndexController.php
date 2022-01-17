@@ -21,6 +21,7 @@ use App\Models\Admin\Shade;
 use App\Models\Admin\Shape;
 use App\Models\Admin\Finish;
 use App\Models\Admin\LookTrend;
+use App\Models\Admin\ShippingStatus;
 use App\Models\Web\Project;
 use App\Models\Web\ProjectProduct;
 use App\Models\Web\ProjectProductTag;
@@ -116,11 +117,12 @@ class IndexController extends Controller
         $shapes = Shape::all();
         $finishes = Finish::all();
         $looktrends = LookTrend::all();
+        $shippings = ShippingStatus::all();
 
         $data['attribute'] = $attribute;
         $data['price_range'] = ['0-500', '500-1000', '1000-2000'];
         $data['brand'] = $brand;
-        return view('shop', compact('data', 'materials', 'colors', 'shades', 'shapes', 'finishes', 'looktrends'));
+        return view('shop', compact('data', 'materials', 'colors', 'shades', 'shapes', 'finishes', 'looktrends', 'shippings'));
     }
 
     public function cartPage()

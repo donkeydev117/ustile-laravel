@@ -41,6 +41,15 @@
     .filter-selected .filter-application-item {
         border: 2px solid blue;
     }
+    .filter-shipping-item{
+        width: 100%;
+        padding-top: 5px !important;
+        border: 2px solid #333;
+        border-radius: 5px;
+        padding-bottom: 5px;
+        text-align: center;
+        font-size: 12px;
+    }
 </style>
 
 @include('product-quick-view')
@@ -212,6 +221,21 @@
                                 <div class="col-md-3 pr-2 filter-item filter-brand" data-id="{{ $brand->id }}" data-filter="brand">
                                     <div class="filter-application-item" style='background-image:url({{ $brand->gallary->detail[0]->path }})'></div>
                                     <span class='filter-item-label'>{{ $brand->name }}</span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- Render for Shipping Options --}}
+                        <div class="right-menu-shipping mt-4">
+                            <h5>{{__('Shipping Status')}}</h5>
+                            <div class="row mt-2">
+                                @foreach($shippings as $s)
+                                <div class="col-md-4 pr-1 filter-item filter-shipping" data-id={{ $s->id }} data-filter="shipping">
+                                    <div class="filter-application-item filter-shipping-item">
+                                        {{ $s->name }}
+                                    </div>
+                                    {{-- <span class="filter-item-label">{{ $s->name }}</span> --}}
                                 </div>
                                 @endforeach
                             </div>

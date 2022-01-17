@@ -687,6 +687,12 @@ class ProductRepository implements ProductInterface
                         }
                     }
                     break;
+                case 'shipping' :
+                    {
+                        foreach($filterOptions as $option){
+                            $query->orWhereRelation('shippingStatus', 'shipping_status_id', $option);
+                        }
+                    }
                 default: break;
             }
         }
