@@ -170,6 +170,11 @@
                         var element = `<span class="badge badge-primary ml-2">Featured</span>`;
                         $(".product-summary-container").find(".container").append(element);
                     }
+                    const shipping_status = product.shipping_status;
+                    shipping_status.forEach(function(item, index){
+                        $(".product-summary-container").find(".container").append(`<span class='badge badge-info ml-2'>${item.status.name}</span>`);
+                    })
+
                     $(".product-description").text(product.detail[0].desc);
                     var variations = product.variations;
                     var temp = document.getElementById("product-variation-card-template");
