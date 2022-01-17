@@ -102,6 +102,17 @@
           clone.querySelector(".product-quick-view-product-id").classList.add("product-id-" + data.data.product_id);
           clone.querySelector(".product-quick-view-detail-link").setAttribute("href", `/product/${data.data.product_id}/${data.data.product_slug}`);
 
+          if(data.data.is_featured == "1"){
+            $(clone).find(".product-quick-view-features-container").append('<span class="badge badge-success ml-2">featured</span>');
+          }
+          if(data.data.made_in_usa == "1"){
+            $(clone).find('.product-quick-view-features-container').append('<span class="badge badge-danger ml-2">Made in USA</span>');
+          }
+          const shipping_status = data.data.shipping_status;
+          shipping_status.forEach(function(item, index){
+            $(clone).find(".product-quick-view-features-container").append(`<span class='badge badge-info ml-2'>${item.status.name}</span>`);
+          })
+
           if(show == "show"){
             $(".right-menu-content").addClass("d-none");
             const compare_content = $(clone).clone();
@@ -311,16 +322,16 @@
             clone.querySelector(".div-class").classList.add('col-lg-3');
           else
             clone.querySelector(".div-class").classList.add('col-lg-4');
-          clone.querySelector(".div-class").classList.add('col-md-6');
-          clone.querySelector(".div-class").classList.add('griding');
-          clone.querySelector(".wishlist-icon").setAttribute('data-id', data.data[i].product_id);
-          clone.querySelector(".wishlist-icon").setAttribute('data-type', data.data[i].product_type);
-          clone.querySelector(".compare-icon").setAttribute('data-id', data.data[i].product_id);
-          clone.querySelector(".compare-icon").setAttribute('data-type', data.data[i].product_type);
-          clone.querySelector(".quick-view-icon").setAttribute('data-id', data.data[i].product_id);
-          clone.querySelector(".wishlist-icon").setAttribute('onclick', 'addWishlist(this)');
-          clone.querySelector(".compare-icon").setAttribute('onclick', 'showProductQuickViewOrAddCompare(this, "compare")');
-          clone.querySelector(".quick-view-icon").setAttribute('onclick', 'showProductQuickViewOrAddCompare(this, "show")');
+            clone.querySelector(".div-class").classList.add('col-md-6');
+            clone.querySelector(".div-class").classList.add('griding');
+            clone.querySelector(".wishlist-icon").setAttribute('data-id', data.data[i].product_id);
+            clone.querySelector(".wishlist-icon").setAttribute('data-type', data.data[i].product_type);
+            clone.querySelector(".compare-icon").setAttribute('data-id', data.data[i].product_id);
+            clone.querySelector(".compare-icon").setAttribute('data-type', data.data[i].product_type);
+            clone.querySelector(".quick-view-icon").setAttribute('data-id', data.data[i].product_id);
+            clone.querySelector(".wishlist-icon").setAttribute('onclick', 'addWishlist(this)');
+            clone.querySelector(".compare-icon").setAttribute('onclick', 'showProductQuickViewOrAddCompare(this, "compare")');
+            clone.querySelector(".quick-view-icon").setAttribute('onclick', 'showProductQuickViewOrAddCompare(this, "show")');
 
           if (data.data[i].product_gallary != null) {
             if (data.data[i].product_gallary.detail != null) {

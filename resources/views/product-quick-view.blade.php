@@ -30,9 +30,9 @@
         {{-- Product Features --}}
         <div class="col-sm-12 mt-4">
             <div class="badges product-quick-view-features-container">
-                <span class="badge badge-danger">50%</span>
+                {{-- <span class="badge badge-danger">50%</span>
                 <span class="badge badge-success">featured</span>
-                <span class="badge badge-info">New</span>
+                <span class="badge badge-info">New</span> --}}
             </div>
         </div>
 
