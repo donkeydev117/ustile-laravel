@@ -61,6 +61,9 @@
         display: flex;
         justify-content: space-between;
     }
+    .viewer-box{
+        z-index: 2;
+    }
 </style>
 
 <div class="container-fuild">
@@ -80,8 +83,8 @@
             <div class="container">
                <div class="row">
                    <div class="col-sm-12 col-md-6">
-                       <div class="product-variation-image">
-                           <img src="{{ $variant['media']['detail'][0]['path']}}" />
+                       <div class="product-variation-image zoom-box">
+                            <img src="{{ $variant['media']['detail'][0]['path']}}" class="image-zoom"  />
                        </div>
                    </div>
                    <div class="col-sm-12 col-md-6">
@@ -251,6 +254,12 @@
             getCalculatorResult();
         });
 
+        $(".image-zoom").jqZoom({
+            selectorWidth: 30,
+            selectorHeight: 30,
+            viewerWidth: 600,
+            viewerHeight: 600
+        });
     });
 
 

@@ -21,10 +21,10 @@
                     </select>
                 </div>
 
-                <div class="col-sm-12 form-group">
+                {{-- <div class="col-sm-12 form-group">
                   <label class="control-lable">Expire at</label>
                   <input type="date" class="form-control" id="create_project_expire_at" />
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="modal-footer">

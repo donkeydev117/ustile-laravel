@@ -50,13 +50,13 @@ class ProjectController extends Controller
         $request->validate([
             'title' => 'string|required',
             "parent_id" => 'numeric|required',
-            'expire_at' => 'date|required'
+            // 'expire_at' => 'date|required'
         ]);
 
         $data = [
             'title' => $request->title,
             'parent_id' => $request->parent_id,
-            'expired_at' => $request->expire_at,
+            'expired_at' => date('Y-m-d', strtotime("+30 days")),
             'user_id' => auth()->user()->id
         ];
 

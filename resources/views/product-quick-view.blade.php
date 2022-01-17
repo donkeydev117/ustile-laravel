@@ -11,8 +11,10 @@
             <div id="quickViewCarousel" class="carousel slide" data-ride="carousel">
                 <!-- The slideshow -->
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="img-fluid quick-view-image w-100" src="" alt="image">
+                    <div class="carousel-item active ">
+                        <a class="quick-view-image-lightbox" href="" data-lightbox="example-1">
+                            <img class="img-fluid quick-view-image w-100" src="" alt="image">
+                        </a>
                     </div>
                 </div>
                 <!-- Left and right controls -->

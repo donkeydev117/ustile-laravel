@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-@include(isset(getSetting()['shop']) ? 'includes.shop.shop-'.getSetting()['shop'] : 'includes.shop.shop-style1')
+@include('includes.shop.shop');
 
 <link rel="stylesheet" type="text/css" href="/assets/front/css/toggle-switch.css">
 <style>
@@ -73,6 +73,12 @@
             if (data.data.product_gallary.detail != null && data.data.product_gallary.detail !=
                 'null' && data.data.product_gallary.detail != '') {
                 clone.querySelector(".quick-view-image").setAttribute('src', data.data.product_gallary.detail[1].gallary_path);
+                clone.querySelector(".quick-view-image").setAttribute('rel', 'lightbox');
+                clone.querySelector(".quick-view-image-lightbox").setAttribute('href', data.data.product_gallary.detail[1].gallary_path);
+                clone.querySelector(".quick-view-image-lightbox").setAttribute('data-lightbox', data.data.product_gallary.gallary_name);
+                clone.querySelector(".quick-view-image-lightbox").setAttribute('rel', 'lightbox');
+                // $(clone).find(".quick-view-image-lightbox").lightbox();
+                console.log(data.data.product_gallary_detail);
             }
           }
           if (data.data.detail != null && data.data.detail != 'null' && data.data.detail != '') {
@@ -94,6 +100,7 @@
           clone.querySelector('.product-quick-view-price').innerHTML=data.data.product_price_symbol;
           clone.querySelector(".product-quick-view-product-id").value = data.data.product_id;
           clone.querySelector(".product-quick-view-product-id").classList.add("product-id-" + data.data.product_id);
+          clone.querySelector(".product-quick-view-detail-link").setAttribute("href", `/product/${data.data.product_id}/${data.data.product_slug}`);
 
           if(show == "show"){
             $(".right-menu-content").addClass("d-none");
@@ -110,7 +117,6 @@
             $(".compare-view-right-menu").removeClass("d-none");
             $("#switch-quick-view-compare").prop("checked", "checked");
           }
-          
         }
       }
     });
@@ -213,6 +219,8 @@
             clone.querySelector(".quick-view-icon").setAttribute('onclick', 'showProductQuickViewOrAddCompare(this, "show")');
             clone.querySelector(".project-icon").setAttribute('data-id', data.data[i].product_id);
             clone.querySelector(".project-icon").setAttribute('onclick', 'showAddToProjectModal(this)');
+            clone.querySelector(".add-to-cart-icon").setAttribute('data-id', data.data[i].product_id);
+            clone.querySelector('.add-to-cart-icon').setAttribute('onclick', 'showAddToCartModal(this)');
 
             if (data.data[i].product_gallary != null) {
               if (data.data[i].product_gallary.detail != null) {

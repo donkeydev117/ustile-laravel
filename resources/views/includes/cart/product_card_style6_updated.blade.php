@@ -20,6 +20,16 @@
                             <div class="icon swipe-to-top project-icon" data-tooltip="tooltip" data-placement="bottom" title="Add to Project" data-original-title="Add to Project" data-toggle="modal" data-target="#addToProjectModal">
                                 <i class="fas fa-folder" data-fa-transform="rotate-90"></i>
                             </div>
+                            <div class="icon swipe-to-top add-to-cart-icon" 
+                                data-tooltip="tooltip" 
+                                data-placement="bottom" 
+                                title="Add to Cart" 
+                                data-original-title="Add to Cart"
+                                data-toggle="modal"
+                                data-target="#addToCartModal"
+                            >
+                                <i class="fas fa-shopping-cart" data-fa-transform="rotate-90"></i>
+                            </div>
                             {{-- <a href="javascript:void(0)" class="icon swipe-to-top compare-icon" data-toggle="tooltip"
                                 data-placement="bottom" title="" data-original-title="Compare"><i
                                     class="fas fa-align-right" data-fa-transform="rotate-90"></i></a> --}}

@@ -28,9 +28,10 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/front/css/dropdown.min.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('assets/front/lightbox2/css/lightbox.min.css')}}" rel="stylesheet" />
+    <link href="{{ asset('assets/front/magnify-image-hover/css/jquery.jqZoom.css')}}" rel="stylesheet" />
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
 
 
 </head>
@@ -92,6 +93,7 @@
     @include('modals.product-quick-view')
     @include('modals.addToProjectModal')
     @include("modals.createProjectModal")
+    @include('modals.addToCartModal')
 
     <!-- All custom scripts here -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -100,6 +102,9 @@
     <script src="{{ asset('assets/front/js/jquery.dropdown.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/assets/front/js/jquery-sortable-lists.min.js"></script>
+    <script src="{{ asset('assets/front/lightbox2/js/lightbox.min.js')}}"></script>
+    <script src="{{ asset('assets/front/magnify-image-hover/js/jquery.jqZoom.js')}}"></script>
+
     <script src="{{ asset('assets/front/js/scripts.js') }}"></script>
 
     @php
@@ -421,7 +426,6 @@
 
 
         function addToCart(input) {
-
             product_type = $.trim($(input).attr('data-type'));
             product_id = $.trim($(input).attr('data-id'));
             product_combination_id = '';
@@ -1035,7 +1039,81 @@
             $("#add_to_project_product_id").val(pid);
         }
 
-    </script>
+        function showAddToCartModal(input){
+            var product_id = $(input).data("id");
+            var template = document.getElementById("shopping-cart-modal-item-content-template");
+            var url = "{{ url('') }}" + '/api/client/products/' + product_id +
+            '?getCategory=1&getDetail=1&language_id=' + languageId + '&currency='+localStorage.getItem("currency");
+            $.ajax({
+                type: "get",
+                headers: {
+                    'Authorization': 'Bearer ' + customerToken,
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
+                    clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
+                },
+                url: url,
+                success: function(res){
+                    const variations = res.data.variations;
+                    console.log(res.data);
+                    if(variations){
+                        variations.forEach(function(v){
+                            var clone = template.content.cloneNode(true);
+                            $(clone).find(".variation-container").attr("data-product-id", v.product_id);
+                            $(clone).find(".variation-container").attr("data-id", v.id);
+                            $(clone).find(".variation-container").attr("data-type", 'variable');
+                            var variationTitleArray = [];
+                            if(v.color) variationTitleArray.push(v.color.color);
+                            if(v.shade) variationTitleArray.push(v.shade.name);
+                            if(v.finish) variationTitleArray.push(v.finish.name);
+                            if(v.look) variationTitleArray.push(v.look.name);
+                            if(v.shape) variationTitleArray.push(v.shape.name);
+                            $(clone).find(".variation-title").text(variationTitleArray.join("/"));
+                            $(clone).find(".variation-price").text(`$${v.price}`);
+                            if(v.media){
+                                $(clone).find(".variation-image").attr("src", v.media.detail[2].path)
+                            } else {
+                                $(clone).find(".variation-image").attr("src", res.data.product_gallary.detail[2].gallary_path);
+                            }
+                            $("#add_to_cart_modal_content").append(clone);
+                        });
+
+                        $(".variation-checkbox").unbind("change").on("change", function(e){
+                            var isChecked = e.target.checked;
+                            console.log(isChecked);
+                            if(isChecked){
+                                $(this).parents(".variation-container").addClass("variation-selected");
+                            } else {
+                                $(this).parents(".variation-container").removeClass("variation-selected");
+                            }
+                        })
+
+                    }
+                }
+                
+            })
+            
+        }
+
+        $("#add_to_shopping_cart_btn").on("click", function(){
+            var $selectedItems = $("#add_to_cart_modal_content").find(".variation-selected");
+            if($selectedItems.length === 0) return;
+
+            console.log($selectedItems);
+
+            $selectedItems.map(function(index, item){
+                var product_type = $(item).data("type");
+                var product_id = $(item).data('product-id');
+                var variation_id = $(item).data("id");
+                var qty = $(item).find(".qty").val();
+                if(qty == 0) return;
+                addToCartFun(product_id,  variation_id, cartSession, qty);
+            });
+
+            $("#close_to_shopping_cart_btn").trigger("click");
+        })
+
+    </script>:
 
     @yield('script')
 </body>
