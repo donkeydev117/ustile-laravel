@@ -71,6 +71,15 @@
                     $tr.append(`<td>
                         <button class='btn btn-secondary' data-type='${item.type}' data-id='${item.id}' onclick='restoreItem(this)'>Restore</button>
                         <button class='btn btn-danger' data-type='${item.type}' data-id='${item.id}' onclick='deleteItem(this)'>Delete</button>
+                        <button 
+                            class='btn btn-success add-to-cart-icon' 
+                            data-id='${item.product.id}' 
+                            onclick='showAddToCartModal(this)'
+                            data-toggle='modal'
+                            data-target='#addToCartModal'
+                        >
+                            Add to Cart
+                        </button>
                     </td>`);
 
                     $("#recylebin-main-table-body").append($tr);

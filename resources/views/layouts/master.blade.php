@@ -1055,7 +1055,7 @@
                 url: url,
                 success: function(res){
                     const variations = res.data.variations;
-                    console.log(res.data);
+                    $(".variation-container").remove();
                     if(variations){
                         variations.forEach(function(v){
                             var clone = template.content.cloneNode(true);
