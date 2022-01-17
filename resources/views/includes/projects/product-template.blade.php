@@ -21,6 +21,17 @@
                         <button class="btn btn-link btn-icon btn-clone">
                             <i class="fa fa-clone"></i>
                         </button>
+                        <button 
+                            class="btn btn-link btn-icon add-to-cart-icon" 
+                            data-tooltip="tooltip" 
+                            data-placement="bottom" 
+                            title="Add to cart"
+                            data-original-title="Add to cart"
+                            data-toggle="modal"
+                            data-target="#addToCartModal"
+                        >
+                            <i class="fas fa-shopping-cart" data-fa-transform="rotate-90"></i>
+                        </button>
                     </div>
                 </div>
             </article>

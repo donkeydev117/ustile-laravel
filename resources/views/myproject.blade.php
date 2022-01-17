@@ -311,6 +311,8 @@
                 $(productClone).find(".btn-clone").attr("data-toggle", "modal");
                 $(productClone).find(".btn-clone").attr("data-target", "#cloneProductModal");
                 $(productClone).find(".btn-clone").attr("onclick", "cloneProject(this)");
+                $(productClone).find(".add-to-cart-icon").attr("data-id", product.product_id);
+                $(productClone).find(".add-to-cart-icon").attr("onclick", 'showAddToCartModal(this)');
 
                 $(clone).find("ul:first").append(productClone);
             })
