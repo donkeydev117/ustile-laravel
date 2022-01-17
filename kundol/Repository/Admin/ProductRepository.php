@@ -10,6 +10,7 @@ use App\Models\Admin\Product;
 use App\Models\Admin\ProductGallaryDetail;
 use App\Models\Admin\ProductCategory;
 use App\Models\Admin\ProductReview;
+use App\Models\Admin\ProductShippingStatus;
 use App\Services\Admin\AccountService;
 use App\Services\Admin\DeleteValidatorService;
 use App\Services\Admin\PointService;
@@ -231,6 +232,7 @@ class ProductRepository implements ProductInterface
                         ->with('productGallaryDetail')
                         ->with('variations')
                         ->with('materialDetail')
+                        ->with('shippingStatus')
                         ->get();
 
 
@@ -351,6 +353,16 @@ class ProductRepository implements ProductInterface
             $product->created_by = \Auth::id();
     
             $product->save();
+            ProductShippingStatus::where('product_id', $product->id)->delete();
+            $shippingStatus = $params['shipping_status'];
+
+            foreach($shippingStatus as $s){
+                ProductShippingStatus::create([
+                    'product_id' => $product->id,
+                    'shipping_status_id' => $s,
+                ]);
+            }
+
             $productService = new ProductService;
             $product_result = $productService->simpleProductDetailData($params, $product->id, 'store');
             $gallary_detail_id = $params['gallary_detail_id'];
@@ -505,8 +517,18 @@ class ProductRepository implements ProductInterface
             $product->application = implode(",", $params['applications']);
             $product->user_id = \Auth::id();
             $product->created_by = \Auth::id();
-    
             $product->save();
+
+            ProductShippingStatus::where('product_id', $product->id)->delete();
+            $shippingStatus = $params['shipping_status'];
+            die(print_r($shippingStatus));
+
+            foreach($shippingStatus as $s){
+                ProductShippingStatus::create([
+                    'product_id' => $product->id,
+                    'shipping_status_id' => $s,
+                ]);
+            }
             $productService = new ProductService;
             $product_result = $productService->simpleProductDetailData($params, $product->id, 'update');
             $gallary_detail_id = $params['gallary_detail_id'];
@@ -529,7 +551,7 @@ class ProductRepository implements ProductInterface
                 $variant->length        = $v['length'];
                 $variant->price         = $v['price'];
                 $variant->sku           = $v['sku'];
-                $variant->media_id      = $v['media'] ? $v['media']['gallary_id'] : 0;
+                $variant->media_id      = $v['media'] ? $v['media']['id'] : 0;
                 $variant->save();
             }
             \DB::commit();

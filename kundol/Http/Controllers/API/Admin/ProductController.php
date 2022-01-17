@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller as Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Admin\Product;
 use App\Models\Admin\ProductVariationAlt;
+use App\Models\Admin\ProductShippingStatus;
+use App\Models\Admin\ShippingStatus;
 use App\Repository\Admin\ProductRepository;
 use App\Services\Admin\ProductService;
 use App\Traits\ApiResponser;
@@ -95,5 +97,10 @@ class ProductController extends Controller
         
         return $this->ProductRepository->filter($params);
 
+    }
+
+    public function getAllShippingStatus(){
+        $data = ShippingStatus::where("is_active", 1)->get();
+        return response()->json(['data' => $data]);
     }
 }

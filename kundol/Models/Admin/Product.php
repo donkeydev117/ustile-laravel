@@ -204,4 +204,9 @@ class Product extends Model
     public function materialDetail(){
         return $this->hasOne('App\Models\Admin\Material', 'id', "material");
     }
+
+    // For Shipping Status
+    public function shippingStatus(){
+        return $this->hasMany('App\Models\Admin\ProductShippingStatus', "product_id", "id")->with('status');
+    }
 }

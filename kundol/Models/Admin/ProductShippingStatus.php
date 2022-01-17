@@ -10,5 +10,9 @@ class ProductShippingStatus extends Model
     use HasFactory;
     protected $table = "product_shipping_status";
     protected $fillable = ['product_id', 'shipping_status_id'];
+
+    public function status(){
+        return $this->hasOne('App\Models\Admin\ShippingStatus', 'id', 'shipping_status_id');
+    }
     
 }

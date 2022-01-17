@@ -102,6 +102,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:user-api', 'scopes:use
     Route::resource('shade', 'API\Admin\ShadeController');
     Route::resource('shape', 'API\Admin\ShapeController');
     Route::resource('looktrend', 'API\Admin\LookTrendController');
+    Route::get('get_all_shipping_status', 'API\Admin\ProductController@getAllShippingStatus');
 
     Route::resource('project_tags', "API\Admin\ProjectTagController");
 

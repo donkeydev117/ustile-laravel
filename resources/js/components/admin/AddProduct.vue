@@ -97,6 +97,7 @@
                                        @setMaterialInChild='setMaterial'
                                        @setMadeInUsaInChild='setMadeInUsa'
                                        @setApplicationInChild='setApplication'
+                                       @setShippingInChild='setShippingInChild'
                                        @setVarinatInChild='setVariant'
                                        @removeVariantInChild='removeVariant'
                                        @setVariantImageInChild='setVariantImage'
@@ -147,6 +148,7 @@ export default {
                 'made_in_usa': 1,
                 'variants' : [],
                 'applications': [],
+                'shipping_status' :[],
 
                 'product_min_order': '0',
                 'product_max_order': '0',
@@ -205,6 +207,17 @@ export default {
             } else if (type === 'remove') {
                 if (this.product.applications.indexOf(value) !== -1) {
                     this.product.applications.splice(this.product.applications.indexOf(value), 1);
+                }
+            }
+        },
+        setShippingInChild(value, type){
+            if (type === 'push') {
+                if (this.product.shipping_status.indexOf(value) === -1) {
+                    this.product.shipping_status.push(value);
+                }
+            } else if (type === 'remove') {
+                if (this.product.shipping_status.indexOf(value) !== -1) {
+                    this.product.shipping_status.splice(this.product.shipping_status.indexOf(value), 1);
                 }
             }
         },
@@ -359,6 +372,10 @@ export default {
                 this.product.made_in_usa = res.data.data.made_in_usa;
                 this.product.variants = res.data.data.variations;
                 this.product.applications = res.data.data.application.split(",");
+                const shipping = res.data.data.shipping_status.map(function(item, index){
+                    return item.shipping_status_id;
+                });
+                this.product.shipping_status = shipping;
 
 
                 if (res.data.data.category != null) {

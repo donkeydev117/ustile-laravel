@@ -73,7 +73,7 @@
                             @input='setApplication'
                             @remove='removeApplication'
                         >
-                    </multiselect>
+                        </multiselect>
                         <small class="form-text text-danger" v-if="errors.has('room')" v-text="errors.get('room')"></small>
                     </div>
                     <!-- Materials -->
@@ -176,7 +176,21 @@
                             </div>
                         </div>
                     </div>
-                   
+                     <div class="col-sm-6 mb-3">
+                        <label>Shipping Status *</label>
+                         <multiselect 
+                            v-model="shipping" 
+                            :options="shipping_status" 
+                            placeholder="Select shipping status" 
+                            label="name" 
+                            track-by="value" 
+                            :multiple="true" 
+                            :taggable="true"
+                            @input='setShippingStatus'
+                            @remove='removeShippingStatus'
+                        >
+                        </multiselect>
+                    </div>
                 </div>
             </form>
         </div>
@@ -355,6 +369,8 @@ export default {
             made_in_usa: 1,
             specialty: '',
             brands: [],
+            shipping_status: [],
+            shipping:[],
             product_type: 'simple',
             product_status: true,
             is_featured: true,
@@ -515,7 +531,32 @@ export default {
                 })
         },
 
+        fetchShippingStatus(){
+            var token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+            var responseData = {};
+            axios.get("/api/admin/get_all_shipping_status", config)
+                .then(res => {
+                    // this.shapes = res.data;
+                    console.log(res.data);
+                    const data = res.data.data.map((item, index) => {
+                        console.log("item:", item);
+                        return {
+                            value: item.id,
+                            name : item.name
+                        }
+                    })
 
+                    this.shipping_status = data;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
 
         setMaterial(value){
             this.$emit('setMaterialInChild', value);
@@ -559,6 +600,12 @@ export default {
         },
         removeApplication(removedOption, id) {
             this.$emit("setApplicationInChild", removedOption.value, 'remove');
+        },
+        setShippingStatus(value, id) {
+            this.$emit("setShippingInChild", value[value.length - 1].value, 'push');
+        },
+        removeShippingStatus(removedOption, id) {
+            this.$emit("setShippingInChild", removedOption.value, 'remove');
         },
         changeColor(colorId){
             if(colorId == '') {
@@ -705,6 +752,7 @@ export default {
         this.fetchFinishes();
         this.fetchLookTrends(); 
         this.fetchShapes();
+        this.fetchShippingStatus();
     },
      watch: {
         product(newVal, oldVal) {
@@ -733,7 +781,17 @@ export default {
             newVal.applications.map(a => {
                 const app = this.applications.find(b => b.value === a);
                 this.application = [...this.application, app]
-            })
+            });
+            const shippingStatus = this.shipping_status;
+            console.log(shippingStatus);
+            if(newVal.shipping_status){
+                this.shipping = newVal.shipping_status.map(function(item, index){
+                    const shippingItem = shippingStatus.find((s) => s.value == item);
+                    return shippingItem;
+                });
+            }
+           
+            // console.log(this.shipping);
         }
     },
     props: ['product', 'errors', 'edit'],
