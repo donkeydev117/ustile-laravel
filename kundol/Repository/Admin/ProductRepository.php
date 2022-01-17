@@ -521,7 +521,6 @@ class ProductRepository implements ProductInterface
 
             ProductShippingStatus::where('product_id', $product->id)->delete();
             $shippingStatus = $params['shipping_status'];
-            die(print_r($shippingStatus));
 
             foreach($shippingStatus as $s){
                 ProductShippingStatus::create([
