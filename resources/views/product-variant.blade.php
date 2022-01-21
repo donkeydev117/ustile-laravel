@@ -8,10 +8,6 @@
     .price-active {
         border: 1px solid;
     }
-    .product-hero{
-        height: 470px;
-        position: relative;
-    }
     .product-summary-container{
         width : 100%;
         color: #fff;
