@@ -127,11 +127,18 @@
                                             <input type="number" step="0.1" class="form-control" id="calculator_room_length" />
                                         </div>
                                         <div class="form-group">
+                                            <label class="control-label">Waste Amount</label>
+                                            <select class="form-control" id="calculator_waste_amount">
+                                                <option value="0.1">10%</option>
+                                                <option value="0.2">20%</option>
+                                                <option value="0.3">30%</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="control-label">
                                                 Total Amount(boxes) : <span id="calculator_result"></span> 
                                             </label>
                                             <br>
-                                            <span style="font-size:12px">*It includes 10% waste.</span>
                                         </div>
                                     </div>
                                 </div>
@@ -249,8 +256,9 @@
         if(roomWidth == "" || roomLength == "") return;
 
         var sqFtRoom = roomLength * roomLength;
+        var wasteAmount = $("#calculator_waste_amount").val();
 
-        var estimated = Math.ceil(sqFtRoom / sqFtBox * 1.1 );
+        var estimated = Math.ceil(sqFtRoom / sqFtBox * (1 + wasteAmount) );
         var estimatedPrice = estimated * price;
 
         $("#calculator_result").text(`${estimated} boxes ($${estimatedPrice.toFixed(2)})`);
@@ -270,6 +278,10 @@
         $("#calculator_room_length").on("input", function(){
             getCalculatorResult();
         });
+
+        $("#calculator_waste_amount").on("change", function(){
+            getCalculatorResult();
+        })
 
         $(".image-zoom").jqZoom({
             selectorWidth: 30,
