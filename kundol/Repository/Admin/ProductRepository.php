@@ -382,6 +382,7 @@ class ProductRepository implements ProductInterface
                 $variant->width         = $v['width'];
                 $variant->length        = $v['length'];
                 $variant->price         = $v['price'];
+                $variant->sample_price  = $v['sample_price'];
                 $variant->sku           = $v['sku'];
                 $variant->media_id      = $v['media'] ? $v['media']['gallary_id'] : 0;
                 $variant->save();
@@ -549,6 +550,7 @@ class ProductRepository implements ProductInterface
                 $variant->width         = $v['width'];
                 $variant->length        = $v['length'];
                 $variant->price         = $v['price'];
+                $variant->sample_price  = $v['sample_price']; 
                 $variant->sku           = $v['sku'];
                 $variant->media_id      = $v['media'] ? $v['media']['id'] : 0;
                 $variant->save();

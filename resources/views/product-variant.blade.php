@@ -93,7 +93,10 @@
                         <div class="variation-attribute">
                             {{ $variant['color']['color']}}/ {{$variant['finish']['name']}} / {{$variant['shade']['name']}} / {{ $variant['look']['name']}} / {{ $variant['shape']['name'] }} 
                         </div>
-                        <div class="variation-attribute">Price: $ {{ $variant['price']}}</div>
+                        <div class="variation-attribute">
+                            <span>Price: $ {{ $variant['price']}}</span>
+                            @if($variant['sample_price'] !=0 )<span>Sample Price: $ {{$variant['sample_price']}}</span> @endif
+                        </div>
                         <div class="pro-counter">
                             <div class="input-group item-quantity">
                                 <input type="text" id="quantity-input" name="quantity" class="form-control" value="1">
@@ -134,15 +137,27 @@
                                 </div>
                                 
                             </div>
-                            <button 
-                                type="button" 
-                                class="btn btn-secondary btn-lg swipe-to-top add-to-cart mb-2" 
-                                onclick="addToCart(this)"
-                                data-type="variable"
-                                data-id="{{$product->id}}"
-                            >
-                                Add to Cart
-                            </button>
+                            <div>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-secondary btn-lg swipe-to-top add-to-cart mb-2" 
+                                    onclick="addToCart(this)"
+                                    data-type="variable"
+                                    data-id="{{$product->id}}">
+                                    Add to Cart
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-danger btn-lg swipe-to-top request-sample mb-2"
+                                    onclick="addToCart(this,1)"
+                                    data-type="variable"
+                                    data-id="{{$product->id}}"
+                                >
+                                    Request Sample
+                                </button>
+                            </div>
+                            
                         </div>
                         <!-- AddToAny BEGIN -->
                         <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
@@ -158,6 +173,7 @@
             </div>
         </div>
     </div>
+    @if(count($other_variants) > 0)
     <div class="container mt-4">
         <div class="page-heading-title">
             <h2>Other Variations</h2>
@@ -187,6 +203,7 @@
             @endforeach
         </div>
     </div>
+    @endif
 
     <section class="product-page container">
         <div class="row " id="variations-container">

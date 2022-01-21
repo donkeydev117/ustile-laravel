@@ -425,7 +425,7 @@
         }
 
 
-        function addToCart(input) {
+        function addToCart(input, is_sample = 0) {
             product_type = $.trim($(input).attr('data-type'));
             product_id = $.trim($(input).attr('data-id'));
             product_combination_id = '';
@@ -442,16 +442,20 @@
             if (qty == '' || qty == 'undefined' || qty == null) {
                 qty = 1;
             }
-            addToCartFun(product_id, product_combination_id, cartSession, qty);
+            if(is_sample == 1) qty = 1;
+            addToCartFun(product_id, product_combination_id, cartSession, qty, is_sample);
         }
 
-        function addToCartFun(product_id, product_combination_id, cartSession, qty) {
+        function addToCartFun(product_id, product_combination_id, cartSession, qty, is_sample) {
             if (loggedIn == '1') {
                 url = "{{ url('') }}" + '/api/client/cart?session_id=' + cartSession + '&product_id=' + product_id +
                     '&qty=' + qty + '&product_combination_id=' + product_combination_id;
             } else {
                 url = "{{ url('') }}" + '/api/client/cart/guest/store?session_id=' + cartSession + '&product_id=' +
                     product_id + '&qty=' + qty + '&product_combination_id=' + product_combination_id;
+            }
+            if(is_sample){
+                url += '&is_sample=1'; 
             }
             $.ajax({
                 type: 'post',
@@ -516,6 +520,7 @@
                         console.log("Cart Data:", data);
                         const cartData = data.data;
                         cartData.forEach(function(cartItem){
+                            console.log("Cart Item: ", cartItem);
                             const clone = templ.content.cloneNode(true);
                             $(".product-card-price").html(cartItem.product_price_symbol);
                             const imagePath = cartItem.product_combination.media === null ? cartItem.product_gallary.detail[0].gallary_path : cartItem.product_combination.media.detail[0].path;
@@ -525,17 +530,17 @@
                             clone.querySelector(".top-cart-product-name").innerHTML = itemName;
 
                             // const discount_price = cartItem.discount_price > 0 ? cartItem.discount_price : cartItem.price;
-                            const price = cartItem.product_combination.price;
-                            console.log("Discount Price:", price);
+                            const price = cartItem.is_sample ==1 ? cartItem.product_combination.sample_price : cartItem.product_combination.price;
+                            var qty = cartItem.is_sample == 1 ? "Sample" : cartItem.qty;
 
                             if (cartItem.currency.symbol_position == 'left') {
-                                clone.querySelector(".top-cart-product-qty-amount").innerHTML = cartItem.qty + 
+                                clone.querySelector(".top-cart-product-qty-amount").innerHTML = qty + 
                                     ' x ' + cartItem.currency.code + ' ' + price +
                                     '     <i class="fas fa-trash"  data-id=' + cartItem
                                     .product_id + ' data-combination-id=' + cartItem.product_combination_id +
                                     ' onclick="removeCartItem(this)"></i>';
                             } else {
-                                clone.querySelector(".top-cart-product-qty-amount").innerHTML = cartItem.qty + 
+                                clone.querySelector(".top-cart-product-qty-amount").innerHTML = qty + 
                                 ' x ' + price + ' ' + cartItem.currency.code +
                                     '  <i class="fas fa-trash" data-id=' + cartItem
                                     .product_id + ' data-combination-id=' + cartItem.product_combination_id +
@@ -730,6 +735,20 @@
             location.reload();
         });
 
+        function logout_action(){
+            localStorage.removeItem("customerToken");
+            localStorage.removeItem("customerHash");
+            localStorage.removeItem("customerLoggedin");
+            localStorage.removeItem("customerId");
+            localStorage.removeItem("customerFname");
+            localStorage.removeItem("customerLname");
+            localStorage.removeItem("cartSession", '');
+            localStorage.removeItem("customerEmail");
+            localStorage.removeItem("customerFname");
+            localStorage.removeItem("customerLname");
+            location.reload();
+        }
+
         $('.log_out').click(function() {
             url = "{{ url('') }}" + '/api/client/customer_logout';
 
@@ -744,21 +763,11 @@
                 },
                 beforeSend: function() {},
                 success: function(data) {
-                    if (data.status == 'Success') {
-                        localStorage.removeItem("customerToken");
-                        localStorage.removeItem("customerHash");
-                        localStorage.removeItem("customerLoggedin");
-                        localStorage.removeItem("customerId");
-                        localStorage.removeItem("customerFname");
-                        localStorage.removeItem("customerLname");
-                        localStorage.removeItem("cartSession", '');
-                        localStorage.removeItem("customerEmail");
-                        localStorage.removeItem("customerFname");
-                        localStorage.removeItem("customerLname");
-                        location.reload();
-                    }
+                   logout_action();
                 },
-                error: function(data) {},
+                error: function(data) {
+                    logout_action();
+                },
             });
         });
 
@@ -801,25 +810,43 @@
 
                             // const discount_price = cartItem.discount_price > 0 ? cartItem.discount_price : cartItem.price;
                             const price = cartItem.product_combination.price;
-                            console.log("Discount Price:", price);
-
+                            
                             if (cartItem.currency.symbol_position == 'left') {
-                                sum = +cartItem.qty * + price;
-                                clone.querySelector(".cartItem-total").innerHTML = cartItem.currency.code + ' ' + sum.toFixed(2);
-                                clone.querySelector(".cartItem-price").innerHTML = cartItem.currency.code + ' ' + price;
+                                if(cartItem.is_sample == 1) {
+                                    sum = +cartItem.product_combination.sample_price;
+                                    clone.querySelector(".cartItem-total").innerHTML = cartItem.currency.code + ' ' + cartItem.product_combination.sample_price;
+                                    clone.querySelector(".cartItem-price").innerHTML = "Requested Sample";
+                                } else {
+                                    sum = +cartItem.qty * + price;
+                                    clone.querySelector(".cartItem-total").innerHTML = cartItem.currency.code + ' ' + sum.toFixed(2);
+                                    clone.querySelector(".cartItem-price").innerHTML = cartItem.currency.code + ' ' + price;
+                                }
+                                
                             } else {
-                                sum = +cartItem.qty * + price;
-                                clone.querySelector(".cartItem-total").innerHTML = sum.toFixed(2) + ' ' + cartItem.currency.code;
-                                clone.querySelector(".cartItem-price").innerHTML = price + ' ' + cartItem.currency.code;
+                                if(cartItem.is_sample == 1) {
+                                    sum = +cartItem.product_combination.sample_price;
+                                    clone.querySelector(".cartItem-total").innerHTML = sum.toFixed(2) + ' ' + cartItem.currency.code;
+                                    clone.querySelector(".cartItem-price").innerHTML = "Requested Sample";
+                                } else {
+                                    sum = +cartItem.qty * + price;
+                                    clone.querySelector(".cartItem-total").innerHTML = sum.toFixed(2) + ' ' + cartItem.currency.code;
+                                    clone.querySelector(".cartItem-price").innerHTML = price + ' ' + cartItem.currency.code;
+                                }
                             }
-                            total_price = total_price + (price*cartItem.qty);
 
+                            total_price = total_price + sum;
                             clone.querySelector(".cartItem-qty").value = +cartItem.qty;
-                            clone.querySelector(".cartItem-qty").setAttribute('id', 'quantity' + i);
-                            clone.querySelector(".cartItem-qty-1").setAttribute('value', 'quantity' + i);
-                            clone.querySelector(".cartItem-qty-2").setAttribute('value', 'quantity' + i);
-                            clone.querySelector(".cartItem-qty-1").setAttribute('data-field', i);
-                            clone.querySelector(".cartItem-qty-2").setAttribute('data-field', i);
+                            if(cartItem.is_sample == 1){
+                                // clone.querySelector(".cartItem-qty").
+                                $(clone).find(".item-quantity").remove();
+                            } else {
+                                clone.querySelector(".cartItem-qty").setAttribute('id', 'quantity' + i);
+                                clone.querySelector(".cartItem-qty-1").setAttribute('value', 'quantity' + i);
+                                clone.querySelector(".cartItem-qty-2").setAttribute('value', 'quantity' + i);
+                                clone.querySelector(".cartItem-qty-1").setAttribute('data-field', i);
+                                clone.querySelector(".cartItem-qty-2").setAttribute('data-field', i);
+                            }
+                            
                             
                             if ($.trim(cartItem.category_detail[0].category_detail) != '' && $.trim(cartItem.category_detail[0].category_detail) != 'null' && $.trim(cartItem.category_detail[0].category_detail) != null) {
                                 clone.querySelector(".cartItem-category-name").innerHTML = cartItem.category_detail[0].category_detail.detail[0].name;

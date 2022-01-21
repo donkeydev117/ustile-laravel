@@ -5,3 +5,7 @@ ALTER TABLE `products` DROP `colors`, DROP `shade`, DROP `material`, DROP `finis
 ALTER TABLE `products` ADD `material` INT(11) NOT NULL DEFAULT '0' AFTER `made_in_usa`;
 
 ALTER TABLE `products` ADD `application` TEXT NOT NULL AFTER `material`;
+
+ALTER TABLE `product_variations_alt` ADD `sample_price` FLOAT NOT NULL DEFAULT '0' AFTER `price`;
+
+ALTER TABLE `cart_items` ADD `is_sample` INT(1) NOT NULL DEFAULT '0' AFTER `is_order`;

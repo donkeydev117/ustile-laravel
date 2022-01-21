@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-    @include(isset(getSetting()['slider_style']) ? 'includes.sliders.slider-'.getSetting()['slider_style'] :
+    {{-- @include(isset(getSetting()['slider_style']) ? 'includes.sliders.slider-'.getSetting()['slider_style'] :
     'includes.sliders.slider-style1')
 
 
@@ -9,7 +9,7 @@
         @if (!$template['skip'] && $template['display'])
             @include('sections.home-'.$template['template_postfix'].'-section')
         @endif
-    @endforeach
+    @endforeach --}}
 
 
 @endsection

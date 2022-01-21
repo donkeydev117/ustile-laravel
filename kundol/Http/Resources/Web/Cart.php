@@ -50,6 +50,7 @@ class Cart extends JsonResource
             'product_discount_price_symbol' => !isset($currency->symbol_position) ? $this->discounts * $this->exchange_rate : ($currency->symbol_position == 'right' ? ($this->discounts * $this->exchange_rate) . ' ' . $currency->code : $currency->code . ' ' . ($this->discounts * $this->exchange_rate)),
             'total' => $priceToConsider * $this->qty,
             'currency' => $currency,
+            'is_sample' => $this->is_sample
             // 'availableQty' => $this->availableQty,
         ];
     }

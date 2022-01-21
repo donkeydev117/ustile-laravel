@@ -252,6 +252,7 @@
                         class="form-control" 
                         placeholder="Width(inch) *" 
                         v-model='variant.width' 
+                        style="width: 120px"
                     > 
                 </div>
                 <div class="ml-2 mb-3">
@@ -260,6 +261,7 @@
                         class="form-control" 
                         placeholder="Length(inch) *" 
                         v-model='variant.length'
+                        style="width: 120px"
                     >
                 </div>
                 <div class="ml-2 mb-3">
@@ -269,6 +271,18 @@
                         step='0.1' 
                         placeholder="Price *" 
                         v-model='variant.price'
+                        style="width: 120px"
+                    />
+                </div>
+                <div class="ml-2 mb-3">
+                    <input 
+                        class="form-control"
+                        type="number"
+                        step='0.1' 
+                        placeholder="Sample Price *" 
+                        v-model='variant.sample_price'
+                        style="width: 120px"
+
                     />
                 </div>
                 <div class="ml-2 mb-3">
@@ -409,6 +423,7 @@ export default {
                 width: '',
                 length: '',
                 price: this.price,
+                sample_price: "",
                 sku: this.sku,
                 media: ''
             },
@@ -716,6 +731,7 @@ export default {
                 width: '',
                 length: '',
                 price: '',
+                sample_price:"",
                 sku: '',
                 media: ''
             };

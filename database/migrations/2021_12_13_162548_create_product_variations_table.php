@@ -25,6 +25,8 @@ class CreateProductVariationsTable extends Migration
             $table->float('width');
             $table->float('length');
             $table->float('price');
+            // For request sample
+            $table->float('sample_price');
             $table->string('sku')->default("");
             $table->integer("media_id")->default(0);
             $table->timestamps();

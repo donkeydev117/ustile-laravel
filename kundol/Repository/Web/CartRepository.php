@@ -92,10 +92,17 @@ class CartRepository implements CartInterface
                 $parms['product_combination_id'] = null;
             }
 
-            $sql = Cart::updateOrCreate(
-                ['product_id' => $parms['product_id'], 'product_combination_id' => $parms['product_combination_id'], 'is_order' => '0', 'customer_id' => $customer_id, 'session_id' => $session_id],
-                $parms
-            );
+            $orderItem = [
+                'product_id' => $parms['product_id'], 
+                'product_combination_id' => $parms['product_combination_id'], 
+                'is_order' => '0', 
+                'is_sample' => isset($parms['is_sample']) ? $parms['is_sample'] : 0,
+                'customer_id' => $customer_id, 
+                'session_id' => $session_id,
+                'qty' => $parms['qty']
+            ];
+
+            $sql = Cart::updateOrCreate($orderItem);
         } catch (Exception $e) {
             return $this->errorResponse();
         }
