@@ -135,6 +135,7 @@ let routes = [
             { path: '/admin/deliveryboy-list', component: require('./components/admin/DeliveryBoyList.vue').default, name: 'delivery-boy-list', meta: { auth: true } },
             { path: '/admin/deliveryboy', component: require('./components/admin/ADdDeliveryBoy.vue').default, name: 'manage-delivery-boy', meta: { auth: true } },
             { path: '/admin/deliveryboy/:id', component: require('./components/admin/ADdDeliveryBoy.vue').default, name: 'manage-delivery-boy', meta: { auth: true } },
+            { path: '/admin/payment_method', component: require('./components/admin/PaymentMethod.vue').default, name: 'payment-method', meta: { auth: true } },
 
 
         ]

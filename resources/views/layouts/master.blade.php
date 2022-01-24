@@ -483,7 +483,6 @@
                     }
                 },
                 error: function(data) {
-                    console.log();
                     if (data.responseJSON.status == 'Error') {
                         // toastr.error(data.responseJSON.message);
                         toastr.error('{{ trans('response.some_thing_went_wrong') }}');
@@ -517,10 +516,8 @@
                         const templ = document.getElementById("top-cart-product-template");
                         total_price = 0;
                         currrency = '';
-                        console.log("Cart Data:", data);
                         const cartData = data.data;
                         cartData.forEach(function(cartItem){
-                            console.log("Cart Item: ", cartItem);
                             const clone = templ.content.cloneNode(true);
                             $(".product-card-price").html(cartItem.product_price_symbol);
                             const imagePath = cartItem.product_combination.media === null ? cartItem.product_gallary.detail[0].gallary_path : cartItem.product_combination.media.detail[0].path;
@@ -967,7 +964,6 @@
                     customerId: customerId
                 },
                 success: function(res){
-                    console.log(res);
                     var projects = res.projects;
                     renderProjectOptions(projects);
                     var projectCount = projects.length;
@@ -1047,7 +1043,6 @@
                         tags: tags
                     },
                     success: function(res){
-                        console.log(res);
                         alert("Product added successful!");
                         $("#close_add_to_project_btn").trigger("click");
                     },
@@ -1107,7 +1102,6 @@
 
                         $(".variation-checkbox").unbind("change").on("change", function(e){
                             var isChecked = e.target.checked;
-                            console.log(isChecked);
                             if(isChecked){
                                 $(this).parents(".variation-container").addClass("variation-selected");
                             } else {
@@ -1125,8 +1119,6 @@
         $("#add_to_shopping_cart_btn").on("click", function(){
             var $selectedItems = $("#add_to_cart_modal_content").find(".variation-selected");
             if($selectedItems.length === 0) return;
-
-            console.log($selectedItems);
 
             $selectedItems.map(function(index, item){
                 var product_type = $(item).data("type");

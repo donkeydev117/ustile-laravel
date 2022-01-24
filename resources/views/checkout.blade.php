@@ -1,6 +1,26 @@
 @extends('layouts.master')
 @section('content')
 
+<style>
+    iframe{
+        border: 0 solid black;
+        width: 600px;
+        height: 45px;
+        padding:0px;
+        margin-bottom: 5px
+    }
+
+    .cardknox input {
+        border: 1px solid black;
+        border-radius: 5px;
+        font-size: 14px;
+        padding: 3px;
+        width: 350px;
+        height: 30px;
+        margin-bottom: 15px;
+    }
+</style>
+
     <div class="container-fuild">
         <nav aria-label="breadcrumb">
             <div class="container">
@@ -511,6 +531,40 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-12 cardknox d-none">
+                                            <form id="cardknox-payment-form">
+                                                <iframe 
+                                                    data-ifields-id='ach' 
+                                                    data-ifields-placeholder="Checking Account Number" 
+                                                    src="https://cdn.cardknox.com/ifields/2.6.2006.0102/ifield.htm">
+                                                </iframe>
+                                                <input type="hidden" data-ifields-id="ach-token" name='xACH' id="ach-token" />
+                                                <iframe
+                                                    data-ifields-id="card-number"
+                                                    data-ifields-placeholder="Card Number"
+                                                    src="https://cdn.cardknox.com/ifields/2.6.2006.0102/ifield.htm"
+                                                >
+                                                </iframe>
+                                                <input type="hidden" data-ifields-id="card-number-token" name="xCardNum" />
+                                                <iframe 
+                                                    data-ifields-id="cvv" 
+                                                    data-ifields-placeholder="CVV"
+                                                    src="https://cdn.cardknox.com/ifields/2.6.2006.0102/ifield.htm"
+                                                >
+                                                </iframe>
+                                                <input type="hidden" data-ifields-id="cvv-token" name="xCVV" type="hidden" />
+                                                <input type="hidden" name="xAmount" value="2000" />
+                                                <input type="hidden" name="xMonth" value="11" />
+                                                <input type="hidden" name="xYear" value="2023" />
+                                                {{-- For Errors --}} 
+                                                <label id="trasction-status"></label>
+                                                <label data-ifields-id="card-data-error" style="color:red"></label>
+
+                                                {{-- Submit --}}
+                                                <input id="submit-btn" type="submit" value="Submit" />
+
+                                            </form>
+                                        </div>
                                         <div class="col-12 col-sm-12">
                                             <div class="row">
                                                 <a data-toggle="pill" href="#pills-method"
@@ -646,6 +700,8 @@
 @section('script')
     <script type="text/javascript" src="https://jstest.authorize.net/v1/Accept.js" charset="utf-8"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://cdn.cardknox.com/ifields/2.6.2006.0102/ifields.min.js"></script>
+
     <script>
         languageId = $.trim(localStorage.getItem("languageId"));
         cartSession = $.trim(localStorage.getItem("cartSession"));
@@ -694,145 +750,98 @@
                         total_price = 0;
                         total_weight = 0;
 
-                        for (i = 0; i < data.data.length; i++) {
+                        data.data.forEach(function(item, index){
+                            console.log(item);
                             const clone = templ.content.cloneNode(true);
-                            // clone.querySelector(".single-text-chat-li").classList.add("bg-blue-100");
+                            var variant = item.product_combination;
+                            // total_weight += parseInt(variant.product_weight) * parseInt(variant.qty);
+                            if(variant.media != null){
+                                clone.querySelector(".cartItem-image").setAttribute('src','/gallary/' + variant.media.name);
+                                clone.querySelector(".cartItem-image").setAttribute('alt', variant.media.name);
+                            }
+                            var name = item.product_detail[0].title;
+                            var variantName = [];
+                            if(variant.color){
+                                variantName.push(variant.color.color);
+                            }
+                            if(variant.finish){
+                                variantName.push(variant.finish.name);
+                            }
+                            if(variant.look){
+                                variantName.push(variant.look.name);
+                            }
+                            if(variant.shade){
+                                variantName.push(variant.shade.name);
+                            }
+                            if(variant.shape){
+                                variantName.push(variant.shape.name);
+                            }
+                            clone.querySelector(".cartItem-name").innerHTML = name;
 
-
-
-                            if (data.data[i].product_type == 'variable') {
-                                for (k = 0; k < data.data[i].combination.length; k++) {
-                                    if (data.data[i].product_combination_id == data.data[i].combination[k]
-                                        .product_combination_id) {
-                                        total_weight += parseInt(data.data[i].product_weight) * parseInt(data
-                                            .data[i].qty);
-                                        if (data.data[i].combination[k].gallary != null) {
-                                            clone.querySelector(".cartItem-image").setAttribute('src',
-                                                '/gallary/' + data.data[i].combination[k].gallary
-                                                .gallary_name);
-                                            clone.querySelector(".cartItem-image").setAttribute('alt', data
-                                                .data[i].combination[k].gallary.gallary_name);
-                                            name = data.data[i].product_detail[0].title;
-                                            for (loop = 0; loop < data.data[i].product_combination
-                                                .length; loop++) {
-                                                if (data.data[i].product_combination[loop].length - 1 == loop) {
-                                                    name += data.data[i].product_combination[loop].variation
-                                                        .detail[0].name;
-                                                } else {
-                                                    name += data.data[i].product_combination[loop].variation
-                                                        .detail[0].name + '-';
-                                                }
-                                            }
-                                            clone.querySelector(".cartItem-name").innerHTML = name;
-                                        }
-                                        k = data.data[i].combination.length;
-                                    } else {}
-                                }
+                            // Price
+                            var price = '', sum = 0;
+                            
+                            if(item.is_sample == 1){
+                                price = variant.sample_price;
+                                sum += variant.sample_price;
                             } else {
-                                total_weight += parseInt(data.data[i].product_weight) * parseInt(data.data[i]
-                                    .qty);
-                                if (data.data[i].product_gallary != null && $.trim(data.data[i]
-                                        .product_gallary) != '') {
-                                    if (data.data[i].product_gallary.detail != null && $.trim(data.data[i]
-                                            .product_gallary.detail) != '') {
-                                        clone.querySelector(".cartItem-image").setAttribute('src', data.data[i]
-                                            .product_gallary.detail[2].gallary_path);
-                                    }
-                                }
-                                if (data.data[i].product_detail != null && $.trim(data.data[i]
-                                        .product_detail) != '') {
-                                    clone.querySelector(".cartItem-image").setAttribute('alt', data.data[i]
-                                        .product_detail[0].title);
-                                    clone.querySelector(".cartItem-name").innerHTML = data.data[i]
-                                        .product_detail[0].title;
-                                }
+                                price = variant.discount_price > 0 ? variant.discount_price : variant.price;
+                                sum += item.qty * price;
                             }
+                            total_price += sum;
 
-                            if (data.data[i].discount_price > 0) {
-                                discount_price = data.data[i].discount_price;
+                            if(item.currency.symbol_position == 'left'){
+                                clone.querySelector(".cartItem-total").innerHTML = item.currency.code + ' ' + sum;
+                                clone.querySelector(".cartItem-price").innerHTML = item.currency.code + ' ' + price;
                             } else {
-                                discount_price = data.data[i].price;
+                                clone.querySelector(".cartItem-total").innerHTML = sum + ' ' + item.currency.code;
+                                clone.querySelector(".cartItem-price").innerHTML = price + ' ' + item.currency.code;
                             }
-                            if (data.data[i].currency != '' && data.data[i].currency != 'null' && data.data[i]
-                                .currency != null) {
-                                if (data.data[i].currency.symbol_position == 'left') {
-                                    sum = +data.data[i].qty * +discount_price;
-                                    clone.querySelector(".cartItem-total").innerHTML = data.data[i].currency
-                                        .code + ' ' + sum;
-                                    clone.querySelector(".cartItem-price").innerHTML = data.data[i].currency
-                                        .code + ' ' + discount_price;
-                                } else {
-                                    sum = +data.data[i].qty * +discount_price;
-                                    clone.querySelector(".cartItem-total").innerHTML = sum + ' ' + data.data[i]
-                                        .currency.code;
-                                    clone.querySelector(".cartItem-price").innerHTML = discount_price + ' ' +
-                                        data.data[i]
-                                        .currency.code;
-                                }
-                            } else {
-                                clone.querySelector(".cartItem-price").innerHTML = discount_price;
+
+                            clone.querySelector(".cartItem-qty").value = +item.qty;
+                            clone.querySelector(".cartItem-qty").setAttribute('id', 'quantity' + index);
+
+                            var categories = [];
+                            if(item.category_detail){
+                                item.category_detail.forEach(function(item, index){
+                                    categories.push(item.category_detail.detail[0].name);
+                                });
                             }
-                            clone.querySelector(".cartItem-qty").value = +data.data[i].qty;
-                            clone.querySelector(".cartItem-qty").setAttribute('id', 'quantity' + i);
+                            clone.querySelector(".cartItem-category-name").innerHTML = categories.join(", ");
 
-                            total_price = total_price + (discount_price * data.data[i].qty);
+                            clone.querySelector(".cartItem-remove").setAttribute('data-id', item.product_id);
+                            clone.querySelector(".cartItem-remove").setAttribute('data-combination-id', item.product_combination_id);
+                            clone.querySelector(".cartItem-remove").setAttribute('onclick', 'removeCartItem(this)');
 
-
-                            if ($.trim(data.data[i].category_detail[0].category_detail) != '' && $.trim(data
-                                    .data[i].category_detail[0].category_detail) != 'null' && $.trim(data.data[
-                                    i].category_detail[0].category_detail) != null) {
-                                clone.querySelector(".cartItem-category-name").innerHTML = data.data[i]
-                                    .category_detail[0].category_detail.detail[0].name;
-                            }
-                            clone.querySelector(".cartItem-remove").setAttribute('data-id', data.data[i]
-                                .product_id);
-                            clone.querySelector(".cartItem-remove").setAttribute('data-combination-id', data
-                                .data[i].product_combination_id);
-                            clone.querySelector(".cartItem-remove").setAttribute('onclick',
-                                'removeCartItem(this)');
-
-                            clone.querySelector(".cartItem-row").setAttribute('product_combination_id', data
-                                .data[i].product_combination_id);
-                            clone.querySelector(".cartItem-row").setAttribute('product_id', data.data[i]
-                                .product_id);
-                            clone.querySelector(".cartItem-row").setAttribute('product_type', data.data[i]
-                                .product_type);
-
+                            clone.querySelector(".cartItem-row").setAttribute('product_combination_id', item.product_combination_id);
+                            clone.querySelector(".cartItem-row").setAttribute('product_id', item.product_id);
+                            clone.querySelector(".cartItem-row").setAttribute('product_type', item.product_type);
                             $("#cartItem-product-show").append(clone);
+
                             const temp1 = document.getElementById("cartItem-grandtotal-template");
                             const clone1 = temp1.content.cloneNode(true);
-                            if (data.data[i].currency != '' && data.data[i].currency != 'null' && data.data[i]
-                                .currency != null) {
-                                if (data.data[i].currency.symbol_position == 'left') {
-                                    clone1.querySelector(".caritem-subtotal").innerHTML = data.data[i].currency
-                                        .code + ' ' + total_price;
-                                    clone1.querySelector(".caritem-subtotal").setAttribute('price',
-                                        total_price);
-                                    clone1.querySelector(".caritem-subtotal").setAttribute('currency-position',
-                                        data.data[i].currency.symbol_position);
-                                    clone1.querySelector(".caritem-subtotal").setAttribute('currency-code', data
-                                        .data[i].currency.code);
-                                    clone1.querySelector(".caritem-subtotal").setAttribute('price-symbol', data
-                                        .data[i].currency.code + ' ' + total_price);
-                                    clone1.querySelector(".caritem-grandtotal").innerHTML = data.data[i]
-                                        .currency.code + ' ' + total_price.toFixed(2);
+
+                            if (item.currency != '' && item.currency != 'null' && item.currency != null) {
+                                if (item.currency.symbol_position == 'left') {
+                                    clone1.querySelector(".caritem-subtotal").innerHTML = item.currency.code + ' ' + total_price;
+                                    clone1.querySelector(".caritem-subtotal").setAttribute('price', total_price);
+                                    clone1.querySelector(".caritem-subtotal").setAttribute('currency-position', item.currency.symbol_position);
+                                    clone1.querySelector(".caritem-subtotal").setAttribute('currency-code', item.currency.code);
+                                    clone1.querySelector(".caritem-subtotal").setAttribute('price-symbol', item.currency.code + ' ' + total_price);
+                                    clone1.querySelector(".caritem-grandtotal").innerHTML = item.currency.code + ' ' + total_price.toFixed(2);
                                     clone1.querySelector(".shipping-tax").setAttribute('data-price', '0');
                                 } else {
-                                    clone1.querySelector(".caritem-subtotal").innerHTML = total_price + ' ' +
-                                        data.data[i].currency.code;
-                                    clone1.querySelector(".caritem-subtotal").setAttribute('price',
-                                        total_price);
+                                    clone1.querySelector(".caritem-subtotal").innerHTML = total_price + ' ' + item.currency.code;
+                                    clone1.querySelector(".caritem-subtotal").setAttribute('price', total_price);
                                     clone1.querySelector(".shipping-tax").setAttribute('data-price', '0');
-                                    clone1.querySelector(".caritem-subtotal").setAttribute('price-symbol', data
-                                        .data[i].currency.code + ' ' + total_price);
-                                    clone1.querySelector(".caritem-grandtotal").innerHTML = total_price.toFixed(
-                                        2) + ' ' + data.data[i].currency.code;
+                                    clone1.querySelector(".caritem-subtotal").setAttribute('price-symbol', item.currency.code + ' ' + total_price);
+                                    clone1.querySelector(".caritem-grandtotal").innerHTML = total_price.toFixed(2) + ' ' + item.currency.code;
                                 }
                             }
                             $("#cartItem-grandtotal-product-show").html('');
                             $("#cartItem-grandtotal-product-show").append(clone1);
-                        }
-
+                        })
+                       
                         $('.total_by_weight').val(total_weight);
                         couponCart = $.trim(localStorage.getItem("couponCart"));
                         if (couponCart != 'null' && couponCart != '') {
@@ -1362,6 +1371,67 @@
                 $(".createOrder").removeClass('d-none');
             }
 
+            if(payment_method == 'cardknox'){
+                setAccount("{{ $cardknox_setting['PUBLIC_FACING_KEY']}}",  'UStiles', "2.6.2006.0102");
+                var defaultStyle = {
+                    "border": '1px solid black',
+                    "border-radius": '5px',
+                    "font-size": '14px',
+                    "padding" : '3px',
+                    "width" : '350px',
+                    "height": '30px',
+                };
+                var invalidStyle = {
+                    "border": '1px solid red',
+                    "border-radius": '5px',
+                    "font-size": '14px',
+                    "padding" : '3px',
+                    "width" : '350px',
+                    "height": '30px',
+                }
+                setIfieldStyle('ach', defaultStyle);
+                setIfieldStyle('card-number', defaultStyle);
+                setIfieldStyle('cvv', defaultStyle);
+
+                addIfieldCallback('input', function(data) {
+                    setIfieldStyle('card-number', data.cardNumberFormattedLength <= 0 ? defaultStyle : data.cardNumberIsValid ? defaultStyle : invalidStyle);
+                    if (data.lastIfieldChanged === 'cvv'){ 
+                        setIfieldStyle('cvv', data.issuer === 'unknown' || data.cvvLength <= 0 ? defaultStyle : data.cvvIsValid ? defaultStyle : invalidStyle);
+                    } else if (data.lastIfieldChanged === 'card-number') {
+                        if (data.issuer === 'unknown' || data.cvvLength <= 0) {
+                            setIfieldStyle('cvv', defaultStyle);
+                        } else if (data.issuer === 'amex'){
+                            setIfieldStyle('cvv', data.cvvLength === 4 ? defaultStyle : invalidStyle);
+                        } else {
+                            setIfieldStyle('cvv', data.cvvLength === 3 ? defaultStyle : invalidStyle);
+                        }
+                    } else if (data.lastIfieldChanged === 'ach') {
+                        setIfieldStyle('ach', data.achLength === 0 ? defaultStyle : data.achIsValid ? defaultStyle : invalidStyle);
+                    }
+                });
+
+                enableAutoFormatting();
+
+                $("#cardknox-payment-form").on("submit", function(e){
+                    e.preventDefault();
+                    var $submitBtn = $(this).find("submit-btn");
+                    $submitBtn.prop("disabled", true);
+                    getTokens(
+                        function(){
+                            $("#cardknox-payment-form").submit();
+                        },
+                        function(error){
+                            $submitBtn.prop("disabled", false);
+                        },
+                        30000
+                    );
+                })
+                $(".stripe_payment").addClass('d-none');
+                $(".braintree_payment").addClass('d-none');
+                $(".bank_transfer").addClass('d-none');
+                $(".createOrder").removeClass('d-none');
+                $(".cardknox").removeClass('d-none');
+            }
         });
         $(".createOrder").click(function(e) {
             e.preventDefault();

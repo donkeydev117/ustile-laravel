@@ -172,7 +172,12 @@ class IndexController extends Controller
         $payment_method_setting = PaymentMethodSetting::where('payment_method_id', '3')->get();
         $payment_method = PaymentMethod::where('status', '1')->get();
         $payment_method_default = PaymentMethod::whereNotIn('id', ['3', '4'])->where('default', '1')->get();
-        return view('checkout', compact('data', 'setting', 'payment_method', 'payment_method_default', 'payment_method_setting'));
+        $cardknox_setting_object = PaymentMethod::where("payment_method", "cardknox")->with("payment_setting")->first()->payment_setting;
+        $cardknox_setting = [];
+        foreach($cardknox_setting_object as $key => $setting){
+            $cardknox_setting[$setting['key']] = $setting['value'];
+        }
+        return view('checkout', compact('data', 'setting', 'payment_method', 'payment_method_default', 'payment_method_setting', 'cardknox_setting'));
     }
 
     public function wishlist()

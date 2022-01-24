@@ -418,7 +418,7 @@
                 v-text="errors.get('title')"
               ></small>
             </div>
-            <div class="form-group" v-for="(key,index) in paymentMethod.key">
+            <div class="form-group" v-for="(key,index) in paymentMethod.key" :key="key">
               <label class="text-dark"> {{ key.split('_').join(' ') }}</label>
               <input type="text" class="form-control" v-model="paymentMethod.value[index]" />
             </div>
@@ -460,7 +460,6 @@ export default {
       pagination: {},
       request_method: "",
       paymentMethods: [],
-      paymentMethods1: [],
       token: [],
       errors: new ErrorHandling(),
       csrf: document
@@ -470,27 +469,6 @@ export default {
   },
 
   methods: {
-    fetchPaymentMethods1(page_url) {
-      this.$parent.loading = true;
-      page_url = page_url || "/api/admin/payment_method";
-      var arr = page_url.split("?");
-
-      if (arr.length > 1) {
-        page_url += "&limit=" + 10;
-      } else {
-        page_url += "?limit=" + 10;
-      }
-      if (this.searchParameter != null) {
-        page_url += "&searchParameter=" + this.searchParameter;
-      }
-      page_url += "&getPaymentMethodSetting=1&sortBy=" + this.sortBy + "&sortType=" + this.sortType;
-      axios
-        .get(page_url, this.token)
-        .then((res) => {
-          this.paymentMethods1 = res.data.data;
-        })
-        .finally(() => (this.$parent.loading = false));
-    },
     fetchPaymentMethods(page_url) {
       this.$parent.loading = true;
       let vm = this;
@@ -637,7 +615,6 @@ export default {
       },
     };
     this.fetchPaymentMethods();
-    this.fetchPaymentMethods1();
   },
 };
 </script>
