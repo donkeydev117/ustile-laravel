@@ -10,12 +10,14 @@
                </div>
              </div>
          </div>
-      
+         <div class="row" id="categories-template-container">
+
+         </div>
       </div>
     </div>
 
 
-<template id="category-slider-template">
+{{-- <template id="category-slider-template">
     <div class="">
         <div class="cat-banner">
           <a class="category-slider-url" href="">
@@ -30,7 +32,23 @@
           </a>
         </div>
       </div>
-</template>
+</template> --}}
+
+  <template id="category-template">
+    <div class="col-12 col-sm-4 d-flex align-items-center mt-2">
+      <a class="category-slider-url" href="#">
+        <figure class="category-image">
+          <div class="hexagon">
+            <div class="hexTop"></div>
+            <div class="hexBottom"></div>
+          </div>
+          <div class="category-title">
+            <h4 class="category-slider-title text-center pt-2"></h4>
+          </div>
+        </figure>
+      </a>
+    </div>
+  </template>
    <div class="general-product">
     <div class="container p-0">
       <div class="category-slider-show">

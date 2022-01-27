@@ -1,15 +1,253 @@
 @extends('layouts.master')
 @section('content')
 
-    {{-- @include(isset(getSetting()['slider_style']) ? 'includes.sliders.slider-'.getSetting()['slider_style'] :
-    'includes.sliders.slider-style1')
+    @include('includes.sliders.slider')
 
+    <style>
+        .diamond-section{
+            margin-bottom: 4rem;
+            padding-bottom: 4rem;
+        }
+        .diamond{
+            transform: rotate(-45deg);
+            width: 250px;
+            height: 250px;
+            position: absolute;
+        }
+        .diamond img{
+            width: 250px;
+            height: 250px;
+        }
+        .diamond-1{
+            top: 150px;
+            left: 20px;
+        }
+        .diamond-1 span{
+            position: absolute; 
+            right:0; 
+            top: -25px
+        }
+        .diamond-2{
+            display: flex;
+            top: 25px;
+            left: 229px;
+            width: 200px;
+            height: 200px;
+        }
+        .diamond-2 span {
+            text-orientation: mixed; 
+            writing-mode: tb-rl;
+        }
+        .diamond-2 img{
+            width: 200px; 
+            height: 200px
+        }
+        .diamond-3 {
+            display: flex;
+            top: 225px;
+            left: 320px;
+        }
+        .diamond-3 span{
+            text-orientation: mixed; 
+            writing-mode: tb-rl; 
+            position: absolute;
+            left: -25px;
+        }
+        .diamond-4{
+            display: flex;
+            top: 45px;
+            left: 500px;
+        }
+        .diamond-4 span{
+            position: absolute; 
+            right:0; 
+            top: -25px
+        }
+        .diamond-5{
+            top: 310px;
+            left: 635px;
+            width: 180px;
+            height: 180px;
+        }
+        .diamond-5 img{
+            width:180px;
+            height: 180px
+        }
+        .diamond-6{
+            top: 141px;
+            left: 784px;
+        }
+        .diamond-6 span{
+            position: absolute; 
+            text-orientation: mixed; 
+            writing-mode: tb-rl;
+        }
+        .diamond span{
+            font-size: 20px;
+            font-weight: 700
+        }
+
+        .feature-item p{
+            text-align: center; 
+            margin-top: 1rem; 
+            margin-bottom: 1rem;
+            font-size: 24px;
+            color: #ef5f4b;
+        }
+        .feature-item img{
+            height: 80px;
+        }
+        .feature-item a{
+            border: 2px solid #ef5f4b; 
+            padding: 10px 20px; 
+            color: #ef5f4b;
+            display: inline-block;
+            font-size: 16px;
+        }
+        .show-room-section{
+            background-color: lightgray;
+            padding: 4rem 4rem;
+            margin-top: 50px;
+        }
+        .hexagon {
+            position: relative;
+            width: 240px; 
+            height: 138.56px;
+            margin: 69.28px 0;
+            background-size: auto 277.1281px;
+            background-position: center;
+        }
+
+        .hexTop,
+        .hexBottom {
+            position: absolute;
+            z-index: 1;
+            width: 169.71px;
+            height: 169.71px;
+            overflow: hidden;
+            -webkit-transform: scaleY(0.5774) rotate(-45deg);
+            -ms-transform: scaleY(0.5774) rotate(-45deg);
+            transform: scaleY(0.5774) rotate(-45deg);
+            background: inherit;
+            left: 35.15px;
+        }
+
+        /*counter transform the bg image on the caps*/
+        .hexTop:after,
+        .hexBottom:after {
+            content: "";
+            position: absolute;
+            width: 240.0000px;
+            height: 138.5640646055102px;
+            -webkit-transform:  rotate(45deg) scaleY(1.7321) translateY(-69.2820px);
+            -ms-transform:      rotate(45deg) scaleY(1.7321) translateY(-69.2820px);
+            transform:          rotate(45deg) scaleY(1.7321) translateY(-69.2820px);
+            -webkit-transform-origin: 0 0;
+            -ms-transform-origin: 0 0;
+            transform-origin: 0 0;
+            background: inherit;
+        }
+
+        .hexTop {
+            top: -84.8528px;
+        }
+
+        .hexTop:after {
+            background-position: center top;
+        }
+
+        .hexBottom {
+            bottom: -84.8528px;
+        }
+
+        .hexBottom:after {
+            background-position: center bottom;
+        }
+
+        .hexagon:after {
+            content: "";
+            position: absolute;
+            top: 0.0000px;
+            left: 0;
+            width: 240.0000px;
+            height: 138.5641px;
+            z-index: 2;
+            background: inherit;
+        }
+
+    </style>
+    <section class="diamond-section mt-4 pt-4">
+        <div class="container pt-4 pb-4 mb-4">
+            <h4 class="text-center">Explore Our Tile and Stone Design ideas Gallery</h4>
+            <p class="text-center">A Great Place to Get Inspired and Discover New Ideas for Home and Business.</p>
+        </div>
+        <div class="container" style=" position: relative; height: 500px; ">
+            <div class="diamond diamond-1">
+                <span>Go Outdoors</span>
+                <img src="/gallary/202112103948ONE_COAL.jpeg">
+            </div>
+            <div class="diamond diamond-2">
+                <img src="/gallary/202112103948ONE_COAL.jpeg">
+                <span>See Bathrooms</span>
+            </div>
+            <div class="diamond diamond-3">
+                <span>Commercial Tile</span>
+                <img src="/gallary/202112103948ONE_COAL.jpeg">
+            </div>
+            <div class="diamond diamond-4">
+                <span>Title Gallery</span>
+                <img src="/gallary/202112103948ONE_COAL.jpeg">
+            </div>
+            <div class="diamond diamond-5">
+                <img src="/gallary/202112103948ONE_COAL.jpeg">
+                <span>Discover Kitchens</span>
+            </div>
+            <div class="diamond diamond-6">
+                <img src="/gallary/202112103948ONE_COAL.jpeg">
+                <span>View Living Space</span>
+            </div>
+        </div>
+    </section>
+
+    <section style="margin-top: 50px">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-4 text-center feature-item">
+                    <img src="{{asset("/images/star-outline.png")}}" />
+                    <p>New Items</p>
+                    <a href="#">View Collection</a>
+                </div>
+                <div class="col-12 col-sm-4 text-center feature-item">
+                    <img src="{{asset("/images/truck.png")}}" />
+                    <p>Ready To Ship</p>
+                    <a href="#">View Collection</a>
+                </div>
+                <div class="col-12 col-sm-4 text-center feature-item">
+                    <img src="{{asset("/images/layers.png")}}" />
+                    <p>Match Box</p>
+                    <a href="#">View Collection</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="show-room-section">
+        <div class="row">
+            <div class="col-sm-6">
+
+            </div>
+            <div class="col-sm-6">
+                <h3>Show Room</h3>
+                <p>Lorem Ipsum is simply dummy of the printing and typesetting industry. Lorem Ipsum has been industry's standard dummy text ever since the 1500s, when an unknown printer took a galley unchanged. </p>
+            </div>
+        </div>
+    </section>
 
     @foreach (homePageBuilderJson() as $template)
         @if (!$template['skip'] && $template['display'])
             @include('sections.home-'.$template['template_postfix'].'-section')
         @endif
-    @endforeach --}}
+    @endforeach
 
 
 @endsection
@@ -383,6 +621,7 @@
             if (sliderType == "style5") {
                 sliderType = 5;
             }
+            sliderType = 2;
             $.ajax({
                 type: 'get',
                 url: "{{ url('') }}" +
@@ -494,19 +733,20 @@
                 success: function(data) {
                     if (data.status == 'Success') {
                         $(".category-slider-show").html('');
-                        const templ = document.getElementById("category-slider-template");
+                        const templ = document.getElementById("category-template");
                         // clone.querySelector(".single-text-chat-li").classList.add("bg-blue-100");
                         for (i = 0; i < data.data.length; i++) {
                             const clone = templ.content.cloneNode(true);
                             // clone.querySelector(".single-text-chat-li").classList.add("bg-blue-100");
                             clone.querySelector(".category-slider-url").setAttribute('href', '/shop?category=' +
                                 data.data[i].id);
-                            clone.querySelector(".category-slider-image").setAttribute('src', '/gallary/' + data
-                                .data[i].icon);
+                            // clone.querySelector(".category-slider-image").setAttribute('src', '/gallary/' + data
+                            //     .data[i].icon);
+                            $(clone).find(".hexagon").css('background-image', `url(/gallary/${data.data[i].icon})`);
                             clone.querySelector(".category-slider-title").innerHTML = data.data[i].name;
-                            $(".category-slider-show").append(clone);
+                            $("#categories-template-container").append(clone);
                         }
-                        getSliderSettings("category-slider-show");
+                        // getSliderSettings("category-slider-show");
                     }
                 },
                 error: function(data) {},
