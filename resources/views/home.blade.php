@@ -446,6 +446,8 @@
             if (cartSession == null || cartSession == 'null') {
                 cartSession = '';
             }
+
+            sliderMedia();
             menuCart(cartSession);
         });
 
