@@ -174,6 +174,34 @@
             z-index: 2;
             background: inherit;
         }
+        .section-partners{
+            background-color: #dee2e6;
+            margin-top: 2rem;
+            padding: 4rem;
+        }
+        .partner-item{
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+        }
+
+        .partner-slicks .slick-dots button{
+            width: 8px !important;
+            height: 8px !important;
+            border-radius: 8px !important;
+        }
+        .partner-slicks .slick-dotted.slick-slider{
+            margin-bottom: 0 !important;
+        }
+        .section-partners h3{
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            font-family: 'Montserrat-Regular';
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 1rem;
+        }
 
     </style>
     <section class="diamond-section mt-4 pt-4">
@@ -243,12 +271,44 @@
         </div>
     </section>
 
-    @foreach (homePageBuilderJson() as $template)
+
+
+    {{-- @foreach (homePageBuilderJson() as $template)
         @if (!$template['skip'] && $template['display'])
             @include('sections.home-'.$template['template_postfix'].'-section')
         @endif
-    @endforeach
+    @endforeach --}}
+    @include('sections.home-category-section')
 
+    <section class="section-partners">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Our Partners</h3>
+            </div>
+        </div>
+        <div class="partner-slicks">
+            <div class="row" id="partner-slicks">
+                <div class="col-4 col-sm-2 partner-item">
+                    <img src="{{ asset('images/partner-1.png')}}" />
+                </div>
+                <div class="col-4 col-sm-2 partner-item">
+                    <img src="{{ asset('images/partner-2.png')}}" />
+                </div>
+                <div class="col-4 col-sm-2 partner-item">
+                    <img src="{{ asset('images/partner-3.png')}}" />
+                </div>
+                <div class="col-4 col-sm-2 partner-item">
+                    <img src="{{ asset('images/partner-4.png')}}" />
+                </div>
+                <div class="col-4 col-sm-2 partner-item">
+                    <img src="{{ asset('images/partner-5.png')}}" />
+                </div>
+                <div class="col-4 col-sm-2 partner-item">
+                    <img src="{{ asset('images/partner-1.png')}}" />
+                </div>
+            </div>
+        </div>
+    </section>
 
 @endsection
 @section('script')
@@ -283,16 +343,7 @@
             appendTo = 'weekly-sale';
             fetchProduct(url, appendTo);
 
-            var url = "{{ url('') }}" +
-                '/api/client/products?limit=1&getCategory=1&getDetail=1&language_id=' + languageId +
-                '&topSelling=1&currency=' + localStorage.getItem("currency");
-            appendTo = 'weekly-sale-first-div';
-            fetchFeaturedWeeklyProduct(url,appendTo)
-
-            blogNews();
-            sliderMedia();
             categorySlider();
-            bannerMedia();
             cartSession = $.trim(localStorage.getItem("cartSession"));
             if (cartSession == null || cartSession == 'null') {
                 cartSession = '';
@@ -446,164 +497,6 @@
             });
         }
 
-
-        function fetchFeaturedWeeklyProduct(url, appendTo) {
-            $.ajax({
-                type: 'get',
-                url: url,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
-                    clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
-                },
-                beforeSend: function() {},
-                success: function(data) {
-                    if (data.status == 'Success') {
-                        console.log(data,"final data");
-                        var htmlToRender ="<article><div class='badges'><span class='badge badge-success'>Featured</span></div><div class='detail'>";
-                        
-                            htmlToRender +='<h5 class="title"><a  href="/product/'+data
-                                    .data[0].product_id +'/'+data
-                                    .data[0].product_slug+'">'+data.data[0].detail[0]
-                                    .title+'</a></h5>';
-
-
-                            htmlToRender +='<p class="discription">'+data.data[0].detail[0]
-                                    .desc+'</p>';
-                            
-                            
-                            
-
-                            if (data.data[0].product_type == 'simple') {
-                                if (data.data[0].product_discount_price == '' || data.data[0]
-                                    .product_discount_price == null || data.data[0].product_discount_price ==
-                                    'null') {
-                                    htmlToRender +='<div class="price">'+data.data[0]
-                                        .product_price_symbol+'</div>';
-                                } else {
-                                    htmlToRender +='<div class="price">'+data.data[0]
-                                        .product_discount_price_symbol + '<span>' +data.data[0].product_price_symbol + '</span></div>';
-                                }
-                            } else {
-                                if (data.data[0].product_combination != null && data.data[0]
-                                    .product_combination != 'null' && data.data[0].product_combination != '') {
-                                        htmlToRender +='<div class="price">'+data.data[0]
-                                        .product_combination[0].product_price_symbol+'</div>';
-                                }
-                            }
-
-                            htmlToRender +='<div class="pro-sub-buttons"><div class="buttons"><button type="button" class="btn  btn-link " data-id='+data.data[0]
-                                .product_id+' onclick="addWishlist(this)" data-type='+data.data[0]
-                                .product_type+'><i class="fas fa-heart"></i>Add to Wishlist</button>';
-                                
-                            htmlToRender +='<button type="button" class="btn btn-link" data-id='+data.data[0]
-                                .product_id+' data-type='+data.data[0]
-                                .product_type+' onclick="addCompare(this)" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add to Compare"><i class="fas fa-align-right"></i>Add to Compare</button></div></div></div>';
-                            htmlToRender +='<picture><div class="product-hover">';
-                            if (data.data[0].product_type == 'simple') {
-                                
-                                htmlToRender +='<button type="button" onclick="addToCart(this)" class="btn btn-block btn-secondary cart swipe-to-top" >Add to Cart</button>';
-
-                            } else {
-                                
-                                htmlToRender +='<a href="/product/'+data
-                                    .data[0].product_id +'/'+data
-                                    .data[0].product_slug+'" onclick="addToCart(this)" class="btn btn-block btn-secondary cart swipe-to-top" >View Detail</a>';
-        
-                            }
-                            
-                            htmlToRender +='</div>';
-
-                             if (data.data[0].product_gallary != null && data.data[0].product_gallary !=
-                                'null' && data.data[0].product_gallary != '') {
-                                if (data.data[0].product_gallary.detail != null && data.data[0].product_gallary
-                                    .detail != 'null' && data.data[0].product_gallary.detail != '') {
-                                       htmlToRender +='<img class="img-fluid" src="'+data.data[0]
-                                        .product_gallary.detail[1].gallary_path+'" alt="Men"s Cotton Classic Baseball Cap">';
-
-                                }
-                            }
-                            htmlToRender +='</picture></article>';
-                           
-
-                        $('#weekly-sale-first-div').html(htmlToRender);
-                    }
-                },
-                error: function(data) {},
-            });
-        }
-
-        function blogNews() {
-            $.ajax({
-                type: 'get',
-                url: "{{ url('') }}" +
-                    '/api/client/blog_news?getGallaryDetail=1&limit=10&sortBy=id&language_id=' + languageId +
-                    '&getDetail=1&getBlogCategory=1&sortType=DESC',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
-                    clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
-                },
-                beforeSend: function() {},
-                success: function(data) {
-                    if (data.status == 'Success') {
-                        $(".blog-news-data").html('');
-                        const templ = document.getElementById("news-blog-template");
-                        // clone.querySelector(".single-text-chat-li").classList.add("bg-blue-100");
-                        for (i = 0; i < data.data.length; i++) {
-                            const clone = templ.content.cloneNode(true);
-                            // clone.querySelector(".single-text-chat-li").classList.add("bg-blue-100");
-                            clone.querySelector(".news-blog-date").innerHTML = data.data[i].date;
-                            clone.querySelector(".news-blog-date").setAttribute('data-id', data.data[i]
-                                .product_id);
-                            clone.querySelector(".blog-url").setAttribute('href', '/blog-detail/' + data.data[i]
-                                .slug);
-                            clone.querySelector(".read-more-url").setAttribute('href', '/blog-detail/' + data
-                                .data[i].slug);
-
-                            if (data.data[i].gallary != null && data.data[i].gallary != 'null' && data.data[i]
-                                .gallary != '') {
-                                if (data.data[i].gallary.detail != null && $.trim(data.data[i].gallary
-                                        .detail) != '' && data.data[i].gallary.detail != 'null') {
-                                    if (data.data[i].gallary.detail[2].gallary_path) {
-                                        clone.querySelector(".news-blog-image").setAttribute('src', data.data[i]
-                                            .gallary.detail[1].gallary_path);
-                                    } else {
-                                        clone.querySelector(".news-blog-image").setAttribute('src', data.data[i]
-                                            .gallary.detail[0].gallary_path);
-                                    }
-                                }
-                            }
-                            if (data.data[i].detail != null && $.trim(data.data[i].detail) != '' && data.data[i]
-                                .detail != 'null') {
-                                clone.querySelector(".news-blog-image").setAttribute('alt', data.data[i].detail[
-                                    0].name);
-                            }
-                            if (data.data[i].category != null && data.data[i].category != 'null' && $.trim(data
-                                    .data[i].category) != '') {
-                                if (data.data[i].category.blog_detail != null && data.data[i].category
-                                    .blog_detail != 'null' && data.data[i].category.blog_detail != '') {
-                                    clone.querySelector(".news-blog-category").innerHTML = data.data[i].category
-                                        .blog_detail[0].name;
-                                }
-                            }
-                            if (data.data[i].detail != null && data.data[i].detail != 'null' && $.trim(data
-                                    .data[i].detail) != '') {
-                                clone.querySelector(".news-blog-name").innerHTML = data.data[i].detail[0].name;
-                                clone.querySelector(".news-blog-desc").innerHTML = data.data[i].detail[0]
-                                    .description;
-                            }
-                            $(".blog-news-data").append(clone);
-                        }
-                        getSliderSettings("blog-news-data");
-                    }
-                },
-                error: function(data) {},
-            });
-        }
-
-
-
         function sliderMedia() {
             var sliderType = "{{ getSetting()['slider_style'] ? getSetting()['slider_style'] : '' }}";
             if (sliderType == "style1") {
@@ -753,108 +646,5 @@
             });
         }
 
-
-
-        function bannerMedia() {
-            var bannerType = "{{ getSetting()['banner_style'] ? getSetting()['banner_style'] : 'style1' }}";
-            if (bannerType == "style1") {
-                bannerType = 'banner1';
-            }
-            if (bannerType == "style2" || bannerType == "style3" || bannerType == "style4") {
-                bannerType = "banner2";
-            }
-            if (bannerType == "style5" || bannerType == "style6") {
-                bannerType = "banner5";
-            }
-            if (bannerType == "style7" || bannerType == "style8") {
-                bannerType = "banner7";
-            }
-            if (bannerType == "style9") {
-                bannerType = "banner9";
-            }
-            if (bannerType == "style10" || bannerType == "style11" || bannerType == "style12") {
-                bannerType = "banner10";
-            }
-
-            if (bannerType == "style13" || bannerType == "style14" || bannerType == "style15") {
-                bannerType = "banner13";
-            }
-
-            if (bannerType == "style16" || bannerType == "style17") {
-                bannerType = "banner16";
-            }
-
-            if (bannerType == "style18" || bannerType == "style19") {
-                bannerType = "banner18";
-            }
-            $('.banner_div').css('display', 'none');
-            $.ajax({
-                type: 'get',
-                url: "{{ url('') }}" + '/api/client/constant_banner?getLanguage=' + languageId + '&title=' +
-                    bannerType +
-                    '&language_id=' + languageId + '&getGallary=1',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    clientid: "{{ isset(getSetting()['client_id']) ? getSetting()['client_id'] : '' }}",
-                    clientsecret: "{{ isset(getSetting()['client_secret']) ? getSetting()['client_secret'] : '' }}",
-                },
-                beforeSend: function() {},
-                success: function(data) {
-                    if (data.status == 'Success') {
-                        if (typeof data.data[0] !== 'undefined') {
-                            $('.banner-link1').attr('href', data.data[0]
-                                .banner_url);
-
-                            $('.banner-image1').attr('src', "/gallary/" + data.data[0].gallary
-                                .gallary_name);
-                        }
-
-
-
-                        if (typeof data.data[1] !== 'undefined') {
-                            $('.banner-link2').attr('href', data.data[1]
-                                .banner_url);
-
-                            $('.banner-image2').attr('src', "/gallary/" + data.data[1].gallary
-                                .gallary_name);
-                        }
-
-
-
-
-                        if (typeof data.data[2] !== 'undefined') {
-                            $('.banner-link3').attr('href', data.data[2]
-                                .banner_url);
-                            $('.banner-image3').attr('src', "/gallary/" + data.data[2].gallary
-                                .gallary_name);
-                        }
-
-                        if (typeof data.data[3] !== 'undefined') {
-                            $('.banner-link4').attr('href', data.data[3]
-                                .banner_url);
-                            $('.banner-image4').attr('src', "/gallary/" + data.data[3].gallary
-                                .gallary_name);
-                        }
-
-                        if (typeof data.data[4] !== 'undefined') {
-
-                            $('.banner-link5').attr('href', data.data[4]
-                                .banner_url);
-                            $('.banner-image5').attr('src', "/gallary/" + data.data[4].gallary
-                                .gallary_name);
-                        }
-                        if (typeof data.data[5] !== 'undefined') {
-                            $('.banner-link6').attr('href', data.data[5]
-                                .banner_url);
-                            $('.banner-image6').attr('src', "/gallary/" + data.data[5].gallary
-                                .gallary_name);
-
-                        }
-                        $('.banner_div').css('display', 'block');
-                    }
-                },
-                error: function(data) {},
-            });
-        }
     </script>
 @endsection

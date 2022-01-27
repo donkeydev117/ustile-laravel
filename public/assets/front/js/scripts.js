@@ -5527,6 +5527,36 @@ jQuery(document).ready(function() {
             buttons	: {}
         }
     });
+
+    jQuery("#partner-slicks").slick({
+        dots: true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 5,
+        adaptiveHeight: true,
+        responsive: [{
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                arrows: false,
+            }
+        },
+        {
+            breakpoint: 992,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+            }
+        },
+        {
+            breakpoint: 576,
+            settings: {
+                slidesToShow:  2,
+                slidesToScroll: 2
+            }
+        }]
+    })
 });
 
 
