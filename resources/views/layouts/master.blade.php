@@ -1021,7 +1021,7 @@
             $("#close_to_shopping_cart_btn").trigger("click");
         })
 
-    </script>:
+    </script>
 
     @yield('script')
 </body>

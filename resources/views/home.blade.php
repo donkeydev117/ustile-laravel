@@ -17,6 +17,7 @@
         .diamond img{
             width: 250px;
             height: 250px;
+            object-fit: cover;
         }
         .diamond-1{
             top: 150px;
@@ -202,7 +203,54 @@
             border-bottom: 1px solid #ccc;
             padding-bottom: 1rem;
         }
+        .section-steps{
+            padding: 4rem;
+        }
 
+        .step-item{
+            padding: 1.5rem 1rem;
+            position: relative;
+            height: 300px;
+            width: 300px;
+        }
+        .step-item-left-border{
+            position: absolute;
+            height: 100%;
+            width: 35%;
+            border: 3px solid #7c7c7c;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            border-right: 0;
+        }
+        .step-item-image img{
+            width: 100%;
+            height: calc(300px - 3rem);
+            object-fit: cover;
+        }
+        .step-item-right-border{
+            position: absolute;
+            height: 100%;
+            width: 35%;
+            border: 3px solid #7c7c7c;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            border-left: 0;
+        }
+        .step-item-image{
+            position: relative;
+        }
+        .step-item-desc{
+            position: absolute;
+            bottom: 0;
+            padding: 0.5rem;
+            align-items: cener;
+            text-align: center;
+            width: 100%;
+            background-color: #444444;
+            color: #fff;
+        }
     </style>
     <section class="diamond-section mt-4 pt-4">
         <div class="container pt-4 pb-4 mb-4">
@@ -212,26 +260,26 @@
         <div class="container" style=" position: relative; height: 500px; ">
             <div class="diamond diamond-1">
                 <span>Go Outdoors</span>
-                <img src="/gallary/202112103948ONE_COAL.jpeg">
+                <img src="{{ asset('images/help-step-1.png')}}">
             </div>
             <div class="diamond diamond-2">
-                <img src="/gallary/202112103948ONE_COAL.jpeg">
+                <img src="{{ asset('images/help-step-2.png')}}">
                 <span>See Bathrooms</span>
             </div>
             <div class="diamond diamond-3">
                 <span>Commercial Tile</span>
-                <img src="/gallary/202112103948ONE_COAL.jpeg">
+                <img src="{{ asset('images/help-step-3.png')}}">
             </div>
             <div class="diamond diamond-4">
                 <span>Title Gallery</span>
-                <img src="/gallary/202112103948ONE_COAL.jpeg">
+                <img src="{{ asset('images/help-step-2.png')}}">
             </div>
             <div class="diamond diamond-5">
-                <img src="/gallary/202112103948ONE_COAL.jpeg">
+                <img src="{{ asset('images/help-step-1.png')}}">
                 <span>Discover Kitchens</span>
             </div>
             <div class="diamond diamond-6">
-                <img src="/gallary/202112103948ONE_COAL.jpeg">
+                <img src="{{ asset('images/help-step-3.png')}}">
                 <span>View Living Space</span>
             </div>
         </div>
@@ -305,6 +353,56 @@
                 </div>
                 <div class="col-4 col-sm-2 partner-item">
                     <img src="{{ asset('images/partner-1.png')}}" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-steps">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="text-center">At US Tiles, We're With You Every Step Of The Way</h4>
+                <p class="text-center">Our Tiles and Stone Experts Help you Create "Beautiful Rooms from Start to Finish"</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row mt-4 pt-4">
+                <div class="col-12 col-sm-4 d-flex justify-content-center">
+                    <div class="step-item">
+                        <div class="step-item-left-border"></div>
+                        <div class="step-item-image">
+                            <img src="{{ asset('images/help-step-1.png')}}" />
+                            <div class="step-item-desc">
+                                <span>Latest in Tile Fashion</span>
+                            </div>
+                        </div>
+                        <div class="step-item-right-border"></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4 d-flex justify-content-center">
+                    <div class="step-item">
+                        <div class="step-item-left-border"></div>
+                        <div class="step-item-image">
+                            <img src="{{ asset('images/help-step-2.png')}}" />
+                            <div class="step-item-desc">
+                                <span>Complimentary Design Services</span>
+                            </div>
+                        </div>
+                        <div class="step-item-right-border"></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4 d-flex justify-content-center">
+                    <div class="step-item">
+                        <div class="step-item-left-border"></div>
+                        <div class="step-item-image">
+                            <img src="{{ asset('images/help-step-3.png')}}" />
+                            <div class="step-item-desc">
+                                <span>Expert Installation Advice</span>
+                            </div>
+                        </div>
+                        <div class="step-item-right-border"></div>
+                    </div>
                 </div>
             </div>
         </div>
