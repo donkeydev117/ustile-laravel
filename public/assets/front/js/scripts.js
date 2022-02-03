@@ -6462,15 +6462,17 @@ jQuery(document).on('click', function(event) {
     }
  
   jQuery( document ).ready(function() {
-    showCartImage();
-    showDetailImage();
-    showShopImage();
-    showContactImage();
-    showHeaderImage();
-    showSliderImage();
-    showBannerImage();
-    showFooterImage();
-    showCardImage();
-
+    // showCartImage();
+    // showDetailImage();
+    // showShopImage();
+    // showContactImage();
+    // showHeaderImage();
+    // showSliderImage();
+    // showBannerImage();
+    // showFooterImage();
+    // showCardImage();
 
 });
+
+new WOW().init();
+

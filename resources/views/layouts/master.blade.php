@@ -30,6 +30,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('assets/front/lightbox2/css/lightbox.min.css')}}" rel="stylesheet" />
     <link href="{{ asset('assets/front/magnify-image-hover/css/jquery.jqZoom.css')}}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/animate.css')}}" rel="stylesheet" />
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -74,7 +75,9 @@
     <script src="/assets/front/js/jquery-sortable-lists.min.js"></script>
     <script src="{{ asset('assets/front/lightbox2/js/lightbox.min.js')}}"></script>
     <script src="{{ asset('assets/front/magnify-image-hover/js/jquery.jqZoom.js')}}"></script>
-
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="{{ asset('assets/js/wow.min.js')}}"></script>
+    
     <script src="{{ asset('assets/front/js/scripts.js') }}"></script>
 
     @php
@@ -162,6 +165,11 @@
             // Nice Scroll Setting
 
             $(".nicescroll").niceScroll();
+
+            $(".grid-masonry").masonry({
+                itemSelector: '.grid-masonry-item',
+                columnWidth: 200
+            })
 
 
         });

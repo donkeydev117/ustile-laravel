@@ -251,54 +251,86 @@
             background-color: #444444;
             color: #fff;
         }
+        .grid-masonry-item{
+            width: 200px
+        }
+        .grid-masonry-item--width-2{
+            width: 400px;
+        }
+
+        .carousel-content .carousel .carousel-inner .carousel-item {
+            /* height: 600px !important; */
+        }
+        .diamond.hovered{
+            width: 250px !important;
+            height: 250px !important;
+        }
+
+        .diamond.hovered img {
+            width : 250px !important;
+            height: 250px !important;
+            transition: all 1s ease 0s, transform 500ms ease 0s;
+        }
+
+        .diamond-mouseout{
+            width : 180px !important;
+            height: 180px !important;
+        }
+
+        .diamond-mouseout img{
+            width: 180px !important;
+            height: 180px !important;
+            transition: all 1s ease 0s, transform 500ms ease 0s;
+        }
+
     </style>
     <section class="diamond-section mt-4 pt-4">
         <div class="container pt-4 pb-4 mb-4">
             <h4 class="text-center">Explore Our Tile and Stone Design ideas Gallery</h4>
             <p class="text-center">A Great Place to Get Inspired and Discover New Ideas for Home and Business.</p>
         </div>
-        <div class="container" style=" position: relative; height: 500px; ">
-            <div class="diamond diamond-1">
+        <div class="container" id="diamond-container" style=" position: relative; height: 500px; ">
+            <a class="diamond diamond-1 wow fadeIn" data-wow-delay="0.5s" href="#">
                 <span>Go Outdoors</span>
                 <img src="{{ asset('images/help-step-1.png')}}">
-            </div>
-            <div class="diamond diamond-2">
+            </a>
+            <a class="diamond diamond-2 wow fadeIn"  data-wow-delay="0.5s" href="#">
                 <img src="{{ asset('images/help-step-2.png')}}">
                 <span>See Bathrooms</span>
-            </div>
-            <div class="diamond diamond-3">
+            </a>
+            <a class="diamond diamond-3 wow fadeIn"  data-wow-delay="0.5s" href="#">
                 <span>Commercial Tile</span>
                 <img src="{{ asset('images/help-step-3.png')}}">
-            </div>
-            <div class="diamond diamond-4">
+            </a>
+            <a class="diamond diamond-4 wow fadeIn"  data-wow-delay="0.5s" href="#">
                 <span>Title Gallery</span>
                 <img src="{{ asset('images/help-step-2.png')}}">
-            </div>
-            <div class="diamond diamond-5">
+            </a>
+            <a class="diamond diamond-5 wow fadeIn" data-wow-delay="0.5s" href="#">
                 <img src="{{ asset('images/help-step-1.png')}}">
                 <span>Discover Kitchens</span>
-            </div>
-            <div class="diamond diamond-6">
+            </a>
+            <a class="diamond diamond-6 wow fadeIn" data-wow-delay="0.5s" href="#">
                 <img src="{{ asset('images/help-step-3.png')}}">
                 <span>View Living Space</span>
-            </div>
+            </a>
         </div>
     </section>
 
     <section style="margin-top: 50px">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-sm-4 text-center feature-item">
+                <div class="col-12 col-sm-4 text-center feature-item wow fadeIn" data-wow-delay="0.5s">
                     <img src="{{asset("/images/star-outline.png")}}" />
                     <p>New Items</p>
                     <a href="#">View Collection</a>
                 </div>
-                <div class="col-12 col-sm-4 text-center feature-item">
+                <div class="col-12 col-sm-4 text-center feature-item wow fadeIn" data-wow-delay="0.5s">
                     <img src="{{asset("/images/truck.png")}}" />
                     <p>Ready To Ship</p>
                     <a href="#">View Collection</a>
                 </div>
-                <div class="col-12 col-sm-4 text-center feature-item">
+                <div class="col-12 col-sm-4 text-center feature-item wow fadeIn" data-wow-delay="0.5s">
                     <img src="{{asset("/images/layers.png")}}" />
                     <p>Match Box</p>
                     <a href="#">View Collection</a>
@@ -310,7 +342,17 @@
     <section class="show-room-section">
         <div class="row">
             <div class="col-sm-6">
-
+                <div class="grid-masonry">
+                    <div class="grid-masonry-item">
+                        <img class="img-fluid" src="{{ asset('images/help-step-3.png')}}" />
+                    </div>
+                    <div class="grid-masonry-item--width-2">
+                        <img class="img-fluid" src="{{ asset('images/help-step-2.png')}}" />
+                    </div>
+                    <div class="grid-masonry-item">
+                        <img class="img-fluid" src="{{ asset('images/help-step-1.png')}}" />
+                    </div>
+                </div>
             </div>
             <div class="col-sm-6">
                 <h3>Show Room</h3>
@@ -326,7 +368,40 @@
             @include('sections.home-'.$template['template_postfix'].'-section')
         @endif
     @endforeach --}}
-    @include('sections.home-category-section')
+    {{-- @include('sections.home-category-section') --}}
+
+    <section class="categories-content pro-content">
+        <div class="container">
+            <div class="products-area">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-6">
+                        <div class="pro-heading-title">
+                            <h2> {{ trans('lables.home-product-categories-title') }}</h2>
+                            <p>{{ trans('lables.home-product-categories-description') }}</p>
+                        </div>
+                   </div>
+               </div>
+               <div class="row" id="categories-template-container">
+                    @foreach($categories as $cate)
+                    <div class="col-12 col-sm-4 d-flex align-items-center mt-2 wow fadeIn" data-wow-delay="0.5s">
+                        <a class="category-slider-url" href="/shop?category={{$cate->id}}">
+                            <figure class="category-image">
+                                <div class="hexagon" style="background-image:url('/gallary/{{$cate->gallary->name}}')">
+                                    <div class="hexTop"></div>
+                                    <div class="hexBottom"></div>
+                                </div>
+                                <div class="category-title">
+                                    <h4 class="category-slider-title text-center pt-2">{{ $cate->detail[0]->category_name}}</h4>
+                                </div>
+                          </figure>
+                        </a>
+                    </div>
+                    @endforeach
+               </div>
+            </div>
+          </div>
+    </section>
+
 
     <section class="section-partners">
         <div class="row">
@@ -368,7 +443,7 @@
 
         <div class="container">
             <div class="row mt-4 pt-4">
-                <div class="col-12 col-sm-4 d-flex justify-content-center">
+                <div class="col-12 col-sm-4 d-flex justify-content-center wow fadeInLeft" data-wow-delay="0.5s">
                     <div class="step-item">
                         <div class="step-item-left-border"></div>
                         <div class="step-item-image">
@@ -380,7 +455,7 @@
                         <div class="step-item-right-border"></div>
                     </div>
                 </div>
-                <div class="col-12 col-sm-4 d-flex justify-content-center">
+                <div class="col-12 col-sm-4 d-flex justify-content-center wow fadeIn" data-wow-delay="0.5s">
                     <div class="step-item">
                         <div class="step-item-left-border"></div>
                         <div class="step-item-image">
@@ -392,7 +467,7 @@
                         <div class="step-item-right-border"></div>
                     </div>
                 </div>
-                <div class="col-12 col-sm-4 d-flex justify-content-center">
+                <div class="col-12 col-sm-4 d-flex justify-content-center wow fadeInRight" data-wow-delay="0.5s">
                     <div class="step-item">
                         <div class="step-item-left-border"></div>
                         <div class="step-item-image">
@@ -416,30 +491,30 @@
                 '/api/client/products?limit=10&getCategory=1&getDetail=1&language_id=' + languageId +
                 '&topSelling=1&currency=' + localStorage.getItem("currency");
             appendTo = 'tab_top_sales';
-            fetchProduct(url, appendTo);
+            // fetchProduct(url, appendTo);
 
             var url = "{{ url('') }}" + '/api/client/products?limit=10&getDetail=1&language_id=' +
                 languageId + '&currency=' + localStorage.getItem("currency");
             appendTo = 'tab_special_products';
-            fetchProduct(url, appendTo);
+            // fetchProduct(url, appendTo);
 
             var url = "{{ url('') }}" + '/api/client/products?limit=10&getDetail=1&language_id=' +
                 languageId + '&currency=' + localStorage.getItem("currency");
             appendTo = 'tab_most_liked';
-            fetchProduct(url, appendTo);
+            // fetchProduct(url, appendTo);
 
             var url = "{{ url('') }}" +
                 '/api/client/products?limit=12&getCategory=1&getDetail=1&language_id=' + languageId +
                 '&sortBy=id&sortType=DESC&currency=' + localStorage.getItem("currency");
             appendTo = 'new-arrival';
-            fetchProduct(url, appendTo);
+            // fetchProduct(url, appendTo);
 
 
             var url = "{{ url('') }}" +
                 '/api/client/products?limit=6&getCategory=1&getDetail=1&language_id=' + languageId +
                 '&sortBy=id&sortType=DESC&currency=' + localStorage.getItem("currency");
             appendTo = 'weekly-sale';
-            fetchProduct(url, appendTo);
+            // fetchProduct(url, appendTo);
 
             categorySlider();
             cartSession = $.trim(localStorage.getItem("cartSession"));
@@ -449,6 +524,18 @@
 
             sliderMedia();
             menuCart(cartSession);
+
+            $(".diamond").on("mouseenter", function(){
+                $(".diamond").removeClass("hovered").addClass("diamond-mouseout");
+                $(this).removeClass("diamond-mouseout").addClass("hovered");
+            });
+
+            $(".diamond").on("mouseout", function(){
+                $(this).removeClass("hovered");
+            })
+            // $("#diamond-container").on("mouseout", function(){
+            //     $(".diamond").removeClass("hovered").removeClass("diamond-mouseout");
+            // })
         });
 
 

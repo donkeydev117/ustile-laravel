@@ -27,6 +27,7 @@ use App\Models\Web\ProjectProduct;
 use App\Models\Web\ProjectProductTag;
 use App\Models\Web\ProjectShare;
 use App\Models\Admin\ProductVariationAlt;
+use App\Models\Admin\Category;
 use Carbon\Carbon;
 use DB;
 use App\Jobs\OrderProcess;
@@ -77,7 +78,11 @@ class IndexController extends Controller
         // return $data['homeBanners'];
         $setting = getSetting();
 
-        return view('home', compact('data', 'setting'));
+        // Get all categories
+        $categories = Category::with('detail')->with('gallary')->limit(6)->get();
+
+        // die(print_r(json_encode($categories)));
+        return view('home', compact('data', 'setting', 'categories'));
     }
 
     public function contactUs()
