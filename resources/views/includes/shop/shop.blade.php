@@ -98,14 +98,31 @@
         border-right-width: 2px;
         border-right-style: solid;
     }
+    .page-heading-title{
+        margin-top: 0;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e1d9d9
+    }
+    #sort-selector{
+        width: 100px;
+        border-color: red;
+        border-width: 2px;
+        appearance: auto;
+        border-radius: 5px;
+    }
 </style>
 
 @include('product-quick-view')
 <!-- Shop Page One content -->
 <section class="pro-content">
-    <div class="shop-content pl-4 pr-4">
-        <div class="page-heading-title">
+    <div class="shop-content pl-4 pr-4 pb-4">
+        <div class="page-heading-title d-flex justify-content-between">
             <h2> {{ trans('lables.shop-shop') }} </h2>
+            <select class="form-control" id="sort-selector">
+                <option value="">Sort</option>
+                <option value="A-Z" data-sort-by="title" data-sort-type="asc">A-Z</option>
+                <option value="Z-A" data-sort-by="title" data-sort-type="desc">Z-A</option>
+            </select>
         </div>
     </div>
     <section class="shop-content shop-two">
