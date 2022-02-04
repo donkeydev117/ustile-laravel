@@ -110,6 +110,10 @@
         appearance: auto;
         border-radius: 5px;
     }
+    .pro-content .product{
+        padding-top: 0px; 
+        margin-bottom: 30px;
+    }
 </style>
 
 @include('product-quick-view')
