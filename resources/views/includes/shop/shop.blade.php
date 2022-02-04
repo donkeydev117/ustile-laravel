@@ -1,4 +1,9 @@
 <style>
+    .pro-content{
+        padding-top: 25px !important;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
     .filter-item-label{
         position: absolute;
         bottom: 0;
@@ -97,24 +102,14 @@
 
 @include('product-quick-view')
 <!-- Shop Page One content -->
-<div class="container-fuild">
-    <nav aria-label="breadcrumb">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">{{ trans('lables.bread-crumb-home') }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ trans('lables.bread-crumb-shop') }}</li>
-            </ol>
-        </div>
-    </nav>
-</div> 
 <section class="pro-content">
-    <div class="container-fluid pl-4 pr-4">
+    <div class="shop-content pl-4 pr-4">
         <div class="page-heading-title">
             <h2> {{ trans('lables.shop-shop') }} </h2>
         </div>
     </div>
-    <section class="shop-content shop-two pl-4 pr-2">
-        <div class="container-fluid pl-4 pr-4">
+    <section class="shop-content shop-two">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-lg-3 right-menu nicescroll">
                     <div class="right-menu-content d-none quick-view-right-menu"></div>
@@ -284,39 +279,6 @@
                             </div>
                         </div>
                         {{-- End filter options done --}}
-                        
-                        {{-- Price --}}
-                        {{-- <div class="range-slider-main">
-                            <a class=" main-manu" data-toggle="collapse" data-target="#price" role="button" aria-expanded="true" aria-controls="men-cloth">
-                                {{ trans('lables.shop-price') }} 
-                            </a>
-    
-                            <div class="sub-manu collapse show multi-collapse" id="price">
-                                <ul class="unorder-list">
-                                    @foreach ($data['price_range'] as $price_range)
-                                        <li class="list-item">
-                                            @if (isset($_GET['price']) && $_GET['price'] == $price_range)
-                                                <a class="list-link price-range-list price-range-list-{{ $price_range }} price-active" style="cursor: pointer;"
-                                                    data-price-range={{ $price_range }}>{{ $price_range }}
-                                                </a>
-                                            @else
-                                                <a class="list-link price-range-list price-range-list-{{ $price_range }}" style="cursor: pointer;"
-                                                    data-price-range={{ $price_range }}>{{ $price_range }}
-                                                </a>
-                                            @endif
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-     --}}
-                        {{-- <div class="range-slider-main">
-                            <button class="btn btn-primary filter-from-sidebar">{{ trans('lables.shop-apply') }}</button>
-                            <a href="{{ url('/shop') }}" class="btn btn-primary">{{ trans('lables.shop-reset') }} </a>
-                        </div> --}}
-                        {{-- <div class="img-main">
-                            <a href="#"><img class="img-fluid" src="{{ asset("assets/front/images/shop/side-image.jpg") }}"></a>
-                        </div> --}}
                     </div>
                    
                     <div class="right-menu-switch-container d-none" id="right-menu-switch-container">
