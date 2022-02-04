@@ -214,11 +214,9 @@
             const clone = templ.content.cloneNode(true);
             // clone.querySelector(".single-text-chat-li").classList.add("bg-blue-100");
             clone.querySelector(".div-class").classList.add('col-12');
-            if(shopStyle.split('style')[1] == 1)
-            clone.querySelector(".div-class").classList.add('col-lg-3');
-            else
             clone.querySelector(".div-class").classList.add('col-lg-4');
-            clone.querySelector(".div-class").classList.add('col-md-6');
+            clone.querySelector(".div-class").classList.add('col-md-4');
+            clone.querySelector(".div-class").classList.add("col-sm-6");
             clone.querySelector(".div-class").classList.add('griding');
             clone.querySelector(".wishlist-icon").setAttribute('data-id', data.data[i].product_id);
             clone.querySelector(".wishlist-icon").setAttribute('data-type', data.data[i].product_type);
@@ -252,7 +250,7 @@
                                     .data[i].product_id+'/'+data
                                     .data[i].product_slug);
                 var desc = data.data[i].detail[0].desc;
-              clone.querySelector(".product-card-desc").innerHTML = desc.substring(0, 50);
+              // clone.querySelector(".product-card-desc").innerHTML = desc.substring(0, 50);
             }
 
               if (data.data[i].product_type == 'simple') {

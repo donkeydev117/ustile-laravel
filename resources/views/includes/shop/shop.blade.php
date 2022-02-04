@@ -50,6 +50,49 @@
         text-align: center;
         font-size: 12px;
     }
+
+    .product-card-image{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+    }
+    .product article .thumb {
+        width: 100%;
+        padding-top: 100%;
+        height: auto;
+    }
+    .product article {
+        background-color: transparent;
+    }
+    .product article .content{
+        padding: 0;
+    }
+    .action-buttons a {
+        font-size: 32px;
+        color: #888;
+    }
+    .action-buttons a:hover{
+        color: #333;
+    }
+    .action-buttons a span { 
+        font-size: 12px;
+        display: block;
+    }
+    .red-content{
+        background-color: #ef5f4b;
+        padding: 10px;
+        color: #fff;
+        border-radius: 5px;
+    }
+    .add-to-cart-link {
+        letter-spacing: 0px;
+    }
+    .border-right-white{
+        border-right-color: #fff;
+        border-right-width: 2px;
+        border-right-style: solid;
+    }
 </style>
 
 @include('product-quick-view')
@@ -329,7 +372,7 @@
                         </div> 
                         <section id="swap" class="shop-content" >
                             <div class="products-area">
-                                @include("includes.cart.product_card_style6_updated")
+                                @include("includes.cart.product_card")
                                 <div class="row shop_page_product_card"></div>
                             </div> 
                         </section>  
