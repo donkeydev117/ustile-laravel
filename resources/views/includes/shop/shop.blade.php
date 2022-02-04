@@ -132,169 +132,270 @@
                     <div class="right-menu-content d-none quick-view-right-menu"></div>
                     <div class="right-menu-content d-none compare-view-right-menu"></div>
                     {{-- Render Categories --}}
-                    <div class="right-menu-content filter-view-right-menu">
-                        <div class="right-menu-categories">
-                            <h5>{{__('Categories')}}</h5>
-                            @foreach ($data['category'] as $category)
-                                @if ($category->parent == null)
-                                    <a class=" main-manu" data-toggle="collapse" href="#{{ $category->category_slug }}" role="button"
-                                        aria-expanded="false" aria-controls="{{ $category->category_slug }}">
-                                        <img class="img-fuild" src="{{ asset('gallary/'.$category->icon->name) }}">
-                                        {{ $category->detail[0]->category_name }}
-                                    </a>
-                                @endif
-                                <div class="sub-manu collapse multi-collapse" id="{{ $category->category_slug }}">
-                                    <ul class="unorder-list">
-                                        @foreach ($data['category'] as $childCategory)
-                                            @if ($childCategory->parent != null)
-                                                @if ($childCategory->parent->id === $category->id)
-                                                    <li class="list-item">
-                                                        <a class="list-link" href="{{ url('/shop?category='.$childCategory->id) }}">
-                                                            <i class="fas fa-angle-right"></i>{{ $childCategory->detail[0]->category_name }}
-                                                        </a>
-                                                    </li>
-                                                @endif
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endforeach
-                        </div>
-                        {{-- Applications --}}
-                        <div class="right-menu-applications mt-4">
-                            <h5>Application</h5>
-                            <div class="row pr-4">
-                                <div class="col-md-4 pr-2 filter-item filter-application" data-id='kitchen' data-filter="application" >
-                                    <div class="filter-application-item" style='background-image:url(/images/applications/kitchen.jpeg)'></div>
-                                    <span class='filter-item-label'>Kitchen</span>
-                                </div>
-                                <div class="col-md-4 pr-2 filter-item filter-application" data-id="foyer" data-filter="application">
-                                    <div class="filter-application-item" style='background-image:url(/images/applications/foyer.jpg)'></div>
-                                    <span class='filter-item-label'>Foyer</span>
-                                </div>
-                                <div class="col-md-4 pr-2 filter-item filter-application" data-id='bathroom' data-filter="application">
-                                    <div class="filter-application-item" style='background-image:url(/images/applications/bathroom.jpeg)'></div>
-                                    <span class='filter-item-label'>Bathroom</span>
-                                </div>
+                    <div class="right-menu-content filter-view-right-menu" id="right-menu-accordian">
+                        <div class="card">
+                            <div class="card-header" id="headingCategory">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="true" aria-controls="collapseCategory">
+                                        Category
+                                    </button>
+                                </h5>
                             </div>
-                        </div>
-                        <hr />
-                        {{-- Render Materials --}}
-                        <div class="right-menu-materials mt-4">
-                            <h5>{{ __('Material')}}</h5>
-                            <div class="row">
-                                @foreach($materials as $material)
-                                <div class="col-md-3 pr-2 filter-item filter-material" data-id="{{ $material->id }}" data-filter="material">
-                                    <div class="filter-application-item" style='background-image:url({{ $material->media }})'></div>
-                                    <span class='filter-item-label'>{{ $material->name }}</span>
-                                </div>
+                            <div class="right-menu-categories collapse" id="collapseCategory" aria-labelledby="headingCategory" data-parent="#right-menu-accordian">
+                                <h5>{{__('Categories')}}</h5>
+                                @foreach ($data['category'] as $category)
+                                    @if ($category->parent == null)
+                                        <a class=" main-manu" data-toggle="collapse" href="#{{ $category->category_slug }}" role="button"
+                                            aria-expanded="false" aria-controls="{{ $category->category_slug }}">
+                                            <img class="img-fuild" src="{{ asset('gallary/'.$category->icon->name) }}">
+                                            {{ $category->detail[0]->category_name }}
+                                        </a>
+                                    @endif
+                                    <div class="sub-manu collapse multi-collapse" id="{{ $category->category_slug }}">
+                                        <ul class="unorder-list">
+                                            @foreach ($data['category'] as $childCategory)
+                                                @if ($childCategory->parent != null)
+                                                    @if ($childCategory->parent->id === $category->id)
+                                                        <li class="list-item">
+                                                            <a class="list-link" href="{{ url('/shop?category='.$childCategory->id) }}">
+                                                                <i class="fas fa-angle-right"></i>{{ $childCategory->detail[0]->category_name }}
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
-                        <hr />
-                        {{-- Render Colors --}}
-                        <div class="right-menu-colors mt-4">
-                            <h5>{{__('Color')}}</h5>
-                            <div class="row">
-                                @foreach($colors as $color)
-                                <div class="col-md-2 pr-2 filter-item filter-color" data-id="{{ $color->id}}" data-filter="color"  >
-                                    <div class='fitler-color-item filter-application-item' style='background-color:{{$color->code}}'>
-    
+                       
+                        {{-- Applications --}}
+                        <div class="card">
+                            <div class="card-header" id="headingApplication">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseApplication" aria-expanded="true" aria-controls="collapseApplication">
+                                        Application
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="right-menu-applications collapse" id="collapseApplication" aria-labelledby="headingApplication" data-parent="#right-menu-accordian">
+                                <h5>Application</h5>
+                                <div class="row pr-4">
+                                    <div class="col-md-4 pr-2 filter-item filter-application" data-id='kitchen' data-filter="application" >
+                                        <div class="filter-application-item" style='background-image:url(/images/applications/kitchen.jpeg)'></div>
+                                        <span class='filter-item-label'>Kitchen</span>
+                                    </div>
+                                    <div class="col-md-4 pr-2 filter-item filter-application" data-id="foyer" data-filter="application">
+                                        <div class="filter-application-item" style='background-image:url(/images/applications/foyer.jpg)'></div>
+                                        <span class='filter-item-label'>Foyer</span>
+                                    </div>
+                                    <div class="col-md-4 pr-2 filter-item filter-application" data-id='bathroom' data-filter="application">
+                                        <div class="filter-application-item" style='background-image:url(/images/applications/bathroom.jpeg)'></div>
+                                        <span class='filter-item-label'>Bathroom</span>
                                     </div>
                                 </div>
-                                @endforeach
                             </div>
                         </div>
+                     
+                        <hr />
+                        {{-- Render Materials --}}
+                        <div class="card">
+                            <div class="card-header" id="headingMaterial">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseMaterial" aria-expanded="true" aria-controls="collapseMaterial">
+                                        Category
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="right-menu-materials collapse" id="collapseMaterial" aria-labelledby="headingMaterial" data-parent="#right-menu-accordian">
+                                <h5>{{ __('Material')}}</h5>
+                                <div class="row">
+                                    @foreach($materials as $material)
+                                    <div class="col-md-3 pr-2 filter-item filter-material" data-id="{{ $material->id }}" data-filter="material">
+                                        <div class="filter-application-item" style='background-image:url({{ $material->media }})'></div>
+                                        <span class='filter-item-label'>{{ $material->name }}</span>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                        <hr />
+                        {{-- Render Colors --}}
+                        <div class="card">
+                            <div class="card-header" id="headingColors">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseColors" aria-expanded="true" aria-controls="collapseColors">
+                                        Colors
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="right-menu-colors collapse" id="collapseColors" aria-labelledby="headingColors" data-parent="#right-menu-accordian">
+                                <h5>{{__('Color')}}</h5>
+                                <div class="row">
+                                    @foreach($colors as $color)
+                                    <div class="col-md-2 pr-2 filter-item filter-color" data-id="{{ $color->id}}" data-filter="color"  >
+                                        <div class='fitler-color-item filter-application-item' style='background-color:{{$color->code}}'>
+        
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                       
     
                         <hr />
     
                         {{-- Render Shades --}}
-                        <div class="right-menu-shades mt-4">
-                            <h5>{{__('Shade')}}</h5>
-                            <div class="row">
-                                @foreach($shades as $shade)
-                                <div class="col-md-3 pr-2 filter-item filter-shade" data-id="{{ $shade->id }}" data-filter="shade">
-                                    <div class="filter-application-item" style='background-image:url({{ $shade->media }})'></div>
-                                    <span class='filter-item-label'>{{ $shade->name }}</span>
+                        <div class="card">
+                            <div class="card-header" id="headingShades">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseShades" aria-expanded="true" aria-controls="collapseShades">
+                                        Shade
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="right-menu-shades collapse" id="collapseShades" aria-labelledby="headingShades" data-parent="#right-menu-accordian">
+                                <h5>{{__('Shade')}}</h5>
+                                <div class="row">
+                                    @foreach($shades as $shade)
+                                    <div class="col-md-3 pr-2 filter-item filter-shade" data-id="{{ $shade->id }}" data-filter="shade">
+                                        <div class="filter-application-item" style='background-image:url({{ $shade->media }})'></div>
+                                        <span class='filter-item-label'>{{ $shade->name }}</span>
+                                    </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
                         </div>
+                        
                         
                         <hr />
     
                         {{-- Render Finishes --}}
-                        <div class="right-menu-finishes mt-4">
-                            <h5>{{__('Finish')}}</h5>
-                            <div class="row">
-                                @foreach($finishes as $finish)
-                                <div class="col-md-3 pr-2 filter-item filter-finish" data-id="{{ $finish->id}}" data-filter="finish">
-                                    <div class="filter-application-item" style='background-image:url({{ $finish->media }})'></div>
-                                    <span class='filter-item-label'>{{ $finish->name }}</span>
+                        <div class="card">
+                            <div class="card-header" id="headingFinish">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFinish" aria-expanded="true" aria-controls="collapseFinish">
+                                        Finish
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="right-menu-finishes collapse" id="collapseFinish" aria-labelledby="headingFinish" data-parent="#right-menu-accordian">
+                                <h5>{{__('Finish')}}</h5>
+                                <div class="row">
+                                    @foreach($finishes as $finish)
+                                    <div class="col-md-3 pr-2 filter-item filter-finish" data-id="{{ $finish->id}}" data-filter="finish">
+                                        <div class="filter-application-item" style='background-image:url({{ $finish->media }})'></div>
+                                        <span class='filter-item-label'>{{ $finish->name }}</span>
+                                    </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
                         </div>
+                        
     
                         <hr />
     
                         {{-- Render Shapes --}}
-                        <div class="right-menu-shapes mt-4">
-                            <h5>{{__('Shape')}}</h5>
-                            <div class="row">
-                                @foreach($shapes as $shape)
-                                <div class="col-md-3 pr-2 filter-item filter-shade" data-id="{{ $shape->id }}" data-filter="shape">
-                                    <div class="filter-application-item" style='background-image:url({{ $shape->media }})'></div>
-                                    <span class='filter-item-label'>{{ $shape->name }}</span>
-                                </div>
-                                @endforeach
+                        <div class="card">
+                            <div class="card-header" id="headingShape">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseShape" aria-expanded="true" aria-controls="collapseShape">
+                                        Shape
+                                    </button>
+                                </h5>
                             </div>
+                            <div class="right-menu-shapes collapse" id="collapseShape" aria-labelledby="headingShape" data-parent="#right-menu-accordian">
+                                <h5>{{__('Shape')}}</h5>
+                                <div class="row">
+                                    @foreach($shapes as $shape)
+                                    <div class="col-md-3 pr-2 filter-item filter-shade" data-id="{{ $shape->id }}" data-filter="shape">
+                                        <div class="filter-application-item" style='background-image:url({{ $shape->media }})'></div>
+                                        <span class='filter-item-label'>{{ $shape->name }}</span>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+        
                         </div>
-    
+                        
                         <hr />
     
                         {{-- Render Look & Trend --}}
-                        <div class="right-menu-looktrend mt-4">
-                            <h5>{{__('Look & Trend')}}</h5>
-                            <div class="row">
-                                @foreach($looktrends as $looktrend)
-                                <div class="col-md-3 pr-2 filter-item filter-looktrend" data-id="{{ $looktrend->id }}" data-filter="looktrend">
-                                    <div class="filter-application-item" style='background-image:url({{ $looktrend->media }})'></div>
-                                    <span class='filter-item-label'>{{ $looktrend->name }}</span>
+                        <div class="card">
+                            <div class="card-header" id="headingLook">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseLook" aria-expanded="true" aria-controls="collapseLook">
+                                        Look
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="right-menu-looktrend collapse" id="collapseLook" aria-labelledby="headingLook" data-parent="#right-menu-accordian">
+                                <h5>{{__('Look & Trend')}}</h5>
+                                <div class="row">
+                                    @foreach($looktrends as $looktrend)
+                                    <div class="col-md-3 pr-2 filter-item filter-looktrend" data-id="{{ $looktrend->id }}" data-filter="looktrend">
+                                        <div class="filter-application-item" style='background-image:url({{ $looktrend->media }})'></div>
+                                        <span class='filter-item-label'>{{ $looktrend->name }}</span>
+                                    </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
                         </div>
+                      
     
                         <hr />
 
                         {{-- Render For Brand --}}
-                        <div class="right-menu-brand mt-4">
-                            <h5>{{ __("Brands")}}</h5>
-                            <div class="row">
-                                @foreach($data['brand'] as $brand)
-                                <div class="col-md-3 pr-2 filter-item filter-brand" data-id="{{ $brand->id }}" data-filter="brand">
-                                    <div class="filter-application-item" style='background-image:url({{ $brand->gallary->detail[0]->path }})'></div>
-                                    <span class='filter-item-label'>{{ $brand->name }}</span>
+                        <div class="card">
+                            <div class="card-header" id="headingBrand">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseBrand" aria-expanded="true" aria-controls="collapseBrand">
+                                        Brand
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="right-menu-brand collapse" id="collapseBrand" aria-labelledby="headingBrand" data-parent="#right-menu-accordian">
+                                <h5>{{ __("Brands")}}</h5>
+                                <div class="row">
+                                    @foreach($data['brand'] as $brand)
+                                    <div class="col-md-3 pr-2 filter-item filter-brand" data-id="{{ $brand->id }}" data-filter="brand">
+                                        <div class="filter-application-item" style='background-image:url({{ $brand->gallary->detail[0]->path }})'></div>
+                                        <span class='filter-item-label'>{{ $brand->name }}</span>
+                                    </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
                         </div>
+                        
 
                         {{-- Render for Shipping Options --}}
-                        <div class="right-menu-shipping mt-4">
-                            <h5>{{__('Shipping Status')}}</h5>
-                            <div class="row mt-2">
-                                @foreach($shippings as $s)
-                                <div class="col-md-4 pr-1 filter-item filter-shipping" data-id={{ $s->id }} data-filter="shipping">
-                                    <div class="filter-application-item filter-shipping-item">
-                                        {{ $s->name }}
+                        <div class="card">
+                            <div class="card-header" id="headingShipping">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseShipping" aria-expanded="true" aria-controls="collapseShipping">
+                                        Shipping
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="right-menu-shipping collapse" id="collapseShipping" aria-labelledby="headingShipping" data-parent="#right-menu-accordian">
+                                <h5>{{__('Shipping Status')}}</h5>
+                                <div class="row mt-2">
+                                    @foreach($shippings as $s)
+                                    <div class="col-md-4 pr-1 filter-item filter-shipping" data-id={{ $s->id }} data-filter="shipping">
+                                        <div class="filter-application-item filter-shipping-item">
+                                            {{ $s->name }}
+                                        </div>
+                                        {{-- <span class="filter-item-label">{{ $s->name }}</span> --}}
                                     </div>
-                                    {{-- <span class="filter-item-label">{{ $s->name }}</span> --}}
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
                         </div>
+                        
                         {{-- End filter options done --}}
                     </div>
                    
