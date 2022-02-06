@@ -350,7 +350,7 @@
                                   .data[i].product_id+'/'+data
                                   .data[i].product_slug);
               var desc = data.data[i].detail[0].desc;
-            clone.querySelector(".product-card-desc").innerHTML = desc.substring(0, 50);
+            // clone.querySelector(".product-card-desc").innerHTML = desc.substring(0, 50);
           }
 
           if (data.data[i].product_type == 'simple') {
