@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-@include('includes.shop.shop');
+@include('includes.shop.shop')
 
 <link rel="stylesheet" type="text/css" href="/assets/front/css/toggle-switch.css">
 <style>
@@ -193,22 +193,7 @@
       beforeSend: function() {},
       success: function(data) {
         if (data.status == 'Success') {
-          if(data.meta.last_page < page){
-              $('.load-more-products').attr('disabled',true);
-              $('.load-more-products').html('No More Items');
-            return
-          }
-          var pagination ='<label for="staticEmail" class="col-form-label">Showing From <span class="showing_record">'+data.meta.to+'</span>&nbsp;of&nbsp;<span class="showing_total_record">'+data.meta.total+'</span>&nbsp;results.</label>';
-          var nextPage = parseInt(data.meta.current_page)+1;
-          pagination += '<div class="col-12 col-sm-6">';
-          pagination +='<ol class="loader-page mt-0">';
-          pagination +='<li class="loader-page-item">';
-          pagination +='<button class="load-more-products btn btn-secondary" data-page="'+nextPage+'">Load More</button>';
-          pagination +='</li>';
-          pagination +='</ol>';
-          pagination +='</div>';
-
-          $('.pagination').html(pagination);
+          
           const templ = document.getElementById("product-card-template");
           for (i = 0; i < data.data.length; i++) {
             const clone = templ.content.cloneNode(true);
@@ -284,6 +269,18 @@
             
             $("."+appendTo).append(clone);
           }
+
+          if(data.meta.last_page == 1 || data.meta.last_page < page){
+              $(".pagination").css('display', 'none');
+            return;
+          }
+          var nextPage = parseInt(data.meta.current_page)+1;
+          var pagination = `<a href="javascript:void(0)" class="load-more-products" data-page="${nextPage}">
+            <img src="/images/arrow-bottom.png">
+            <span class="d-block">View More</span>
+          </a>`;
+
+          $('.pagination').html(pagination);
         }
       },
       error: function(data) {},

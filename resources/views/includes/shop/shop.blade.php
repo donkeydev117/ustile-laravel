@@ -126,6 +126,10 @@
         display: flex;
         justify-content: space-between;
     }
+    .pagination{
+        background-color: transparent;
+        border: none;
+    }
 </style>
 
 @include('product-quick-view')
@@ -462,7 +466,7 @@
                             </div> 
                         </section>  
                     </div>
-                    <div class="pagination justify-content-between "></div>
+                    <div class="pagination justify-content-center "></div>
                 </div>
             </div>
         </div>
