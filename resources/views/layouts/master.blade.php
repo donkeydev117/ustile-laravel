@@ -34,6 +34,49 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <style>
+        .header-two .header-maxi .pro-header-right-options .dropdown .dropdown-menu .shopping-cart-items,
+        .sticky-header .header-sticky-inner .pro-header-right-options .dropdown .dropdown-menu .shopping-cart-items,
+        .header-mobile .header-maxi .pro-header-right-options .dropdown .dropdown-menu .shopping-cart-items {
+            max-height: 600px;
+        }
+        .header-two .header-maxi .pro-header-right-options .dropdown .dropdown-menu,
+        .sticky-header .header-sticky-inner .pro-header-right-options .dropdown .dropdown-menu,
+        .header-mobile .header-maxi .pro-header-right-options .dropdown .dropdown-menu {
+            width : 320px;
+        }
+        .top-cart-product-image {
+            height: 100%;
+        }
+        .cart-dropdown-menu-title {
+            font-size: 20px;
+            margin-left: 1.5rem;
+            text-transform: uppercase;
+        }
+        .cart-menu-view-cart-btn{
+            background-color : #ef5f4b;
+            color: #fff;
+        }
+        .cart-menu-view-cart-btn:hover{
+            background-color: #ef5f4b;
+            color : #fff
+        }
+
+        .item-remove{
+            cursor: pointer;
+        }
+        .header-two .header-maxi .pro-header-right-options .dropdown .dropdown-menu .shopping-cart-items li .item-thumb .image,
+        .sticky-header .header-sticky-inner .pro-header-right-options .dropdown .dropdown-menu .shopping-cart-items li .item-thumb .image {
+            width : 60px;
+            height: 60px;
+        }
+        .header-two .header-maxi .pro-header-right-options .dropdown .dropdown-menu .shopping-cart-items li,
+        .sticky-header .header-sticky-inner .pro-header-right-options .dropdown .dropdown-menu .shopping-cart-items li{
+            padding-bottom: 25px;
+            margin-bottom: 15px;
+        }
+
+    </style>
 
 </head>
 
@@ -510,30 +553,36 @@
 
                             if (cartItem.currency.symbol_position == 'left') {
                                 clone.querySelector(".top-cart-product-qty-amount").innerHTML = qty + 
-                                    ' x ' + cartItem.currency.code + ' ' + price +
-                                    '     <i class="fas fa-trash"  data-id=' + cartItem
-                                    .product_id + ' data-combination-id=' + cartItem.product_combination_id +
-                                    ' onclick="removeCartItem(this)"></i>';
+                                    ' x ' + cartItem.currency.code + price;
+                                
                             } else {
                                 clone.querySelector(".top-cart-product-qty-amount").innerHTML = qty + 
-                                ' x ' + price + ' ' + cartItem.currency.code +
+                                ' x ' + price + cartItem.currency.code +
                                     '  <i class="fas fa-trash" data-id=' + cartItem
                                     .product_id + ' data-combination-id=' + cartItem.product_combination_id +
                                     '  onclick="removeCartItem(this)"></i>';
                             }
+                            clone.querySelector('.item-remove').innerHTML =  '<i class="fas fa-trash"  data-id=' + cartItem
+                                    .product_id + ' data-combination-id=' + cartItem.product_combination_id +
+                                    ' onclick="removeCartItem(this)"></i>'
+
                             total_price = total_price + (price*cartItem.qty);
+
 
                             $(".top-cart-product-show").append(clone);
 
                         })
                         
-                        if (currrency != '' && currrency != 'null' && currrency != null) {
-                            if (currrency.symbol_position == 'left') {
-                                total_price = currrency.code + ' ' + total_price;
-                            } else {
-                                total_price = total_price + ' ' + currrency.code;
-                            }
-                        }
+                        // if (currrency != '' && currrency != 'null' && currrency != null) {
+                        //     if (currrency.symbol_position == 'left') {
+                        //         total_price = currrency.code + total_price;
+                        //     } else {
+                        //         total_price = total_price + currrency.code;
+                        //     }
+                        // }
+
+                        total_price = `$${total_price}`;
+
                         if (data.data.length > 0) {
                             const temp1 = document.getElementById("top-cart-product-total-template");
                             const clone1 = temp1.content.cloneNode(true);

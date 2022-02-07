@@ -116,12 +116,9 @@
                             <i class="fas fa-shopping-bag"></i>
                             <span class="badge badge-secondary total-menu-cart-product-count">0</span>
                           </button> 
-
-                          
                           <template id="top-cart-product-template">
                             <li class="top-cart-product-id">
                               <div class="item-thumb">
-
                                 <div class="image">
                                   <img class="img-fluid top-cart-product-image" src="" alt="Product Image">
                                 </div>
@@ -143,6 +140,7 @@
                             </li>
                           </template>
                           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="headerOneCartButton">
+                            <label class='cart-dropdown-menu-title'>Your Cart</label>
                             <ul class="shopping-cart-items top-cart-product-show">
                               <li>{{  trans("lables.header-emptycart") }}</li>
                             </ul>

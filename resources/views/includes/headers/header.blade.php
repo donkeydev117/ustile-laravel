@@ -100,28 +100,6 @@
                     <img class="img-fluid" src="{{isset(getSetting()['site_logo']) ? getSetting()['site_logo'] : asset('01-logo.png') }}" alt="{{isset(getSetting()['site_name']) ? getSetting()['site_name'] : 'Logo' }}">
                   </a>
                 </div>
-                {{-- Search Field --}}
-                {{-- <div class="col-12 col-sm-6">
-                  <form class="form-inline">
-                    <div class="search-field-module">
-                      <button class="btn btn-secondary swipe-to-top dropdown-toggle selected_category" type="button" id="headerOneCartButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" data-placement="bottom" title="{{  trans("lables.header-all-categories") }}">
-                        {{  trans("lables.header-all-categories") }}
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="headerOneCartButton">
-                        @foreach($data['category'] as $categories)
-                        
-                        <a class="dropdown-item cat-dropdown" href="javascript:void(0)" data-id="{{ $categories->id }}" data-name="{{isset($categories->detail[0]->category_name) ? $categories->detail[0]->category_name : ''}}">{{isset($categories->detail[0]->category_name) ? $categories->detail[0]->category_name : ''}}</a>
-                        @endforeach
-        
-                      </div>
-                      <div class="search-field-wrap">
-                        <input type="search" placeholder="{{ isset($_GET['search']) ? $_GET['search'] : trans('lables.header-search-products').'...' }}" data-toggle="tooltip" data-placement="bottom" title="Search Item" id="search-input">
-                        <button class="btn btn-secondary swipe-to-top" id="search_button" data-toggle="tooltip" data-placement="bottom" title="{{ trans('lables.header-search-products') }}">
-                          <i class="fa fa-search"></i></button>
-                      </div>
-                    </div>
-                  </form>
-                </div> --}}
                 <div>
                   <ul class="pro-header-right-options">
                     <li>
@@ -149,30 +127,34 @@
                         </div>
                       </button>
                       <template id="top-cart-product-template">
-                    <li class="top-cart-product-id">
+                    <li class="top-cart-product-id d-flex justify-content-between">
                       <div class="item-thumb">
-        
                         <div class="image">
                           <img class="img-fluid top-cart-product-image" src="" alt="Product Image">
                         </div>
                       </div>
                       <div class="item-detail">
                         <h3 class="top-cart-product-name"></h3>
-                        <div class="item-s top-cart-product-qty-amount"> <i class="fas fa-trash"></i></div>
+                        <div class="item-s top-cart-product-qty-amount"></div>
+                      </div>
+                      <div class="item-remove d-flex justify-content-center align-items-center">
                       </div>
                     </li>
                     </template>
                     <template id="top-cart-product-total-template">
                       <li>
-                        <span class="item-summary ">{{  trans("lables.header-total") }}&nbsp;:&nbsp;<span class="top-cart-product-total"></span>
-                        </span>
+                        <div class="item-summary d-flex justify-content-between">
+                          <span class="text-uppercase">{{  trans("lables.header-total") }}</span>
+                          <span class="top-cart-product-total"></span>
+                        </div>
                       </li>
                       <li>
-                        <a class="btn btn-link btn-block " href="{{url('/cart')}}">{{  trans("lables.header-view-cart") }}</a>
-                        <a class="btn btn-secondary btn-block  swipe-to-top" href="{{url('/checkout')}}">{{  trans("lables.header-checkout") }}</a>
+                        <a class="btn btn-link btn-block swipe-to-top cart-menu-view-cart-btn" href="{{url('/cart')}}">{{  trans("lables.header-view-cart") }}</a>
+                        <a class="btn btn-secondary btn-block  swipe-to-top cart-menu-view-checkout-btn" href="{{url('/checkout')}}">{{  trans("lables.header-checkout") }}</a>
                       </li>
                     </template>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="headerOneCartButton">
+                      <label class="cart-dropdown-menu-title">Your Cart</label>
                       <ul class="shopping-cart-items top-cart-product-show">
                         <li>{{  trans("lables.header-emptycart") }}</li>
                       </ul>
