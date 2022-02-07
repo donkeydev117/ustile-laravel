@@ -44,11 +44,35 @@
         cursor: pointer;
         margin-right: 20px;
     }
+    .empty-project-content-container{
+        background-image: url('/images/empty-project.png');
+        height: 250px;
+        width: 100%;
+        position: relative;
+    }
+    .empty-project-content{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgb(65, 65, 65, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
     
 </style>
 <div class="container-fluid">
     <div class="row mt-4">
         <div class="col-sm-12" id="project_container">
+            <div class="container empty-project-content-container">
+                <div class="empty-project-content">
+                    <h4 class="text-white text-uppercase d-block">Project</h4>
+                    <p class="text-white">Save Your Project Tile Collections And Get a Free Quote</p>
+                </div>
+            </div>
         </div>
     </div>
 
