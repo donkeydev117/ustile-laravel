@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('content')
-    @include(isset(getSetting()['cart_page']) ? 'includes.cartpages.cart-'.getSetting()['cart_page'] :
-    'includes.cartpages.cart-style1')
+    @include('includes.cartpages.cartpage')
     <input type="hidden" id="totalItems" value="0" />
 
 @endsection
