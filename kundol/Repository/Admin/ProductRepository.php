@@ -373,6 +373,7 @@ class ProductRepository implements ProductInterface
             foreach($variants as $v){
                 $variant                = new ProductVariationAlt;
                 $variant->product_id    = $product->id;
+                $variant->name          = $v['name'];
                 $variant->color         = $v['color']['id'];
                 $variant->shade         = $v['shade']['id'];
                 $variant->finish        = $v['finish']['id'];
@@ -541,6 +542,7 @@ class ProductRepository implements ProductInterface
             foreach($variants as $v){
                 $variant                = new ProductVariationAlt;
                 $variant->product_id    = $product->id;
+                $variant->name          = $v['name'];
                 $variant->color         = $v['color']['id'];
                 $variant->shade         = $v['shade']['id'];
                 $variant->finish        = $v['finish']['id'];
@@ -552,7 +554,7 @@ class ProductRepository implements ProductInterface
                 $variant->price         = $v['price'];
                 $variant->sample_price  = $v['sample_price']; 
                 $variant->sku           = $v['sku'];
-                $variant->media_id      = $v['media'] ? $v['media']['id'] : 0;
+                $variant->media_id      = $v['media'] ? ( isset($v['media']['id']) ? $v['media']['id'] : $v['media']['gallary_id'])  : 0;
                 $variant->save();
             }
             \DB::commit();

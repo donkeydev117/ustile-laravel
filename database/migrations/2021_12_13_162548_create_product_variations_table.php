@@ -16,6 +16,7 @@ class CreateProductVariationsTable extends Migration
         Schema::create('product_variations_alt', function (Blueprint $table) {
             $table->id();
             $table->integer("product_id");
+            $table->string('name')->nullable();
             $table->integer('color');
             $table->integer('shade');
             $table->integer('finish');

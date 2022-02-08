@@ -199,109 +199,16 @@
     <div class="card card-custom gutter-b b-white border-0">
         <div class="card-header border-0 align-items-center">
             <h3 class="card-label mb-0 font-weight-bold text-body">Variants</h3>
+            <button class="btn btn-primary btn-sm" @click.prevent='displayCreateVariationModal()'>Create</button>
         </div>
         <div class="card-body">
-            <div class="row pl-2 pr-2">
-                <div class="mb-3 ml-2">
-                    <select class="form-control" v-model="color" v-on:change='changeColor($event.target.value)' >
-                        <option disabled value=''>Color</option>
-                        <option v-for='c in colors' :key='c.id' :value='c.id'>{{c.color}}</option>
-                    </select>
-                </div>
-                <!-- Shades -->
-                <div class="mb-3 ml-2">
-                    <select class="form-control" v-model="shade" v-on:change='changeShade($event.target.value)'>
-                        <option disabled value=''>Shade</option>
-                        <option v-for='s in shades' :key='s.id' :value='s.id'>{{s.name}}</option>
-                    </select>
-                </div>
-                <!-- Finish -->
-                <div class="ml-2 mb-3">
-                    <select class="form-control" v-model='finish' v-on:change="changeFinish($event.target.value)">
-                        <option disabled value=''>Finish</option>
-                        <option v-for='f in finishes' :key='f.id' :value='f.id'>{{ f.name }}</option>
-                    </select>
-                </div>
-                <!-- Look & Trend -->
-                <div class="ml-2 mb-3">
-                    <select class="form-control" v-model='look' v-on:change='changeLook($event.target.value)'>
-                        <option disabled value=''>Look</option>
-                        <option v-for='lt in looktrends' :key='lt.id' :value='lt.id'>{{lt.name}}</option>
-                    </select>
-                </div>
-                <!-- Shapes -->
-                <div class="ml-2 mb-3">
-                    <select class="form-control" v-model="shape" v-on:change='changeShape($event.target.value)'>
-                        <option disabled value=''>Shape</option>
-                        <option v-for='sh in shapes' :key='sh.id' :value='sh.id' >{{ sh.name }}</option>
-                    </select>
-                </div>
-                <!-- Size of Box -->
-                <div class="ml-2 mb-3">
-                    <input 
-                        type="number" 
-                        class="form-control" 
-                        placeholder="Box size *"
-                        v-model="variant.box_size" 
-                    />
-                </div>
-                <!-- Size -->
-                <div class="ml-2 mb-3">
-                    <input 
-                        type="number" 
-                        class="form-control" 
-                        placeholder="Width(inch) *" 
-                        v-model='variant.width' 
-                        style="width: 120px"
-                    > 
-                </div>
-                <div class="ml-2 mb-3">
-                    <input 
-                        type="number" 
-                        class="form-control" 
-                        placeholder="Length(inch) *" 
-                        v-model='variant.length'
-                        style="width: 120px"
-                    >
-                </div>
-                <div class="ml-2 mb-3">
-                    <input 
-                        class="form-control"
-                        type="number"
-                        step='0.1' 
-                        placeholder="Price *" 
-                        v-model='variant.price'
-                        style="width: 120px"
-                    />
-                </div>
-                <div class="ml-2 mb-3">
-                    <input 
-                        class="form-control"
-                        type="number"
-                        step='0.1' 
-                        placeholder="Sample Price *" 
-                        v-model='variant.sample_price'
-                        style="width: 120px"
-
-                    />
-                </div>
-                <div class="ml-2 mb-3">
-                    <input 
-                        class="form-control"
-                        placeholder="SKU *" 
-                        v-model='variant.sku'
-                    />
-                </div>
-                <div class="ml-2 mb-3">
-                    <button  class="btn btn-primary btn-sm"  @click.prevent='createVariant()'>Create</button>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Name</th>
                                     <th>Color</th>
                                     <th>Shade</th>
                                     <th>Finish</th>
@@ -318,6 +225,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(v, index) in variants" :key='index'>
+                                    <td>{{ v.name }}</td>
                                     <td>{{v.color.color}}</td>
                                     <td>{{v.shade.name}}</td>
                                     <td>{{v.finish.name}}</td>
@@ -354,6 +262,140 @@
         </div>
     </div>
     <attach-image @toggleImageSelect="toggleImageSelect" :showModal="showModal" @setImage="setImage" />
+    
+    <div class="modal fade" :class="{'show': showCreateVariationModal }" tabindex="-1" role="dialog" :style="[showCreateVariationModal ? {'display': 'block !important'} : {'display': 'none'}]" style="overflow: scroll;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Variation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <label class="control-label" for="variation-title">Name</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="Variation Name"
+                                        id="variation-title" 
+                                        v-model="variant.name" 
+                                    />
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-color">Color</label>
+                                    <select class="form-control" v-model="color" v-on:change='changeColor($event.target.value)' id="variation-color" >
+                                        <option disabled value=''>Color</option>
+                                        <option v-for='c in colors' :key='c.id' :value='c.id'>{{c.color}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-shade">Shade</label>
+                                    <select class="form-control" v-model="shade" v-on:change='changeShade($event.target.value)' id="variation-shade">
+                                        <option disabled value=''>Shade</option>
+                                        <option v-for='s in shades' :key='s.id' :value='s.id'>{{s.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-finish">Finish</label>
+                                    <select class="form-control" v-model='finish' v-on:change="changeFinish($event.target.value)" id="variation-finish">
+                                        <option disabled value=''>Finish</option>
+                                        <option v-for='f in finishes' :key='f.id' :value='f.id'>{{ f.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-look">Look</label>
+                                    <select class="form-control" v-model='look' v-on:change='changeLook($event.target.value)' id="variation-look">
+                                        <option disabled value=''>Look</option>
+                                        <option v-for='lt in looktrends' :key='lt.id' :value='lt.id'>{{lt.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-shape">Shape</label>
+                                    <select class="form-control" v-model="shape" v-on:change='changeShape($event.target.value)'  id="variation-shape">
+                                        <option disabled value=''>Shape</option>
+                                        <option v-for='sh in shapes' :key='sh.id' :value='sh.id' >{{ sh.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-boxsize">Box Size</label>
+                                    <input 
+                                        type="number" 
+                                        class="form-control" 
+                                        placeholder="Box size *"
+                                        v-model="variant.box_size" 
+                                        id="variation-boxsize"
+                                    />
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-width">Width</label>
+                                    <input 
+                                        type="number" 
+                                        class="form-control" 
+                                        placeholder="Width(inch) *" 
+                                        v-model='variant.width' 
+                                        id="variation-width"
+                                    > 
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-length">Length</label>
+                                    <input 
+                                        type="number" 
+                                        class="form-control" 
+                                        placeholder="Length(inch) *" 
+                                        v-model='variant.length'
+                                        id="variation-length"
+                                    >
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-price">Price</label>
+                                    <input 
+                                        class="form-control"
+                                        type="number"
+                                        step='0.1' 
+                                        placeholder="Price *" 
+                                        v-model='variant.price'
+                                        id="variation-price"
+                                    />
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-sampleprice">Sample Price</label>
+                                    <input 
+                                        class="form-control"
+                                        type="number"
+                                        step='0.1' 
+                                        placeholder="Sample Price *" 
+                                        v-model='variant.sample_price'
+                                        id="variation-sampleprice"
+                                    />
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for="variation-sku">SKU</label>
+                                    <input 
+                                        class="form-control"
+                                        placeholder="SKU *" 
+                                        v-model='variant.sku'
+                                        id="variation-sku"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @click.prevent='createVariant()'>Create</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click.prevent="hideCreateVariationModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 </template>
 
@@ -396,6 +438,7 @@ export default {
             product_min_order: '',
             product_max_order: '',
             showModal: false,
+            showCreateVariationModal: false,
             currentSelectedGalleryName: '',
             lastSku: '',
             token: [],
@@ -414,6 +457,7 @@ export default {
             media: '',
             editMediaIndex: -1,
             variant: {
+                name: "",
                 color: '',
                 shade: '',
                 finish: '',
@@ -722,6 +766,7 @@ export default {
             this.media = '';
 
             this.variant = {
+                name: "",
                 color: '',
                 shade: '',
                 finish: '',
@@ -735,6 +780,12 @@ export default {
                 sku: '',
                 media: ''
             };
+        },
+        displayCreateVariationModal(){
+            this.showCreateVariationModal = true;
+        },
+        hideCreateVariationModal(){
+            this.showCreateVariationModal = false;
         },
 
         removeVariant(index){

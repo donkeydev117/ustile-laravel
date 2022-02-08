@@ -9,3 +9,7 @@ ALTER TABLE `products` ADD `application` TEXT NOT NULL AFTER `material`;
 ALTER TABLE `product_variations_alt` ADD `sample_price` FLOAT NOT NULL DEFAULT '0' AFTER `price`;
 
 ALTER TABLE `cart_items` ADD `is_sample` INT(1) NOT NULL DEFAULT '0' AFTER `is_order`;
+
+-- 8 FEB
+ALTER TABLE `product_variations_alt` ADD `name` VARCHAR(255) NULL DEFAULT NULL AFTER `product_id`;
+
