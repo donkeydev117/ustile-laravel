@@ -70,14 +70,24 @@
             <td class="col-12 col-sm-2 col-md-2">
                 <img class="cartItem-image" src="" />
             </td>
-            <td class="col-12 col-sm-4 col-md-4 item-detail-left">
+            <td class="col-12 col-sm-4 col-md-3 item-detail-left">
                 <div class="item-detail">
-                    <span class="cartItem-category-name"></span>
+                    {{-- <span class="cartItem-category-name"></span> --}}
                     <h4 class="cartItem-name"></h4>
-                    <div class="item-attributes"></div>
+                    <div class="item-attributes">
+                        <div class="mb-1">Size: <span class="cart-item-size"></span></div>
+                        <div class="mb-1">Color: <span class="cart-item-color"></span></div>
+                        <div class="mb-1">Finish: <span class="cart-item-finish"></span></div>
+                        <div class="mb-1">Look: <span class="cart-item-look"></span></div>
+                        <div class="mb-1">Shape: <span class="cart-item-shape"></span></div>
+
+                    </div>
                 </div>
             </td>
-            <td class="item-price col-12 col-md-2 cartItem-price"></td>
+            <td class="item-price col-12 col-md-2 ">
+                <div class="cartItem-price "></div>
+                <div class="mt-1 d-inline-block cart-item-boxsize-container"><span class="cart-item-boxsize"></span> / box</div>
+            </td>
             <td class="col-12 col-md-2">
                 <div class="input-group item-quantity">
                     <button type="button" value="quantity" class="quantity-left-minus btn cartItem-qty-2" data-type="minus" data-field="">
