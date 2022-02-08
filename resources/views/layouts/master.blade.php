@@ -742,7 +742,6 @@
                         cartData.forEach(function(cartItem, i){
                             var sum = 0;
                             $("#totalItems").val(i + 1);
-
                             const clone = templ.content.cloneNode(true);
                             $(".product-card-price").html(cartItem.product_price_symbol);
                             const imagePath = cartItem.product_combination.media === null ? cartItem.product_gallary.detail[0].gallary_path : cartItem.product_combination.media.detail[0].path;

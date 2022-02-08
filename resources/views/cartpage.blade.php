@@ -1,8 +1,61 @@
 @extends('layouts.master')
+
+<style>
+    #btn_update_cart,
+    #btn_continue_shopping {
+        width : 250px;
+    }
+    #btn_update_cart{
+        background-color: #ef5f4b;
+        color: #fff;
+    }
+    #btn_update_cart:hover{
+        color: #333;
+    }
+    .quantity-left-minus{
+        padding: 0 !important;
+        position: absolute;
+        left: 5px;
+        top: 0;
+        width: 20px;
+        z-index: 2;
+        bottom: 0;
+    }
+    .quantity-right-plus{
+        padding: 0 !important;
+        position: absolute;
+        right: 5;
+        top: 0;
+        bottom: 0;
+        z-index: 2;
+    }
+    .quantity-left-minus span,
+    .quantity-right-plus span{
+        font-size: 12px;
+        color: #ef5f4b;
+    }
+
+    .cartItem-image {
+        width: 100px;
+        height: 100px;
+    }
+
+    .cart-page-one .top-table tbody tr td{
+        justify-content: flex-start !important;
+    }
+
+    .cart-main-content{
+        margin-top: 1rem;
+        padding-top: 1rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+
+</style>
+
 @section('content')
     @include('includes.cartpages.cartpage')
     <input type="hidden" id="totalItems" value="0" />
-
 @endsection
 @section('script')
     <script>

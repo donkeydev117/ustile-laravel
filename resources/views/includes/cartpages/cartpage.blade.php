@@ -1,61 +1,55 @@
-<div class="container-fuild">
-    <nav aria-label="breadcrumb">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">{{ trans('lables.bread-crumb-home') }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ trans('lables.bread-shopping-cart') }}</li>
-            </ol>
-        </div>
-    </nav>
-</div>
-<section class="pro-content">
-    <div class="container">
-        <div class="page-heading-title">
-            <h2>{{ trans('lables.cart-page-shopping-cart') }}</h2>
 
+
+<section class="cart-main-content">
+    <div class="container-fluid">
+        <div class="page-heading-title">
+            <h2>{{ trans('lables.cart-page-shopping-cart') }} <span class="cart-item-count"></span></h2>
         </div>
     </div>
 
 
     <!-- cart Content -->
-    <section class=" cart-content">
-        <div class="container">
+    <section class="cart-content">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-sm-12 cart-area cart-page-one">
                     <div class="row">
                         <div class="col-12 col-lg-9">
-                            <table class="table top-table" id="cartItem-product-show">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table class="table top-table">
+                                        <tbody id="cartItem-product-show">
 
-                            </table>
-
-                            <div class="col-12 col-lg-12 mb-4">
-
-                                <div class="row justify-content-between click-btn">
-                                    <div class="col-12 col-lg-4">
-                                        <div class="row">
-                                            <div class="input-group">
-                                                <input type="text" id="coupon_code" class="form-control" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="coupon-code">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-secondary swipe-to-top" type="button" onclick="couponCartItem()" id="coupon-code">{{ trans('lables.cart-page-apply') }}</button>
+                                        </tbody>
+                                    </table>
+                                    <div class="col-12 col-lg-12 mb-4">
+                                        <div class="row justify-content-between click-btn">
+                                            <div class="col-12 col-lg-4">
+                                                {{-- <div class="row">
+                                                    <div class="input-group">
+                                                        <input type="text" id="coupon_code" class="form-control" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="coupon-code">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-secondary swipe-to-top" type="button" onclick="couponCartItem()" id="coupon-code">{{ trans('lables.cart-page-apply') }}</button>
+                                                        </div>
+                                                    </div>
+                                                </div> --}}
+                                            </div>
+                                            <div class="col-12 col-lg-8 align-right">
+                                                <div class="row">
+                                                    <button type="button" class="btn btn-secondary swipe-to-top" id="btn_continue_shopping">{{ trans('lables.cart-page-continue-shopping') }}</button>
+                                                    <button type="button" class="btn btn-light swipe-to-top" id="btn_update_cart" onclick="updateCartItem()">{{ trans('lables.cart-page-update-cart') }}</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-7 align-right">
-                                        <div class="row">
-                                            <button type="button" class="btn btn-secondary swipe-to-top">
-                                                {{ trans('lables.cart-page-continue-shopping') }}</button>
-                                            <button type="button" class="btn btn-light swipe-to-top" onclick="updateCartItem()">{{ 
-                                            trans('lables.cart-page-update-cart') }}</button>
-                                        </div>
-
-
-
-                                    </div>
                                 </div>
                             </div>
+                           
+
+                            
                         </div>
                         <div class="col-12 col-lg-3">
+                           
                             <table class="table right-table" id="cartItem-grandtotal-product-show">
 
                             </table>
@@ -72,52 +66,38 @@
 
 
     <template id="cartItem-Template">
-        <tbody>
-            <tr class="d-flex cartItem-row">
-                <td class="col-12 col-md-2">
-                    <img class="img-fluid cartItem-image" src="" />
-                </td>
-                <td class="col-12 col-md-4 item-detail-left">
-                    <div class="item-detail">
-                        <span class="cartItem-category-name"></span>
-                        <h4 class="cartItem-name">
-                        </h4>
-                        <div class="item-attributes"></div>
-                        <div class="item-controls">
-                            {{-- <button type="button" class="btn">
-                                <span class="fas fa-pencil-alt"></span>
-                            </button> --}}
-                            <button type="button" class="btn cartItem-remove">
-                                <span class="fas fa-times"></span>
-                            </button>
-                        </div>
-                    </div>
-                </td>
-                <td class="item-price col-12 col-md-2 cartItem-price"></td>
-                <td class="col-12 col-md-2">
-                    <div class="input-group item-quantity">
-
-                        <input type="text" id="quantity2" name="quantity" class="form-control cartItem-qty">
-
-                        <span class="input-group-btn">
-                            <button type="button" value="quantity" class="quantity-right-plus btn cartItem-qty-1" data-type="plus" data-field="">
-
-                                <span class="fas fa-plus"></span>
-                            </button>
-
-                            <button type="button" value="quantity" class="quantity-left-minus btn cartItem-qty-2" data-type="minus" data-field="">
-                                <span class="fas fa-minus"></span>
-                            </button>
-
-
-                        </span>
-
-
-                    </div>
-                </td>
-                <td class="align-middle item-total col-12 col-md-2 cartItem-total" align="center"></td>
-            </tr>
-        </tbody>
+        <tr class="d-flex cartItem-row">
+            <td class="col-12 col-sm-2 col-md-2">
+                <img class="cartItem-image" src="" />
+            </td>
+            <td class="col-12 col-sm-4 col-md-4 item-detail-left">
+                <div class="item-detail">
+                    <span class="cartItem-category-name"></span>
+                    <h4 class="cartItem-name"></h4>
+                    <div class="item-attributes"></div>
+                </div>
+            </td>
+            <td class="item-price col-12 col-md-2 cartItem-price"></td>
+            <td class="col-12 col-md-2">
+                <div class="input-group item-quantity">
+                    <button type="button" value="quantity" class="quantity-left-minus btn cartItem-qty-2" data-type="minus" data-field="">
+                        <span class="fas fa-minus"></span>
+                    </button>
+                    <input type="text" id="quantity2" name="quantity" class="form-control cartItem-qty">
+                    <button type="button" value="quantity" class="quantity-right-plus btn cartItem-qty-1" data-type="plus" data-field="">
+                        <span class="fas fa-plus"></span>
+                    </button>
+                </div>
+            </td>
+            <td class="align-middle item-total col-12 col-md-2 cartItem-total" align="center"></td>
+            <td class="item-action col-12 col-md-1">
+                <div class="item-controls">
+                    <button type="button" class="btn cartItem-remove pl-2 pr-2">
+                        <span class="fas fa-times"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
     </template>
 
 
