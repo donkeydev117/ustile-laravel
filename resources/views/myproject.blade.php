@@ -5,8 +5,8 @@
         padding: 0.25rem 0.375rem;
     }
     .product-image{
-        width:  100px;
-        height: 100px;
+        width:  150px;
+        height: 150px;
     }
     .sortable  li, #s-l-base li { 
         padding-left:50px 
@@ -66,13 +66,17 @@
 </style>
 <div class="container-fluid">
     <div class="row mt-4">
-        <div class="col-sm-12" id="project_container">
+        <div class="col-sm-12">
             <div class="container empty-project-content-container">
                 <div class="empty-project-content">
                     <h4 class="text-white text-uppercase d-block">Project</h4>
                     <p class="text-white">Save Your Project Tile Collections And Get a Free Quote</p>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-sm-12" id="project_container">
         </div>
     </div>
 

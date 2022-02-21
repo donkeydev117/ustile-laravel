@@ -1,6 +1,6 @@
 <template id="project_template">
     <li class="project-template-li-container">
-        <div class="" id="" class="product-wraper">
+        <div class="product-wraper">
             <div class="project-content">
                 <h5 class="project-title mb-0"></h5>
                 <div class="actions clickable" style="display:flex; flex-direction:row">

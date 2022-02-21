@@ -187,3 +187,16 @@ b{
 .product article .product-hover .icons {
     padding-top: 30% !important;
 }
+
+.project-template-li-container .product-wraper .project-content {
+    background-color: #ef5f4b;
+}
+
+.project-template-li-container .product-wraper .s-l-opener{
+    margin-top: 10px;
+}
+
+.product-template-container-li .div-class{
+    background-color: #fff;
+    padding: 10px;
+}
