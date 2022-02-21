@@ -48,6 +48,7 @@ class ProductRepository implements ProductInterface
                 return $this->successResponse(ProductResource::collection($product->select('id')->get()), 'Data Get Successfully!');
             }
             $product = $product->with('product_attribute.attribute.attribute_detail')->with('gallary');
+            // With Primary Variation
 
             $product = $product->getAttributeDetailByLanguage($languageId);
             $product = $product->getVariationDetailByLanguage($languageId);
@@ -230,7 +231,6 @@ class ProductRepository implements ProductInterface
                         ->with('detail')
                         ->with('productDetail')
                         ->with('productGallaryDetail')
-                        ->with('variations')
                         ->with('materialDetail')
                         ->with('shippingStatus')
                         ->get();
@@ -386,6 +386,7 @@ class ProductRepository implements ProductInterface
                 $variant->sample_price  = $v['sample_price'];
                 $variant->sku           = $v['sku'];
                 $variant->media_id      = $v['media'] ? $v['media']['gallary_id'] : 0;
+                $variant->is_primary    = $v['is_primary'];
                 $variant->save();
             }
             \DB::commit();
@@ -555,6 +556,7 @@ class ProductRepository implements ProductInterface
                 $variant->sample_price  = $v['sample_price']; 
                 $variant->sku           = $v['sku'];
                 $variant->media_id      = $v['media'] ? ( isset($v['media']['id']) ? $v['media']['id'] : $v['media']['gallary_id'])  : 0;
+                $variant->is_primary    = $v['is_primary'];
                 $variant->save();
             }
             \DB::commit();

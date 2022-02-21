@@ -219,6 +219,7 @@
                                     <th>Length</th>
                                     <th>Price</th>
                                     <th>SKU</th>
+                                    <th>Primary</th>
                                     <th>Media</th>
                                     <th>Action</th>
                                 </tr>
@@ -236,16 +237,14 @@
                                     <td>{{v.length == "" ? "" : v.length + '"'}}</td>
                                     <td>{{v.price}}</td>
                                     <td>{{v.sku}}</td>
+                                    <td>{{v.is_primary == 1 ? "Primary" : ""}}</td>
                                     <td>
                                         <button v-if='v.media==""' class="btn btn-sm btn-primary" @click.prevent="toggleImageSelect(index)">Add</button>
-                                        <img 
-                                            v-if="v.media != null"
-                                            :src="v.media.gallary_path"
-                                            class='variant-image'
-                                        />
+                                        <img v-if="v.media != null" :src="v.media.gallary_path" class='variant-image' />
                                     </td>
                                     <td>
                                         <button class="btn btn-danger btn-sm" @click.prevent="removeVariant(index)">Remove</button>
+                                        <button class="btn btn-primary btn-sm" @click.prevent="showEditVariantModal(index)">Edit</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -262,9 +261,11 @@
         </div>
     </div>
     <attach-image @toggleImageSelect="toggleImageSelect" :showModal="showModal" @setImage="setImage" />
+    <attach-image @toggleImageSelect="toggleImageSelectForNew" :showModal="showImageSelectModalForNewVariant" @setImage="setImageForNewVariant" />
+
     
-    <div class="modal fade" :class="{'show': showCreateVariationModal }" tabindex="-1" role="dialog" :style="[showCreateVariationModal ? {'display': 'block !important'} : {'display': 'none'}]" style="overflow: scroll;">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" :class="{'show': showCreateVariationModal }" tabindex="-1" role="dialog" :style="[showCreateVariationModal ? {'display': 'block !important'} : {'display': 'none'}]" style="overflow: scroll; z-index: 1">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Create Variation</h5>
@@ -288,36 +289,36 @@
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label class="control-label" for="variation-color">Color</label>
-                                    <select class="form-control" v-model="color" v-on:change='changeColor($event.target.value)' id="variation-color" >
-                                        <option disabled value=''>Color</option>
+                                    <select class="form-control"  v-on:change='changeColor($event.target.value)' id="variation-color" >
+                                        <option value=''></option>
                                         <option v-for='c in colors' :key='c.id' :value='c.id'>{{c.color}}</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label class="control-label" for="variation-shade">Shade</label>
-                                    <select class="form-control" v-model="shade" v-on:change='changeShade($event.target.value)' id="variation-shade">
-                                        <option disabled value=''>Shade</option>
+                                    <select class="form-control"  v-on:change='changeShade($event.target.value)' id="variation-shade">
+                                        <option value=''></option>
                                         <option v-for='s in shades' :key='s.id' :value='s.id'>{{s.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label class="control-label" for="variation-finish">Finish</label>
-                                    <select class="form-control" v-model='finish' v-on:change="changeFinish($event.target.value)" id="variation-finish">
-                                        <option disabled value=''>Finish</option>
+                                    <select class="form-control" v-on:change="changeFinish($event.target.value)" id="variation-finish">
+                                        <option value=''></option>
                                         <option v-for='f in finishes' :key='f.id' :value='f.id'>{{ f.name }}</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label class="control-label" for="variation-look">Look</label>
-                                    <select class="form-control" v-model='look' v-on:change='changeLook($event.target.value)' id="variation-look">
-                                        <option disabled value=''>Look</option>
+                                    <select class="form-control"  v-on:change='changeLook($event.target.value)' id="variation-look">
+                                        <option value=''></option>
                                         <option v-for='lt in looktrends' :key='lt.id' :value='lt.id'>{{lt.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label class="control-label" for="variation-shape">Shape</label>
-                                    <select class="form-control" v-model="shape" v-on:change='changeShape($event.target.value)'  id="variation-shape">
-                                        <option disabled value=''>Shape</option>
+                                    <select class="form-control" v-on:change='changeShape($event.target.value)'  id="variation-shape">
+                                        <option value=''></option>
                                         <option v-for='sh in shapes' :key='sh.id' :value='sh.id' >{{ sh.name }}</option>
                                     </select>
                                 </div>
@@ -382,10 +383,30 @@
                                         id="variation-sku"
                                     />
                                 </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="control-label" for='variation-primary'>Primary Variation</label>
+                                    <select class="form-control" id="variation-primary" v-model='variant.is_primary'>
+                                        <option value='0'>No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 form-group">
+                                    <div class="">
+                                        <button class="btn btn-primary btn-sm" @click.prevent="toggleImageSelectForNew()">Add Media</button>
+                                    </div>
+                                    <div class="mt-2">
+                                        <img 
+                                            v-if="variant.media != null"
+                                            :src="variant.media.gallary_path"
+                                            class='variant-image'
+                                            style='width: 100px;height:100px'
+                                        />
+                                    </div>
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
-                   
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" @click.prevent='createVariant()'>Create</button>
@@ -446,15 +467,7 @@ export default {
             editChild: false,
             displayClearBtn: 0,
             variants: [],
-            color: '',
-            shade: '',
-            finish: '',
-            look: '',
-            shape: '',
-            box_size: '',
-            width: '',
-            length: '',
-            media: '',
+            showImageSelectModalForNewVariant : false,
             editMediaIndex: -1,
             variant: {
                 name: "",
@@ -469,7 +482,8 @@ export default {
                 price: this.price,
                 sample_price: "",
                 sku: this.sku,
-                media: ''
+                is_primary : 0,
+                media: null
             },
         };
     },
@@ -733,7 +747,8 @@ export default {
         },
         
         validateVariant(){
-            if(this.variant.color == '' ||
+            if( this.variant.name == '' ||
+                this.variant.color == '' ||
                 this.variant.shade == '' ||
                 this.variant.finish == '' ||
                 this.variant.look == '' ||
@@ -753,18 +768,7 @@ export default {
             }
             this.variants = [...this.variants, this.variant];
             this.$emit('setVarinatInChild', this.variant);
-            this.color = '';
-            this.shade = '';
-            this.finish = '';
-            this.look = '';
-            this.shape = '';
-            this.box_size = '';
-            this.width = '';
-            this.length = '';
-            this.price = '';
-            this.sku = '';
-            this.media = '';
-
+            this.showCreateVariationModal = false;
             this.variant = {
                 name: "",
                 color: '',
@@ -778,6 +782,7 @@ export default {
                 price: '',
                 sample_price:"",
                 sku: '',
+                is_primary: 0,
                 media: ''
             };
         },
@@ -798,7 +803,13 @@ export default {
         toggleImageSelect(index) {
             this.editMediaIndex = index;
             this.showModal = !this.showModal;
-            // this.currentSelectedGalleryName = name;
+        },
+        toggleImageSelectForNew(){
+            this.showImageSelectModalForNewVariant = !this.showImageSelectModalForNewVariant;
+        },
+        setImageForNewVariant(gallary){
+            console.log(gallary);
+            this.variant.media = gallary;
         },
         setImage(gallary) {
             this.variants[this.editMediaIndex].media = gallary;

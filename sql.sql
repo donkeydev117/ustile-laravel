@@ -13,3 +13,5 @@ ALTER TABLE `cart_items` ADD `is_sample` INT(1) NOT NULL DEFAULT '0' AFTER `is_o
 -- 8 FEB
 ALTER TABLE `product_variations_alt` ADD `name` VARCHAR(255) NULL DEFAULT NULL AFTER `product_id`;
 
+-- 10 FEB
+ALTER TABLE `product_variations_alt` ADD `is_primary` INT(1) NOT NULL DEFAULT '0' AFTER `media_id`;

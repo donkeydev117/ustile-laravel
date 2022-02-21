@@ -36,14 +36,15 @@ class Product extends JsonResource
         $this->exchange_rate = 1;
 
         // Get variations
-        $variations = ProductVariationAlt::with('media')
+        $variationsQuery = ProductVariationAlt::with('media')
                                         ->with('color')
                                         ->with('shade')
                                         ->with('finish')
                                         ->with('shape')
                                         ->with('look')
-                                        ->where("product_id", $this->id)
-                                        ->get();
+                                        ->where("product_id", $this->id);
+        $variations = $variationsQuery->get();
+        $primaryVariation = $variationsQuery->where('is_primary', '1')->get();
 
         $currency = [];
         if (isset($request->currency) && $request->currency != '') {
@@ -98,6 +99,7 @@ class Product extends JsonResource
                 'made_in_usa' => $this->made_in_usa,
                 'material' => $this->materialDetail,
                 'variations' => $variations ,
+                'primary_variation' => $primaryVariation,
                 'application' => $this->application,
                 'shipping_status' => $this->shippingStatus,
             ];
@@ -149,6 +151,7 @@ class Product extends JsonResource
                 'material' => $this->materialDetail,
                 "brand_id" => $this->brand_id,
                 'variations' => $variations,
+                'primary_variation' => $primaryVariation,
                 'application' => $this->application,
                 'shipping_status' => $this->shippingStatus,
             ];
@@ -197,6 +200,7 @@ class Product extends JsonResource
             'material' => $this->materialDetail,
             "brand_id" => $this->brand_id,
             'variations' => $variations,
+            'primary_variation' => $primaryVariation,
             'application' => $this->application,
             'shipping_status' => $this->shippingStatus,
         ];

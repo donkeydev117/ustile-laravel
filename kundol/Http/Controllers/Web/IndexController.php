@@ -568,7 +568,7 @@ class IndexController extends Controller
     }
 
     public function showVariation($product_id, $product_slug, $id){
-        $product = Product::where("id", $product_id)->with('detail')->firstOrFail();
+        $product = Product::where("id", $product_id)->with('detail')->with('productGallaryDetail')->with('gallary')->firstOrFail();
         $variant = ProductVariationAlt::where("id", $id)
                     ->with('media')
                     ->with('color')

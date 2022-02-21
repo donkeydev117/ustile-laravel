@@ -100,7 +100,15 @@
           clone.querySelector('.product-quick-view-price').innerHTML=data.data.product_price_symbol;
           clone.querySelector(".product-quick-view-product-id").value = data.data.product_id;
           clone.querySelector(".product-quick-view-product-id").classList.add("product-id-" + data.data.product_id);
-          clone.querySelector(".product-quick-view-detail-link").setAttribute("href", `/product/${data.data.product_id}/${data.data.product_slug}`);
+          var detailLink = "";
+          if(data.data.variations.length  === 0){
+            detailLink = '/product/' + data.data.product_id+'/'+data.data.product_slug;
+          } else if(data.data.primary_variation.length === 0){
+            detailLink = '/product/' + data.data.product_id+'/'+data.data.product_slug + "/variation/" + data.data.variations[0].id;
+          } else {
+            detailLink = '/product/' + data.data.product_id+'/'+data.data.product_slug + "/variation/" + data.data.primary_variation[0].id;
+          }
+          clone.querySelector(".product-quick-view-detail-link").setAttribute("href", detailLink);
 
           if(data.data.is_featured == "1"){
             $(clone).find(".product-quick-view-features-container").append('<span class="badge badge-success ml-2">featured</span>');
@@ -193,11 +201,20 @@
       beforeSend: function() {},
       success: function(data) {
         if (data.status == 'Success') {
+          console.log("products:", data.data);
           
           const templ = document.getElementById("product-card-template");
           for (i = 0; i < data.data.length; i++) {
             const clone = templ.content.cloneNode(true);
             // clone.querySelector(".single-text-chat-li").classList.add("bg-blue-100");
+            var detailLink = "";
+            if(data.data[i].variations.length  === 0){
+              detailLink = '/product/' + data.data[i].product_id+'/'+data.data[i].product_slug;
+            } else if(data.data[i].primary_variation.length === 0){
+              detailLink = '/product/' + data.data[i].product_id+'/'+data.data[i].product_slug + "/variation/" + data.data[i].variations[0].id;
+            } else {
+              detailLink = '/product/' + data.data[i].product_id+'/'+data.data[i].product_slug + "/variation/" + data.data[i].primary_variation[0].id;
+            }
             clone.querySelector(".div-class").classList.add('col-12');
             clone.querySelector(".div-class").classList.add('col-lg-4');
             clone.querySelector(".div-class").classList.add('col-md-4');
@@ -231,9 +248,7 @@
             }
             if (data.data[i].detail != null) {
               clone.querySelector(".product-card-name").innerHTML = data.data[i].detail[0].title;
-              clone.querySelector(".product-card-name").setAttribute('href', '/product/' + data
-                                    .data[i].product_id+'/'+data
-                                    .data[i].product_slug);
+              clone.querySelector(".product-card-name").setAttribute('href', detailLink);
                 var desc = data.data[i].detail[0].desc;
               // clone.querySelector(".product-card-desc").innerHTML = desc.substring(0, 50);
             }
@@ -264,7 +279,7 @@
                   clone.querySelector(".product-card-link").innerHTML = 'Add To Cart';
               }
               else{
-                  clone.querySelector(".product-card-link").setAttribute('href', '/product/' + data.data[i].product_id+'/'+data.data[i].product_slug);
+                  clone.querySelector(".product-card-link").setAttribute('href', detailLink);
               }
             
             $("."+appendTo).append(clone);
@@ -342,10 +357,16 @@
             }
           }
           if (data.data[i].detail != null) {
+            var detailLink = "";
+            if(data.data[i].variations.length  === 0){
+              detailLink = '/product/' + data.data[i].product_id+'/'+data.data[i].product_slug;
+            } else if(data.data[i].primary_variation.length === 0){
+              detailLink = '/product/' + data.data[i].product_id+'/'+data.data[i].product_slug + "/variation/" + data.data[i].variations[0].id;
+            } else {
+              detailLink = '/product/' + data.data[i].product_id+'/'+data.data[i].product_slug + "/variation/" + data.data[i].primary_variation[0].id;
+            }
             clone.querySelector(".product-card-name").innerHTML = data.data[i].detail[0].title;
-            clone.querySelector(".product-card-name").setAttribute('href', '/product/' + data
-                                  .data[i].product_id+'/'+data
-                                  .data[i].product_slug);
+            clone.querySelector(".product-card-name").setAttribute('href', detailLink);
               var desc = data.data[i].detail[0].desc;
             // clone.querySelector(".product-card-desc").innerHTML = desc.substring(0, 50);
           }

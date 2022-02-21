@@ -201,6 +201,10 @@ class Product extends Model
         return $this->hasMany('App\Models\Admin\ProductVariationAlt', "product_id", "id");
     }
 
+    public function primaryVariation(){
+        return $this->hasMany('App\Models\Admin\ProductVariationAlt', 'product_id', 'id')->where('is_primary', '1');
+    }
+
     public function materialDetail(){
         return $this->hasOne('App\Models\Admin\Material', 'id', "material");
     }

@@ -31,6 +31,7 @@
     <link href="{{ asset('assets/front/lightbox2/css/lightbox.min.css')}}" rel="stylesheet" />
     <link href="{{ asset('assets/front/magnify-image-hover/css/jquery.jqZoom.css')}}" rel="stylesheet" />
     <link href="{{ asset('assets/css/animate.css')}}" rel="stylesheet" />
+    <link href="{{ asset('css/custom.css')}}" rel='stylesheet'  />
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
