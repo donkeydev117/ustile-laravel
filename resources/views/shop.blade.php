@@ -232,6 +232,9 @@
             clone.querySelector(".project-icon").setAttribute('onclick', 'showAddToProjectModal(this)');
             clone.querySelector(".add-to-cart-icon").setAttribute('data-id', data.data[i].product_id);
             clone.querySelector('.add-to-cart-icon').setAttribute('onclick', 'showAddToCartModal(this)');
+            clone.querySelector('.add-to-cart-link').setAttribute('data-id', data.data[i].product_id);
+            clone.querySelector('.add-to-cart-link').setAttribute('onclick', 'showAddToCartModal(this)');
+
 
             if (data.data[i].product_gallary != null) {
               if (data.data[i].product_gallary.detail != null) {

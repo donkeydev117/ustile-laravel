@@ -61,7 +61,14 @@
                     <div class="red-content mt-4">
                         <div class="row">
                             <div class="col-6 border-right-white text-right">
-                                <a class="text-uppercase text-white add-to-cart-link" href="#">Add to Cart</a>
+                                <a 
+                                    class="text-uppercase text-white add-to-cart-link" 
+                                    href="javascript:void(0)"
+                                    data-toggle="modal"
+                                    data-target="#addToCartModal"
+                                >
+                                Add to Cart
+                                </a>
                             </div>
                             <div class="col-6">
                                 <span class="price-link text-white">$7.11 - $7.51/SQFT</span>
