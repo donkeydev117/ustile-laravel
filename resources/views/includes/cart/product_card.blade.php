@@ -9,15 +9,15 @@
                                 data-placement="bottom" title="" data-original-title="Wishlist">
                                 <i class="fas fa-heart"></i>
                             </a>
-                            <div class="icon swipe-to-top quick-view-icon" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Quick View">
+                            {{-- <div class="icon swipe-to-top quick-view-icon" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Quick View">
                                 <i class="fas fa-eye"></i>
-                            </div>
+                            </div> --}}
                             <div class="icon swipe-to-top compare-icon" data-tooltip="tooltip" data-placement="bottom" title="Add to Compare" data-original-title="Add to Compare">
                                 <i class="fas fa-align-right" data-fa-transform="rotate-90"></i>
                             </div>
-                            <div class="icon swipe-to-top project-icon" data-tooltip="tooltip" data-placement="bottom" title="Add to Project" data-original-title="Add to Project" data-toggle="modal" data-target="#addToProjectModal">
+                            {{-- <div class="icon swipe-to-top project-icon" data-tooltip="tooltip" data-placement="bottom" title="Add to Project" data-original-title="Add to Project" data-toggle="modal" data-target="#addToProjectModal">
                                 <i class="fas fa-folder" data-fa-transform="rotate-90"></i>
-                            </div>
+                            </div> --}}
                             <div class="icon swipe-to-top add-to-cart-icon" 
                                 data-tooltip="tooltip" 
                                 data-placement="bottom" 
@@ -46,13 +46,13 @@
                             </a>
                         </div>
                         <div class="col-4 text-center pl-0 pr-0">
-                            <a href="#" class="select-options-icon">
+                            <a href="javascript:void(0)" class="select-options-icon">
                                 <i class="fas fa-shopping-bag"></i>
                                 <span>Select Options</span>
                             </a>
                         </div>
                         <div class="col-4 text-center pl-0 pr-0">
-                            <a class="add-project-icon" href="#">
+                            <a class="add-project-icon project-icon" href="javascript:void(0)" data-toggle="modal" data-target="#addToProjectModal">
                                 <i class="fas fa-plus-circle"></i>
                                 <span>Add Project</span>
                             </a>

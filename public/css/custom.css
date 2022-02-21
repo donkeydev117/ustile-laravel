@@ -183,3 +183,7 @@ b{
 .pro-counter {
     margin-top: 10px
 }
+
+.product article .product-hover .icons {
+    padding-top: 30% !important;
+}
