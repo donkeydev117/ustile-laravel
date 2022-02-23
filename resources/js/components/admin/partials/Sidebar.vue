@@ -193,47 +193,20 @@
 
               <!--begin::Nav Catalog -->
 
-              <li
-                class="nav-item"
-                v-if="$parent.permissions.includes('catalog')"
-              >
-                <a
-                  class="nav-link"
-                  data-toggle="collapse"
-                  href="javascript:void(0)"
-                  @click.prevent="setActive('catalog')"
-                  :class="{ active: isActive('catalog') }"
-                >
+              <li class="nav-item" v-if="$parent.permissions.includes('catalog')">
+                <a class="nav-link" data-toggle="collapse" href="javascript:void(0)" @click.prevent="setActive('catalog')" :class="{ active: isActive('catalog') }" >
                   <span class="svg-icon nav-icon">
                     <i class="fas fa-boxes font-size-h4"></i>
                   </span>
                   <span class="nav-text">Catalog</span>
                   <i class="fas fa-chevron-right fa-rotate-90"></i>
                 </a>
-                <div
-                  :class="{ 'collapse nav-collapse': !isActive('catalog') }"
-                  class="nav-collapse"
-                  id="catalog"
-                  data-parent="#accordion"
-                >
+                <div :class="{ 'collapse nav-collapse': !isActive('catalog') }" class="nav-collapse" id="catalog" data-parent="#accordion">
                   <div id="accordion1">
                     <ul class="nav flex-column">
-                      <!-- <li
-                        class="nav-item"
-                        v-if="$parent.permissions.includes('product-unit-list')"
-                      >
-                        <router-link
-                          to="/admin/product-unit"
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="
-                              svg-icon
-                              nav-icon
-                              d-flex
-                              justify-content-center
-                            "
-                          >
+                       <li class="nav-item" v-if="$parent.permissions.includes('product-list')">
+                        <a class="nav-link sub-nav-link" data-toggle="collapse" @click.prevent="setChildActive('attributes')">
+                          <span class="svg-icon nav-icon d-flex justify-content-center">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="10px"
@@ -248,251 +221,241 @@
                               />
                             </svg>
                           </span>
-                          <span class="nav-text">Product Units</span>
-                        </router-link>
-                      </li> -->
-                      <!-- Product Color -->
-                      <li class="nav-item">
-                        <router-link
-                          to='/admin/product-colors'
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="svg-icon nav-icon d-flex justify-content-center"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">Colors</span>
-                        </router-link>
-                      </li>
-                      <!-- Product Materials -->
-                      <li class="nav-item">
-                        <router-link
-                          to='/admin/product-materials'
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="svg-icon nav-icon d-flex justify-content-center"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">Materials</span>
-                        </router-link>
-                      </li>
-                      <li class="nav-item">
-                        <router-link
-                          to='/admin/product-finish'
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="svg-icon nav-icon d-flex justify-content-center"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">Finish</span>
-                        </router-link>
-                      </li>
-                      <li class="nav-item">
-                        <router-link
-                          to='/admin/product-shades'
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="svg-icon nav-icon d-flex justify-content-center"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">Shades</span>
-                        </router-link>
-                      </li>
-                      <li class="nav-item">
-                        <router-link
-                          to='/admin/product-shapes'
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="svg-icon nav-icon d-flex justify-content-center"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">Shapes</span>
-                        </router-link>
-                      </li>
-                      <li class="nav-item">
-                        <router-link
-                          to='/admin/product-look-trend'
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="svg-icon nav-icon d-flex justify-content-center"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">Look & Trend</span>
-                        </router-link>
-                      </li>
+                          <span class="nav-text">Attributes</span>
+                          <i class="fas fa-chevron-right fa-rotate-90"></i>
+                        </a>
 
-                      <li
-                        class="nav-item"
-                        v-if="
-                          $parent.permissions.includes('product-brand-list')
-                        "
-                      >
-                        <router-link
-                          to="/admin/product-brand"
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="
-                              svg-icon
-                              nav-icon
-                              d-flex
-                              justify-content-center
-                            "
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
+                        <ul class="nav flex-column" :style="activeChildItem == 'attributes' && toggleChildMenu ? 'display:block' : 'display:none'">
+                          <!-- Product Color -->
+                          <li class="nav-item">
+                            <router-link
+                              to='/admin/product-colors'
+                              class="nav-link sub-nav-link"
                             >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">Product Brands</span>
-                        </router-link>
-                      </li>
-
-                      <li
-                        class="nav-item"
-                        v-if="
-                          $parent.permissions.includes('product-category-list')
-                        "
-                      >
-                        <router-link
-                          to="/admin/product-category"
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="
-                              svg-icon
-                              nav-icon
-                              d-flex
-                              justify-content-center
-                            "
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
+                              <span
+                                class="svg-icon nav-icon d-flex justify-content-center"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="10px"
+                                  height="10px"
+                                  fill="currentColor"
+                                  class="bi bi-circle"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                  />
+                                </svg>
+                              </span>
+                              <span class="nav-text">Colors</span>
+                            </router-link>
+                          </li>
+                          <!-- Product Materials -->
+                          <li class="nav-item">
+                            <router-link
+                              to='/admin/product-materials'
+                              class="nav-link sub-nav-link"
                             >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">Product Categories</span>
-                        </router-link>
-                      </li>
+                              <span
+                                class="svg-icon nav-icon d-flex justify-content-center"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="10px"
+                                  height="10px"
+                                  fill="currentColor"
+                                  class="bi bi-circle"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                  />
+                                </svg>
+                              </span>
+                              <span class="nav-text">Materials</span>
+                            </router-link>
+                          </li>
+                          <li class="nav-item">
+                            <router-link
+                              to='/admin/product-finish'
+                              class="nav-link sub-nav-link"
+                            >
+                              <span
+                                class="svg-icon nav-icon d-flex justify-content-center"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="10px"
+                                  height="10px"
+                                  fill="currentColor"
+                                  class="bi bi-circle"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                  />
+                                </svg>
+                              </span>
+                              <span class="nav-text">Finish</span>
+                            </router-link>
+                          </li>
+                          <li class="nav-item">
+                            <router-link
+                              to='/admin/product-shades'
+                              class="nav-link sub-nav-link"
+                            >
+                              <span
+                                class="svg-icon nav-icon d-flex justify-content-center"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="10px"
+                                  height="10px"
+                                  fill="currentColor"
+                                  class="bi bi-circle"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                  />
+                                </svg>
+                              </span>
+                              <span class="nav-text">Shades</span>
+                            </router-link>
+                          </li>
+                          <li class="nav-item">
+                            <router-link
+                              to='/admin/product-shapes'
+                              class="nav-link sub-nav-link"
+                            >
+                              <span
+                                class="svg-icon nav-icon d-flex justify-content-center"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="10px"
+                                  height="10px"
+                                  fill="currentColor"
+                                  class="bi bi-circle"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                  />
+                                </svg>
+                              </span>
+                              <span class="nav-text">Shapes</span>
+                            </router-link>
+                          </li>
+                          <li class="nav-item">
+                            <router-link
+                              to='/admin/product-look-trend'
+                              class="nav-link sub-nav-link"
+                            >
+                              <span
+                                class="svg-icon nav-icon d-flex justify-content-center"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="10px"
+                                  height="10px"
+                                  fill="currentColor"
+                                  class="bi bi-circle"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                  />
+                                </svg>
+                              </span>
+                              <span class="nav-text">Look & Trend</span>
+                            </router-link>
+                          </li>
 
-                      <li
-                        class="nav-item"
-                        v-if="$parent.permissions.includes('product-list')"
-                      >
-                        <a
-                          class="nav-link sub-nav-link"
-                          data-toggle="collapse"
-                          @click.prevent="setChildActive('product')"
-                        >
-                          <span
-                            class="
-                              svg-icon
-                              nav-icon
-                              d-flex
-                              justify-content-center
+                          <li
+                            class="nav-item"
+                            v-if="
+                              $parent.permissions.includes('product-brand-list')
                             "
                           >
+                            <router-link
+                              to="/admin/product-brand"
+                              class="nav-link sub-nav-link"
+                            >
+                              <span
+                                class="
+                                  svg-icon
+                                  nav-icon
+                                  d-flex
+                                  justify-content-center
+                                "
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="10px"
+                                  height="10px"
+                                  fill="currentColor"
+                                  class="bi bi-circle"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                  />
+                                </svg>
+                              </span>
+                              <span class="nav-text">Product Brands</span>
+                            </router-link>
+                          </li>
+
+                          <li
+                            class="nav-item"
+                            v-if="
+                              $parent.permissions.includes('product-category-list')
+                            "
+                          >
+                            <router-link
+                              to="/admin/product-category"
+                              class="nav-link sub-nav-link"
+                            >
+                              <span
+                                class="
+                                  svg-icon
+                                  nav-icon
+                                  d-flex
+                                  justify-content-center
+                                "
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="10px"
+                                  height="10px"
+                                  fill="currentColor"
+                                  class="bi bi-circle"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                  />
+                                </svg>
+                              </span>
+                              <span class="nav-text">Product Categories</span>
+                            </router-link>
+                          </li>
+                        </ul>
+                       </li>
+
+                      <li class="nav-item" v-if="$parent.permissions.includes('product-list')">
+                        <a class="nav-link sub-nav-link" data-toggle="collapse" @click.prevent="setChildActive('product')">
+                          <span class="svg-icon nav-icon d-flex justify-content-center">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="10px"
@@ -510,17 +473,7 @@
                           <span class="nav-text">Products</span>
                           <i class="fas fa-chevron-right fa-rotate-90"></i>
                         </a>
-                        <!-- <div class="collapse nav-collapse" id="catalogProduct" data-parent="#accordion1">
-                                                
-                                            </div> -->
-                        <ul
-                          class="nav flex-column"
-                          :style="
-                            activeChildItem == 'product' && toggleChildMenu
-                              ? 'display:block'
-                              : 'display:none'
-                          "
-                        >
+                        <ul class="nav flex-column" :style="activeChildItem == 'product' && toggleChildMenu ? 'display:block' : 'display:none'">
                           <li
                             class="nav-item"
                             v-if="$parent.permissions.includes('product-list')"
@@ -548,18 +501,6 @@
                           </li>
                         </ul>
                       </li>
-
-                      <!-- <li class="nav-item">
-                                            <a href="product-barcode.html" class="nav-link sub-nav-link">
-                                                <span class="svg-icon nav-icon d-flex justify-content-center">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="10px" height="10px" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
-                                                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                    </svg>
-                                                </span>
-                                                <span class="nav-text">Product Bar code Label</span>
-                                            </a>
-                                        </li> -->
-
                       <li
                         class="nav-item"
                         v-if="$parent.permissions.includes('product-reviews')"
@@ -598,267 +539,7 @@
                 </div>
               </li>
 
-              <!--begin::Nav Product Stock / Inventory -->
-<!-- 
-              <li class="nav-item" v-if="$parent.permissions.includes('stock')">
-                <a
-                  class="nav-link"
-                  data-toggle="collapse"
-                  href="javascript:void(0)"
-                  @click.prevent="setActive('stock')"
-                  :class="{ active: isActive('stock') }"
-                >
-                  <span class="svg-icon nav-icon">
-                    <i class="fas fa-boxes font-size-h4"></i>
-                  </span>
-                  <span class="nav-text">Stock / Inventory</span>
-                  <i class="fas fa-chevron-right fa-rotate-90"></i>
-                </a>
-                
-                <div
-                  :class="{ 'collapse nav-collapse': !isActive('stock') }"
-                  class="nav-collapse"
-                  id="stock"
-                  data-parent="#accordion"
-                >
-                  <div id="accordion1">
-                    <ul class="nav flex-column">
-                      <li
-                        class="nav-item"
-                        v-if="$parent.permissions.includes('stock-list')"
-                      >
-                        <router-link
-                          to="/admin/stocks"
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="
-                              svg-icon
-                              nav-icon
-                              d-flex
-                              justify-content-center
-                            "
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">List Stock</span>
-                        </router-link>
-                      </li>
-                      <li
-                        class="nav-item"
-                        v-if="$parent.permissions.includes('stock-manage')"
-                      >
-                        <router-link
-                          to="/admin/add-stock"
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="
-                              svg-icon
-                              nav-icon
-                              d-flex
-                              justify-content-center
-                            "
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">Add Stock</span>
-                        </router-link>
-                      </li>
-                      <li
-                        class="nav-item"
-                        v-if="
-                          $parent.permissions.includes('stock-transfer-list')
-                        "
-                      >
-                        <router-link
-                          to="/admin/stock-transfers"
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="
-                              svg-icon
-                              nav-icon
-                              d-flex
-                              justify-content-center
-                            "
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">List Stock Transfers</span>
-                        </router-link>
-                      </li>
-                      <li
-                        class="nav-item"
-                        v-if="
-                          $parent.permissions.includes('stock-transfer-manage')
-                        "
-                      >
-                        <router-link
-                          to="/admin/stock-transfer"
-                          class="nav-link sub-nav-link"
-                        >
-                          <span
-                            class="
-                              svg-icon
-                              nav-icon
-                              d-flex
-                              justify-content-center
-                            "
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="10px"
-                              height="10px"
-                              fill="currentColor"
-                              class="bi bi-circle"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="nav-text">Add Stock Transfer</span>
-                        </router-link>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </li> -->
-
-              <!--begin::Nav Quotations -->
-<!-- 
-              <li
-                class="nav-item"
-                v-if="$parent.permissions.includes('quotation-list')"
-              >
-                <a
-                  class="nav-link"
-                  data-toggle="collapse"
-                  href="#Quotations"
-                  @click.prevent="setActive('quotations')"
-                  :class="{ active: isActive('quotations') }"
-                >
-                  <span class="svg-icon nav-icon">
-                    <i class="fas fa-quote-right font-size-h4"></i>
-                  </span>
-                  <span class="nav-text">Quotations</span>
-                  <i class="fas fa-chevron-right fa-rotate-90"></i>
-                </a>
-                <div
-                  :class="{ 'collapse nav-collapse': !isActive('quotations') }"
-                  class="nav-collapse"
-                  id="Quotations"
-                  data-parent="#accordion"
-                >
-                  <ul class="nav flex-column">
-                    <li
-                      class="nav-item"
-                      v-if="$parent.permissions.includes('quotation-list')"
-                    >
-                      <a href="/admin/quotations" class="nav-link sub-nav-link">
-                        <span
-                          class="
-                            svg-icon
-                            nav-icon
-                            d-flex
-                            justify-content-center
-                          "
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="10px"
-                            height="10px"
-                            fill="currentColor"
-                            class="bi bi-circle"
-                            viewBox="0 0 16 16"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                            />
-                          </svg>
-                        </span>
-                        <span class="nav-text">List Quotations</span>
-                      </a>
-                    </li>
-                    <li
-                      class="nav-item"
-                      v-if="$parent.permissions.includes('quotation-manage')"
-                    >
-                      <a
-                        href="/admin/add-quotation"
-                        class="nav-link sub-nav-link"
-                      >
-                        <span
-                          class="
-                            svg-icon
-                            nav-icon
-                            d-flex
-                            justify-content-center
-                          "
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="10px"
-                            height="10px"
-                            fill="currentColor"
-                            class="bi bi-circle"
-                            viewBox="0 0 16 16"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                            />
-                          </svg>
-                        </span>
-                        <span class="nav-text">Add Quotation</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li> -->
-
               <!--begin::Nav Purchase -->
-
               <li
                 class="nav-item"
                 v-if="$parent.permissions.includes('purchase-list')"
