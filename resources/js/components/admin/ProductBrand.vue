@@ -208,7 +208,6 @@ export default {
     },
 
     methods: {
-
         fetchbrands(page_url) {
             this.$parent.loading = true;
             let vm = this;
@@ -231,7 +230,6 @@ export default {
                 vm.makePagination(res.data.meta, res.data.links);
             }).finally(() => (this.$parent.loading = false));
         },
-
         makePagination(meta, links) {
             let pagination = {
                 current_page: meta.current_page,
