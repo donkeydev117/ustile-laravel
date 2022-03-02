@@ -45,7 +45,11 @@ let routes = [
             { path : "/admin/product-shades", component: require("./components/admin/ProductShade.vue").default, name:'product-shades', meta: { auth: true }},
             { path : "/admin/product-shapes", component: require("./components/admin/ProductShape.vue").default, name:'product-shapes', meta: { auth: true }},
             { path : "/admin/product-look-trend", component: require("./components/admin/ProductLookTrend.vue").default, name:'product-look-trend', meta: { auth: true }},
+            // Product Applications:
+
             { path : "/admin/product-applications", component: require("./components/admin/ProductApplications.vue").default, name:'product-applications', meta: { auth: true }},
+            
+            // Product Technical Data:
             { path : "/admin/product-technical-data", component: require("./components/admin/ProductTechnicalData.vue").default, name:'product-technical-data', meta: { auth: true }},
 
 

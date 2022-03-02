@@ -30,74 +30,66 @@
                             </div>
                         </div>
                         <div class="row">
-                        <div class="col-12 ">
-                            <div class="card card-custom gutter-b bg-white border-0">
-                                <div class="card-body">
-                                    <div>
-                                        <div class=" table-responsive" id="printableTable">
+                            <div class="col-12 ">
+                                <div class="card card-custom gutter-b bg-white border-0">
+                                    <div class="card-body">
+                                        <div>
+                                            <div class=" table-responsive" id="printableTable">
+                                                <div id="productbrandTable_wrapper" class="dataTables_wrapper no-footer">
+                                                    <div class="dataTables_length" id="productbrandTable_length"><label>Show
+                                                            <select name="productbrandTable_length" aria-controls="productbrandTable" class="" v-model="limit" v-on:change="fetchApplications()">
+                                                                <option value="10">10</option>
+                                                                <option value="25">25</option>
+                                                                <option value="50">50</option>
+                                                                <option value="100">100</option>
+                                                                <option value="200">200</option>
+                                                                <option value="500">500</option>
+                                                                <option value="1000">1000</option>
+                                                            </select> entries</label></div>
 
-                                            <div id="productbrandTable_wrapper" class="dataTables_wrapper no-footer">
-
-                                                <div class="dataTables_length" id="productbrandTable_length"><label>Show
-                                                        <select name="productbrandTable_length" aria-controls="productbrandTable" class="" v-model="limit" v-on:change="fetchbrands()">
-                                                            <option value="10">10</option>
-                                                            <option value="25">25</option>
-                                                            <option value="50">50</option>
-                                                            <option value="100">100</option>
-                                                            <option value="200">200</option>
-                                                            <option value="500">500</option>
-                                                            <option value="1000">1000</option>
-                                                        </select> entries</label></div>
-
-                                                <div id="productbrandTable_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="productbrandTable" v-model="searchParameter" @keyup="fetchbrands()"></label></div>
-                                                <table id="productbrandTable" class="display dataTable no-footer" role="grid">
-                                                    <thead class="text-body">
-                                                        <tr role="row">
-                                                            <th class="sorting" tabindex="0" aria-controls="productbrandTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="ID: activate to sort column descending" style="width: 31.25px;" @click="sorting('id')" :class="(this.$data.sortType == 'asc' || this.$data.sortType == 'ASC') && this.$data.sortBy == 'id'  ? 'sorting_asc' : (this.$data.sortType == 'desc' || this.$data.sortType == 'DESC') && this.$data.sortBy == 'id' ? 'sorting_desc' : 'sorting'">
-                                                                ID
-                                                            </th>
-                                                            <th class="sorting" tabindex="0" aria-controls="productbrandTable" rowspan="1" colspan="1" aria-label="brand: activate to sort column ascending" style="width: 95.5288px;" @click="sorting('name')" :class="(this.$data.sortType == 'asc' || this.$data.sortType == 'ASC') && this.$data.sortBy == 'name'  ? 'sorting_asc' : (this.$data.sortType == 'desc' || this.$data.sortType == 'DESC') && this.$data.sortBy == 'name' ? 'sorting_desc' : 'sorting'">
-                                                                Name
-                                                            </th>
-                                                            <th class="no-sort sorting_disabled" rowspan="1" colspan="1" aria-label="Action" style="width: 53.1891px;">
-                                                                Slug
-                                                            </th>
-                                                            <th class="no-sort sorting_disabled" rowspan="1" colspan="1" aria-label="Action" style="width: 53.1891px;">
-                                                                Status
-                                                            </th>
-                                                            <th v-if="$parent.permissions.includes('product-brand-manage')" class="no-sort sorting_disabled" rowspan="1" colspan="1" aria-label="Action" style="width: 53.1891px;">
-                                                                Action
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="kt-table-tbody text-dark">
-                                                        <tr class="kt-table-row kt-table-row-level-0 odd" role="row" v-for="brand in brands" v-bind:key="brand.brand_id">
-                                                            <td class="sorting_1">
-                                                                {{brand.brand_id}}
-                                                            </td>
-                                                            <td>
-                                                                {{ brand.brand_name }}
-                                                            </td>
-                                                            <td>
-                                                                {{ brand.brand_slug }}
-                                                            </td>
-                                                            <td>
-                                                                {{ brand.brand_status }}
-                                                            </td>
-                                                            <td v-if="$parent.permissions.includes('product-brand-manage')">
-                                                                <a href="javascript:void(0)" class=" click-edit" id="click-edit1" data-toggle="tooltip" title="" data-placement="right" data-original-title="Check out more demos" @click="editbrand(brand)"><i class="fa fa-edit"></i></a>
-                                                                <a class="" href="#" @click="deletebrand(brand.brand_id)"><i class="fa fa-trash"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <ul class="pagination pagination-sm m-0 float-right">
-                                                    <li v-bind:class="[{disabled: !pagination.prev_page_url}]"><button class="page-link" href="#" @click="fetchbrands(pagination.prev_page_url)">Previous</button></li>
-
-                                                    <li class="disabled"><button class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</button></li>
-
-                                                    <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><button class="page-link" href="#" @click="fetchbrands(pagination.next_page_url)">Next</button></li>
-                                                </ul>
+                                                    <div id="productbrandTable_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="productbrandTable" v-model="searchParameter" @keyup="fetchApplications()"></label></div>
+                                                    <table id="productbrandTable" class="display dataTable no-footer" role="grid">
+                                                        <thead class="text-body">
+                                                            <tr role="row">
+                                                                <th class="sorting" tabindex="0" aria-controls="productbrandTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="ID: activate to sort column descending" style="width: 31.25px;" @click="sorting('id')" :class="(this.$data.sortType == 'asc' || this.$data.sortType == 'ASC') && this.$data.sortBy == 'id'  ? 'sorting_asc' : (this.$data.sortType == 'desc' || this.$data.sortType == 'DESC') && this.$data.sortBy == 'id' ? 'sorting_desc' : 'sorting'">
+                                                                    ID
+                                                                </th>
+                                                                <th class="sorting" tabindex="0" aria-controls="productbrandTable" rowspan="1" colspan="1" aria-label="application: activate to sort column ascending" style="width: 95.5288px;" @click="sorting('name')" :class="(this.$data.sortType == 'asc' || this.$data.sortType == 'ASC') && this.$data.sortBy == 'name'  ? 'sorting_asc' : (this.$data.sortType == 'desc' || this.$data.sortType == 'DESC') && this.$data.sortBy == 'name' ? 'sorting_desc' : 'sorting'">
+                                                                    Name
+                                                                </th>
+                                                                <th class="no-sort sorting_disabled" rowspan="1" colspan="1" aria-label="Action" style="width: 53.1891px;">
+                                                                    Slug
+                                                                </th>
+                                                                <th class="no-sort sorting_disabled" rowspan="1" colspan="1" aria-label="Action" style="width: 53.1891px;">
+                                                                    Image
+                                                                </th>
+                                                                <th v-if="$parent.permissions.includes('product-applications')" class="no-sort sorting_disabled" rowspan="1" colspan="1" aria-label="Action" style="width: 53.1891px;">
+                                                                    Action
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="kt-table-tbody text-dark">
+                                                            <tr class="kt-table-row kt-table-row-level-0 odd" role="row" v-for="application in applications" v-bind:key="application.id">
+                                                                <td class="sorting_1">
+                                                                    {{application.id}}
+                                                                </td>
+                                                                <td>
+                                                                    {{ application.name }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ application.slug }}
+                                                                </td>
+                                                                <td>
+                                                                    <img :src='application.gallary.detail[0].path' style="width: 50px;" />
+                                                                </td>
+                                                                <td v-if="$parent.permissions.includes('product-applications')">
+                                                                    <a href="javascript:void(0)" class=" click-edit" id="click-edit1" data-toggle="tooltip" title="" data-placement="right" data-original-title="Check out more demos" @click="editApplication(application)"><i class="fa fa-edit"></i></a>
+                                                                    <a class="" href="#" @click="deleteApplication(application.id)"><i class="fa fa-trash"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -105,10 +97,40 @@
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
             </div>
         </div>
+        <div class="offcanvas offcanvas-right kt-color-panel p-5 kt_notes_panel" v-if="display_form" :class="display_form ? 'offcanvas-on' : ''">
+            <div class="offcanvas-header d-flex align-items-center justify-content-between pb-3">
+                <h4 class="font-size-h4 font-weight-bold m-0">Add Application</h4>
+                <a href="#" class="btn btn-sm btn-icon btn-light btn-hover-primary kt_notes_panel_close" v-on:click="clearForm()">
+                    <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
+                    </svg>
+                </a>
+            </div>
+            <form id="myform">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group ">
+                            <label class="text-dark">Application Name</label>
+                            <input type="text"  v-model="application.name" class="form-control" />
+                            <small class="form-text text-danger" v-if="errors.has('name')" v-text="errors.get('name')"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" @click="toggleImageSelect()">Upload Application Media</button>
+                            <small id="textHelp" class="form-text text-muted">Select Image file from gallary.</small>
+                            <small class="form-text text-danger" v-if="errors.has('gallary_id')" v-text="errors.get('gallary_id')"></small>
+
+                            <img v-if="gallary_path != ''" :src="gallary_path" style="width:100px;height:100px;"/>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" @click="addUpdateApplication()" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    <attach-image @toggleImageSelect="toggleImageSelect" :showModal="showModal" @setImage="setImage"/>
     </div>
 </template>
 
@@ -118,11 +140,11 @@ export default {
     data() {
         return {
             display_form: 0,
-            brand: {
-                brand_id: "",
-                brand_name: "",
-                brand_status: "",
-                gallary_id: ""
+            application: {
+                id: "",
+                name: "",
+                slug: "",
+                image: ""
             },
             searchParameter: '',
             sortBy: 'id',
@@ -135,7 +157,7 @@ export default {
             request_method: "",
             countrySelected: "",
             stateSelected: "",
-            brands: [],
+            applications: [],
             languages: [],
             token: [],
             selectedLanguage: '',
@@ -147,10 +169,10 @@ export default {
     },
 
     methods: {
-        fetchbrands(page_url) {
+        fetchApplications(page_url) {
             this.$parent.loading = true;
             let vm = this;
-            page_url = page_url || "/api/admin/brand";
+            page_url = page_url || "/api/admin/application";
             var arr = page_url.split('?');
 
             if (arr.length > 1) {
@@ -165,10 +187,12 @@ export default {
             var responseData = {};
 
             axios.get(page_url, this.token).then(res => {
-                this.brands = res.data.data;
-                vm.makePagination(res.data.meta, res.data.links);
+                this.applications = res.data;
+                console.log(this.applications);
+                // vm.makePagination(res.data.meta, res.data.links);
             }).finally(() => (this.$parent.loading = false));
         },
+
         makePagination(meta, links) {
             let pagination = {
                 current_page: meta.current_page,
@@ -179,16 +203,15 @@ export default {
 
             this.pagination = pagination;
         },
-        deletebrand(id) {
+        deleteApplication(id) {
             if (confirm('Are You Sure?')) {
                 this.$parent.loading = true;
-                axios.delete(`/api/admin/brand/${id}`, this.token)
+                axios.delete(`/api/admin/application/${id}`, this.token)
                     .then(res => {
-                        if (res.data.status == "Success") {
+                        if (res.data.status == "success") {
                             this.$toaster.success('Settings has been updated successfully')
-                            this.fetchbrands();
+                            this.fetchApplications();
                         }
-
                     })
                     .catch(error =>{
                         if (error.response.status == 422) {
@@ -200,28 +223,28 @@ export default {
                     .finally(() => (this.$parent.loading = false));
             }
         },
-        addUpdatebrand() {
+        addUpdateApplication() {
             this.$parent.loading = true;
-            var url = '/api/admin/brand';
+            var url = '/api/admin/application';
             if (this.edit === false) {
                 // Add
                 this.request_method = 'post'
             } else {
                 // Update
-                var url = '/api/admin/brand/' + this.brand.brand_id;
+                var url = '/api/admin/application/' + this.application.id;
                 this.request_method = 'put'
             }
+
             axios[this.request_method](url, {
-                    name: this.brand.brand_name,
-                    gallary_id: this.brand.gallary_id,
-                    status: this.brand.brand_status,
+                    name: this.application.name,
+                    media: this.application.image,
                 }, this.token)
                 .then(res => {
-                    if (res.data.status == "Success") {
+                    if (res.data.status == "success") {
                         this.display_form = 0;
                         this.$toaster.success('Settings has been updated successfully')
                         this.clearForm();
-                        this.fetchbrands();
+                        this.fetchApplications();
                     } else {
                         this.$toaster.error(res.data.message)
                     }
@@ -239,20 +262,20 @@ export default {
                 }).finally(() => (this.$parent.loading = false));
 
         },
-        editbrand(brand) {
+        editApplication(application) {
             this.edit = true;
             this.display_form = 1;
             this.errors = new ErrorHandling();
-            this.brand.brand_id = brand.brand_id;
-            this.brand.brand_name = brand.brand_name;
-            this.brand.brand_status = brand.brand_status;
-
+            this.application.id = application.id;
+            this.application.name = application.name;
+            this.application.image = application.image;
+            this.gallary_path = application.gallary.detail[0].path;
         },
         clearForm() {
             this.edit = false;
-            this.brand.brand_id = null;
-            this.brand.brand_name = '';
-            this.brand.gallary_id = "";
+            this.application.id = null;
+            this.application.name = '';
+            this.application.image = "";
             this.gallary_path = "";
             this.display_form = 0;
         },
@@ -271,18 +294,17 @@ export default {
         setImage(gallary){
             console.log(gallary);
             this.gallary_path = gallary.gallary_path,
-            this.brand.gallary_id = gallary.gallary_id;
+            this.application.image = gallary.gallary_id;
         }
     },
     mounted() {
-
         var token = localStorage.getItem('token');
         this.token = {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         };
-        this.fetchbrands();
+        this.fetchApplications();
     }
 };
 </script>
