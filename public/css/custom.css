@@ -188,8 +188,17 @@ b{
     padding-top: 30% !important;
 }
 
-.project-template-li-container .product-wraper .project-content {
-    background-color: #ef5f4b;
+
+#project_container  .project-template-li-container .product-wraper .project-content {
+    background-color: orange;
+}
+
+#project_container  .project-template-li-container ul .project-template-li-container .product-wraper .project-content {
+    background-color: black;
+}
+
+#project_container  .project-template-li-container ul .project-template-li-container ul .project-template-li-container .product-wraper .project-content {
+    background-color: grey;
 }
 
 .project-template-li-container .product-wraper .s-l-opener{

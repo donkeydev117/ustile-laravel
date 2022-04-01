@@ -65,8 +65,38 @@
                         @input="setCat" 
                         @remove='removeCat'
                     />
-
                     <small class="form-text text-danger" v-if="errors.has('category_id')" v-text="errors.get('category_id')"></small>
+                    <label>Applications</label>
+                    <multiselect 
+                        v-model="category_id" 
+                        :options="categories" 
+                        :custom-label="nameWithLang" 
+                        placeholder="Select one" 
+                        label="name" 
+                        track-by="id" 
+                        :multiple="true" 
+                        :taggable="true" 
+                        @input="setCat" 
+                        @remove='removeCat'
+                    />
+                    <small class="form-text text-danger" v-if="errors.has('category_id')" v-text="errors.get('category_id')"></small>
+
+                    <label>Technical Data</label>
+                    <multiselect 
+                        v-model="category_id" 
+                        :options="categories" 
+                        :custom-label="nameWithLang" 
+                        placeholder="Select one" 
+                        label="name" 
+                        track-by="id" 
+                        :multiple="true" 
+                        :taggable="true" 
+                        @input="setCat" 
+                        @remove='removeCat'
+                    />
+                    <small class="form-text text-danger" v-if="errors.has('category_id')" v-text="errors.get('category_id')"></small>
+
+
 
                     <br />
                     <ul class="nav nav-pills lang-tab" id="pills-tab1" role="tablist">
@@ -127,6 +157,7 @@ export default {
     data() {
         return {
             categories: [],
+            applications: [],
             languages: [],
             selectedLanguage: "",
             showModal: false,
@@ -165,6 +196,9 @@ export default {
                     }
                 })
                 .finally(() => (this.$parent.$parent.loading = false));
+        },
+        fetchApplications() {
+
         },
         fetchLanguages() {
             this.$parent.$parent.loading = true;
